@@ -26,14 +26,20 @@ lazy val actor = (project in file("actor")
   settings (name := "akka-test-actor")
   settings commonSettings
   settings (libraryDependencies ++= Seq(
-    Akka.actor,
-    scalatest)))
+    Akka.default.actor,
+    scalatest,
+    Akka.newer.actor   % Test,
+    Akka.default.slf4j % Test)))
 
 lazy val http = (project in file("http")
   settings (name := "akka-test-http")
   settings commonSettings
   settings (libraryDependencies ++= Seq(
-    Akka.actor,
-    Akka.stream,
-    AkkaHttp.core,
-    scalatest)))
+    Akka.default.actor,
+    Akka.default.stream,
+    AkkaHttp.default.core,
+    scalatest,
+    Akka.newer.actor         % Test,
+    Akka.newer.stream        % Test,
+    AkkaHttp.newer.core      % Test,
+    AkkaHttp.default.testkit % Test)))

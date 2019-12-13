@@ -32,13 +32,13 @@ Tests:
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.1"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.2 % Test"
 ```
 
 And just drop this test into your project 
 
 ```scala
-package com.evolutiongaming.akkatest
+import com.evolutiongaming.akkatest.AkkaActorSuite
 
 class AkkaActorTest extends AkkaActorSuite
 ```
@@ -56,13 +56,13 @@ Add dependency
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.1"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.2 % Test"
 ```
 
 And just drop this test into your project
 
 ```scala
-package com.evolutiongaming.akkatest
+import com.evolutiongaming.akkatest.AkkaHttpSuite
 
 class AkkaHttpTest extends AkkaHttpSuite
 ```
@@ -72,7 +72,7 @@ class AkkaHttpTest extends AkkaHttpSuite
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.1"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.2"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.1"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.2"
 ```

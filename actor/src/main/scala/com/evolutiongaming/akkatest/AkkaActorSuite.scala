@@ -2,15 +2,22 @@ package com.evolutiongaming.akkatest
 
 import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory
-import org.scalatest.{AsyncFunSuite, Succeeded}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
 trait AkkaActorSuite extends AsyncFunSuite {
+  import AkkaActorSuite._
 
   test("akka modules are of same version") {
+    `akka modules are of same version`
+  }
+}
 
+object AkkaActorSuite {
+
+  def `akka modules are of same version`(implicit executor: ExecutionContext): Future[Assertion] = {
     def future[A](a: => A): Future[A] = Future.fromTry { Try { a } }
 
     for {
