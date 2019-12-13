@@ -13,10 +13,8 @@ class AkkaActorTest extends AsyncFunSuite with Matchers {
       error <- `akka modules are of same version`.transform((a: Try[Assertion]) => Success(a))
     } yield {
       error match {
-        case Failure(a: IllegalStateException)  =>
-          println(a.getMessage); succeed
-        case _                                                                 =>
-          fail()
+        case Failure(a: IllegalStateException) if a.getMessage contains "akka-slf4j" => succeed
+        case _                                                                       => fail()
       }
     }
   }
