@@ -6,7 +6,7 @@
 [![bintray](https://api.bintray.com/packages/evolutiongaming/maven/akka-test/images/download.svg) ](https://bintray.com/evolutiongaming/maven/akka-test/_latestVersion)
 [![license: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
-This library is created in order to provide reusable set of tests to be used in projects dependent on [Akka](https://akka.io) libraries
+This library is created in order to provide reusable set of tests to be used in projects dependent on [Akka](https://akka.io) libraries.
 For instance to prevent following "surprise" at runtime:
 
 ```

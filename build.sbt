@@ -35,5 +35,5 @@ lazy val http = (project in file("http")
   settings (libraryDependencies ++= Seq(
     Akka.actor,
     Akka.stream,
-    AkkaHttp.http,
+    AkkaHttp.core,
     scalatest)))

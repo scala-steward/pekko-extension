@@ -2,15 +2,14 @@ package com.evolutiongaming.akkatest
 
 import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory
-import org.scalatest.Succeeded
-import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.{AsyncFunSuite, Succeeded}
 
 import scala.concurrent.Future
 import scala.util.Try
 
 trait AkkaActorSuite extends AsyncFunSuite {
 
-  test("modules are of same version") {
+  test("akka modules are of same version") {
 
     def future[A](a: => A): Future[A] = Future.fromTry { Try { a } }
 
