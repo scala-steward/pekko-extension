@@ -1,0 +1,3 @@
+package com.evolutiongaming.akkatest
+
+class AkkaActorTest extends AkkaActorSuite

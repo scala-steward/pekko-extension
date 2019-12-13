@@ -1,3 +1,5 @@
+import Dependencies._
+
 lazy val commonSettings = Seq(
   organization := "com.evolutiongaming",
   homepage := Some(new URL("http://github.com/evolution-gaming/akka-test")),
@@ -23,9 +25,15 @@ lazy val root = (project in file(".")
 lazy val actor = (project in file("actor")
   settings (name := "akka-test-actor")
   settings commonSettings
-  settings (libraryDependencies ++= Seq()))
+  settings (libraryDependencies ++= Seq(
+    Akka.actor,
+    scalatest)))
 
 lazy val http = (project in file("http")
   settings (name := "akka-test-http")
   settings commonSettings
-  settings (libraryDependencies ++= Seq()))
+  settings (libraryDependencies ++= Seq(
+    Akka.actor,
+    Akka.stream,
+    AkkaHttp.http,
+    scalatest)))
