@@ -32,7 +32,7 @@ Tests:
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.2 % Test"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-actor" % "0.0.2" % Test
 ```
 
 And just drop this test into your project 
@@ -56,7 +56,7 @@ Add dependency
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.2 % Test"
+libraryDependencies += "com.evolutiongaming" %% "akka-test-http" % "0.0.2" % Test
 ```
 
 And just drop this test into your project
