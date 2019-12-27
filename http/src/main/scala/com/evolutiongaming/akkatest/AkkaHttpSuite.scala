@@ -3,7 +3,8 @@ package com.evolutiongaming.akkatest
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import com.typesafe.config.ConfigFactory
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try

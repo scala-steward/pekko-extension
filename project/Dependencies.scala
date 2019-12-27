@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies {
 
-  val scalatest = "org.scalatest" %% "scalatest" % "3.0.8"
+  val scalatest = "org.scalatest" %% "scalatest" % "3.1.0"
 
 
   sealed abstract class Akka(version: String) {
@@ -12,7 +12,7 @@ object Dependencies {
   }
 
   object Akka {
-    val default: Akka = new Akka("2.5.26") {}
+    val default: Akka = new Akka("2.5.27") {}
     val newer  : Akka = new Akka("2.6.1") {}
   }
 
