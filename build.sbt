@@ -2,23 +2,28 @@ import Dependencies._
 
 lazy val commonSettings = Seq(
   organization := "com.evolutiongaming",
-  homepage := Some(new URL("http://github.com/evolution-gaming/akka-test")),
+  homepage := Some(url("https://github.com/evolution-gaming/akka-test")),
   startYear := Some(2019),
-  organizationName := "Evolution Gaming",
-  organizationHomepage := Some(url("http://evolutiongaming.com")),
-  bintrayOrganization := Some("evolutiongaming"),
+  organizationName := "Evolution",
+  organizationHomepage := Some(url("https://evolution.com")),
   scalaVersion := crossScalaVersions.value.head,
   crossScalaVersions := Seq("2.13.1", "2.12.10"),
   scalacOptions in(Compile, doc) ++= Seq("-groups", "-implicits", "-no-link-warnings"),
   scalacOptsFailOnWarn := Some(false),
-  resolvers += Resolver.bintrayRepo("evolutiongaming", "maven"),
   licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT"))),
+  publishTo := Some(Resolver.evolutionReleases),
   releaseCrossBuild := true)
+
+val alias: Seq[sbt.Def.Setting[_]] =
+  //  addCommandAlias("check", "all versionPolicyCheck Compile/doc") ++
+  addCommandAlias("check", "show version") ++
+    addCommandAlias("build", "+all compile test")
 
 
 lazy val root = (project in file(".")
   settings (name := "akka-test")
   settings commonSettings
+  settings alias
   settings (skip in publish := true)
   aggregate(actor, http))
 
