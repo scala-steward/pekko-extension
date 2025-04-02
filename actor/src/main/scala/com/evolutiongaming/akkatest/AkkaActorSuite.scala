@@ -18,13 +18,16 @@ trait AkkaActorSuite extends AsyncFunSuite {
 
 object AkkaActorSuite {
 
-  def `akka modules are of same version`(implicit executor: ExecutionContext): Future[Assertion] = {
+  def `akka modules are of same version`(
+    implicit
+    executor: ExecutionContext,
+  ): Future[Assertion] = {
     def future[A](a: => A): Future[A] = Future.fromTry { Try { a } }
 
     for {
       config <- future { ConfigFactory.load("reference.conf") }
       system <- future { ActorSystem("actor-manifest-suite", config) }
-      _      <- system.terminate()
+      _ <- system.terminate()
     } yield Succeeded
   }
 }
