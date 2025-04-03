@@ -19,16 +19,19 @@ trait AkkaHttpSuite extends AsyncFunSuite {
 
 object AkkaHttpSuite {
 
-  def `akka-http modules are of same version`(implicit executor: ExecutionContext): Future[Assertion] = {
+  def `akka-http modules are of same version`(
+    implicit
+    executor: ExecutionContext,
+  ): Future[Assertion] = {
 
     def future[A](a: => A): Future[A] = Future.fromTry { Try { a } }
 
     for {
       config <- future { ConfigFactory.load("reference.conf") }
       system <- future { ActorSystem("http-manifest-suite", config) }
-      http   <- future { Http(system) }
-      _      <- http.shutdownAllConnectionPools()
-      _      <- system.terminate()
+      http <- future { Http(system) }
+      _ <- http.shutdownAllConnectionPools()
+      _ <- system.terminate()
     } yield Succeeded
   }
 }
