@@ -9,8 +9,7 @@ lazy val commonSettings = Seq(
   startYear := Some(2019),
   organizationName := "Evolution",
   organizationHomepage := Some(url("https://evolution.com")),
-  scalaVersion := crossScalaVersions.value.head,
-  crossScalaVersions := crossScalaVersionsVal,
+  scalaVersion := crossScalaVersionsVal.head,
   Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings"),
   licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT"))),
   publishTo := Some(Resolver.evolutionReleases),
@@ -18,47 +17,40 @@ lazy val commonSettings = Seq(
 )
 
 val aliases: Seq[sbt.Def.Setting[?]] =
-  addCommandAlias("fmt", plus4HeteroScalaVersions("all scalafmtAll scalafmtSbt")) ++
+  addCommandAlias("fmt", "all scalafmtAll scalafmtSbt") ++
     addCommandAlias(
-      "check", // check is used by the release.yml@v3
-      plus4HeteroScalaVersions("all scalafmtCheckAll scalafmtSbtCheck versionPolicyCheck Compile/doc"),
-    ) ++
-    addCommandAlias(
-      "checkOne",
+      "check",
       "all scalafmtCheckAll scalafmtSbtCheck versionPolicyCheck Compile/doc",
     ) ++
-    addCommandAlias("build", plus4HeteroScalaVersions("all compile test"))
-
-// workaround for +all not working if you have modules with different cross-compilation Scala version sets
-def plus4HeteroScalaVersions(command: String): String = {
-  crossScalaVersionsVal.map { scalaVer =>
-    s"++$scalaVer $command"
-  }.mkString(
-    start = "; ",
-    sep = "; ",
-    end = "",
-  )
-}
+    addCommandAlias("build", "all test package")
 
 lazy val root = project.in(file("."))
   .settings(name := "akka-test")
   .settings(inThisBuild(commonSettings))
   .settings(aliases)
-  .settings(publish / skip := true)
-  .aggregate(actor, http)
+  .settings(
+    publish / skip := true,
+  )
+  .aggregate((
+    actor.projectRefs ++
+      http.projectRefs
+  ) *)
 
-lazy val actor = project.in(file("actor"))
+lazy val actor = projectMatrix.in(file("actor"))
   .settings(name := "akka-test-actor")
+  .jvmPlatform(
+    scalaVersions = crossScalaVersionsVal,
+  )
   .settings(libraryDependencies ++= Seq(
     Akka.default.actor,
     scalatest,
     Akka.older.slf4j % Test,
   ))
 
-lazy val http = project.in(file("http"))
+lazy val http = projectMatrix.in(file("http"))
   .settings(name := "akka-test-http")
-  .settings(
-    crossScalaVersions := crossScalaVersionsWithout3Val,
+  .jvmPlatform(
+    scalaVersions = crossScalaVersionsWithout3Val,
   )
   .settings(libraryDependencies ++= Seq(
     Akka.default.actor,
