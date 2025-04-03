@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    uses: evolution-gaming/scala-github-actions/.github/workflows/release.yml@feature/configurable-sbt-cmds
+    uses: evolution-gaming/scala-github-actions/.github/workflows/release.yml@v4
     secrets: inherit
     with:
       # override sbt commands so they don't use "+" because the project uses mixed Scala versions
