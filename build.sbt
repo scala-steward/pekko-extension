@@ -4,7 +4,7 @@ lazy val commonSettings = Seq(
   organization         := "com.evolutiongaming",
   organizationName     := "Evolution",
   organizationHomepage := Some(url("http://evolution.com")),
-  homepage             := Some(url("http://github.com/evolution-gaming/akka-effect")),
+  homepage             := Some(url("http://github.com/evolution-gaming/pekko-effect")),
   startYear            := Some(2019),
   scalaVersion         := "2.13.16",
   Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings"),
@@ -31,7 +31,7 @@ val alias: Seq[sbt.Def.Setting[_]] =
 
 lazy val root = project
   .in(file("."))
-  .settings(name := "akka-effect")
+  .settings(name := "pekko-effect")
   .settings(commonSettings)
   .settings(publish / skip := true)
   .settings(alias)
@@ -48,13 +48,13 @@ lazy val root = project
 
 lazy val actor = project
   .in(file("actor"))
-  .settings(name := "akka-effect-actor")
+  .settings(name := "pekko-effect-actor")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      Akka.actor,
-      Akka.slf4j   % Test,
-      Akka.testkit % Test,
+      Pekko.actor,
+      Pekko.slf4j   % Test,
+      Pekko.testkit % Test,
       Cats.core,
       CatsEffect.effect,
       Logback.classic          % Test,
@@ -68,31 +68,31 @@ lazy val actor = project
 
 lazy val `actor-tests` = project
   .in(file("actor-tests"))
-  .settings(name := "akka-effect-actor-tests")
+  .settings(name := "pekko-effect-actor-tests")
   .settings(commonSettings)
   .settings(publish / skip := true)
   .dependsOn(actor % "test->test;compile->compile", testkit % "test->test;test->compile")
   .settings(
     libraryDependencies ++= Seq(
-      Akka.testkit % Test,
+      Pekko.testkit % Test,
     ),
   )
 
 lazy val testkit = project
   .in(file("testkit"))
-  .settings(name := "akka-effect-testkit")
+  .settings(name := "pekko-effect-testkit")
   .settings(commonSettings)
   .dependsOn(actor)
   .settings(
     libraryDependencies ++= Seq(
-      Akka.testkit % Test,
+      Pekko.testkit % Test,
       scalatest    % Test,
     ),
   )
 
 lazy val `persistence-api` = project
   .in(file("persistence-api"))
-  .settings(name := "akka-effect-persistence-api")
+  .settings(name := "pekko-effect-persistence-api")
   .settings(commonSettings)
   .dependsOn(
     actor         % "test->test;compile->compile",
@@ -105,15 +105,15 @@ lazy val `persistence-api` = project
       CatsEffect.effect,
       `cats-helper`,
       sstream,
-      Akka.slf4j   % Test,
-      Akka.testkit % Test,
+      Pekko.slf4j   % Test,
+      Pekko.testkit % Test,
       scalatest    % Test,
     ),
   )
 
 lazy val persistence = project
   .in(file("persistence"))
-  .settings(name := "akka-effect-persistence")
+  .settings(name := "pekko-effect-persistence")
   .settings(commonSettings)
   .dependsOn(
     `persistence-api` % "test->test;compile->compile",
@@ -123,49 +123,49 @@ lazy val persistence = project
   )
   .settings(
     libraryDependencies ++= Seq(
-      Akka.actor,
-      Akka.stream,
-      Akka.persistence,
-      Akka.`persistence-query`,
-      Akka.slf4j   % Test,
-      Akka.testkit % Test,
+      Pekko.actor,
+      Pekko.stream,
+      Pekko.persistence,
+      Pekko.`persistence-query`,
+      Pekko.slf4j   % Test,
+      Pekko.testkit % Test,
       Cats.core,
       CatsEffect.effect,
       `cats-helper`,
       pureconfig,
       smetrics,
       scalatest                   % Test,
-      `akka-persistence-inmemory` % Test,
+      `pekko-persistence-inmemory` % Test,
     ),
   )
 
 lazy val eventsourcing = project
   .in(file("eventsourcing"))
-  .settings(name := "akka-effect-eventsourcing")
+  .settings(name := "pekko-effect-eventsourcing")
   .settings(commonSettings)
   .dependsOn(persistence % "test->test;compile->compile")
   .settings(
     libraryDependencies ++= Seq(
-      Akka.stream,
+      Pekko.stream,
       retry,
     ),
   )
 
 lazy val cluster = project
   .in(file("cluster"))
-  .settings(name := "akka-effect-cluster")
+  .settings(name := "pekko-effect-cluster")
   .settings(commonSettings)
   .dependsOn(actor % "test->test;compile->compile", testkit % "test->test;test->compile", `actor-tests` % "test->test")
   .settings(
     libraryDependencies ++= Seq(
-      Akka.cluster,
+      Pekko.cluster,
       pureconfig,
     ),
   )
 
 lazy val `cluster-sharding` = project
   .in(file("cluster-sharding"))
-  .settings(name := "akka-effect-cluster-sharding")
+  .settings(name := "pekko-effect-cluster-sharding")
   .settings(commonSettings)
   .dependsOn(
     cluster     % "test->test;compile->compile",
@@ -173,6 +173,6 @@ lazy val `cluster-sharding` = project
   )
   .settings(
     libraryDependencies ++= Seq(
-      Akka.`cluster-sharding`,
+      Pekko.`cluster-sharding`,
     ),
   )

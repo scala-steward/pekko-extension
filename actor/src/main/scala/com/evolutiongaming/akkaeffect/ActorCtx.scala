@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{ActorContext, ActorRef, ActorRefFactory}
+import org.apache.pekko.actor.{ActorContext, ActorRef, ActorRefFactory}
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Monad, ~>}
@@ -11,57 +11,57 @@ import scala.concurrent.duration.Duration
 /** Refined for [[ActorContext]]. Unlike the original ActorContext, all methods of ActorCtx are thread-safe
   *
   * @see
-  *   [[akka.actor.ActorContext]]
+  *   [[org.apache.pekko.actor.ActorContext]]
   */
 trait ActorCtx[F[_]] {
 
   /** @see
-    *   [[akka.actor.ActorContext.self]]
+    *   [[org.apache.pekko.actor.ActorContext.self]]
     */
   def self: ActorRef
 
   /** @see
-    *   [[akka.actor.ActorContext.parent]]
+    *   [[org.apache.pekko.actor.ActorContext.parent]]
     */
   def parent: ActorRef
 
   /** @see
-    *   [[akka.actor.ActorContext.dispatcher]]
+    *   [[org.apache.pekko.actor.ActorContext.dispatcher]]
     */
   def executor: ExecutionContextExecutor
 
   /** @see
-    *   [[akka.actor.ActorContext.setReceiveTimeout]]
+    *   [[org.apache.pekko.actor.ActorContext.setReceiveTimeout]]
     */
   def setReceiveTimeout(timeout: Duration): F[Unit]
 
   /** @see
-    *   [[akka.actor.ActorContext.child]]
+    *   [[org.apache.pekko.actor.ActorContext.child]]
     */
   def child(name: String): F[Option[ActorRef]]
 
   /** @see
-    *   [[akka.actor.ActorContext.children]]
+    *   [[org.apache.pekko.actor.ActorContext.children]]
     */
   def children: F[List[ActorRef]]
 
   /** @see
-    *   [[akka.actor.ActorContext.actorOf]]
+    *   [[org.apache.pekko.actor.ActorContext.actorOf]]
     */
   def actorRefFactory: ActorRefFactory
 
   /** @see
-    *   [[akka.actor.ActorContext.watchWith]]
+    *   [[org.apache.pekko.actor.ActorContext.watchWith]]
     */
   def watch[A](actorRef: ActorRef, msg: A): F[Unit]
 
   /** @see
-    *   [[akka.actor.ActorContext.unwatch]]
+    *   [[org.apache.pekko.actor.ActorContext.unwatch]]
     */
   def unwatch(actorRef: ActorRef): F[Unit]
 
   /** @see
-    *   [[akka.actor.ActorContext.stop]]
+    *   [[org.apache.pekko.actor.ActorContext.stop]]
     */
   def stop: F[Unit]
 }

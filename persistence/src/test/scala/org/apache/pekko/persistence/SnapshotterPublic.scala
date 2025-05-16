@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 
 trait SnapshotterPublic extends Snapshotter {
   def snapshotStore: ActorRef

@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.persistence.DeleteEventsToInterop
+import org.apache.pekko.persistence.DeleteEventsToInterop
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import cats.{Applicative, FlatMap, ~>}
@@ -10,7 +10,7 @@ import com.evolutiongaming.catshelper.{FromFuture, Log, MeasureDuration, MonadTh
 import scala.concurrent.duration.FiniteDuration
 
 /** @see
-  *   [[akka.persistence.Eventsourced.deleteMessages]]
+  *   [[org.apache.pekko.persistence.Eventsourced.deleteMessages]]
   */
 trait DeleteEventsTo[F[_]] {
 
@@ -32,7 +32,7 @@ object DeleteEventsTo {
   }
 
   private[akkaeffect] def of[F[_]: Sync: FromFuture, A](
-    persistentActor: akka.persistence.PersistentActor,
+    persistentActor: org.apache.pekko.persistence.PersistentActor,
     timeout: FiniteDuration,
   ): Resource[F, DeleteEventsTo[F]] =
     DeleteEventsToInterop(persistentActor, timeout)

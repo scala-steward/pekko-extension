@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, SaveSnapshot}
+import org.apache.pekko.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, SaveSnapshot}
 
 object SnapshotProtocolPublic {
 

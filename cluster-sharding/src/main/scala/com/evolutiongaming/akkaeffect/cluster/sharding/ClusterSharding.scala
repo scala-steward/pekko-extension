@@ -1,9 +1,9 @@
 package com.evolutiongaming.akkaeffect.cluster.sharding
 
-import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import akka.cluster.sharding.ShardRegion.*
-import akka.cluster.sharding.{ClusterShardingSettings, ShardRegion}
+import org.apache.pekko.actor.{ActorRef, ActorSystem, Props}
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.*
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.implicits.*
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
@@ -19,7 +19,7 @@ import scala.concurrent.duration.*
 trait ClusterSharding[F[_]] {
 
   /** @see
-    *   [[akka.cluster.sharding.ClusterSharding.start]]
+    *   [[org.apache.pekko.cluster.sharding.ClusterSharding.start]]
     */
   def start[A](
     typeName: TypeName,
@@ -32,7 +32,7 @@ trait ClusterSharding[F[_]] {
   ): Resource[F, ActorRef]
 
   /** @see
-    *   [[akka.cluster.sharding.ClusterSharding.startProxy]]
+    *   [[org.apache.pekko.cluster.sharding.ClusterSharding.startProxy]]
     */
   def startProxy(
     typeName: TypeName,
@@ -47,7 +47,7 @@ trait ClusterSharding[F[_]] {
   def shards(typeName: TypeName): F[Set[ShardState]]
 
   /** @see
-    *   [[akka.cluster.sharding.ClusterSharding.shardRegion]]
+    *   [[org.apache.pekko.cluster.sharding.ClusterSharding.shardRegion]]
     */
   def shardRegion(typeName: TypeName): F[ActorRef]
 }
@@ -78,7 +78,7 @@ object ClusterSharding {
       }
 
     for {
-      clusterSharding <- Sync[F].delay(akka.cluster.sharding.ClusterSharding(actorSystem)).toResource
+      clusterSharding <- Sync[F].delay(org.apache.pekko.cluster.sharding.ClusterSharding(actorSystem)).toResource
     } yield new ClusterSharding[F] {
 
       def start[A](

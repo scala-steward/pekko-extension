@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{ActorPath, ActorRef, Props}
+import org.apache.pekko.actor.{ActorPath, ActorRef, Props}
 import cats.effect.{Async, Resource, Sync}
 import cats.{Applicative, FlatMap, ~>}
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
@@ -8,7 +8,7 @@ import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
 /** Typesafe api for ActorRef
   *
   * @see
-  *   [[akka.actor.ActorRef]]
+  *   [[org.apache.pekko.actor.ActorRef]]
   * @tparam A
   *   message
   * @tparam B
@@ -17,17 +17,17 @@ import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
 trait ActorEffect[F[_], -A, B] {
 
   /** @see
-    *   [[akka.actor.ActorRef.path]]
+    *   [[org.apache.pekko.actor.ActorRef.path]]
     */
   def path: ActorPath
 
   /** @see
-    *   [[akka.pattern.ask]]
+    *   [[org.apache.pekko.pattern.ask]]
     */
   def ask: Ask[F, A, B]
 
   /** @see
-    *   [[akka.actor.ActorRef.tell]]
+    *   [[org.apache.pekko.actor.ActorRef.tell]]
     */
   def tell: Tell[F, A]
 

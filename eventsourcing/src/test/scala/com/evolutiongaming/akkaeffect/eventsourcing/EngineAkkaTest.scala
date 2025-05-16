@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.eventsourcing
 
-import akka.stream.SystemMaterializer
+import org.apache.pekko.stream.SystemMaterializer
 import cats.effect.*
 import cats.effect.implicits.effectResourceOps
 import com.evolutiongaming.akkaeffect.ActorSuite

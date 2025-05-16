@@ -1,7 +1,7 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import akka.persistence.JournalProtocol.DeleteMessagesTo
+import org.apache.pekko.actor.{Actor, ActorRef, ActorSystem, Props}
+import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 import cats.effect.implicits.effectResourceOps
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Async, Deferred, IO, Sync}

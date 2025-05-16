@@ -1,7 +1,7 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.actor.{ActorContext, ActorRef}
-import akka.persistence.JournalProtocol.DeleteMessagesTo
+import org.apache.pekko.actor.{ActorContext, ActorRef}
+import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect.persistence.{DeleteEventsTo, SeqNr}

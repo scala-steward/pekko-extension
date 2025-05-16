@@ -8,7 +8,7 @@ import scala.reflect.ClassTag
 
 /** Capability to convert `Any` to specific type.
   *
-  * The class is useful in the context of untyped Akka to represent the conversion from `Any` coming to an actor to a
+  * The class is useful in the context of untyped Pekko to represent the conversion from `Any` coming to an actor to a
   * useful type.
   *
   * While it is not necessary to use it, it provides some useful smart constructors out of the box.

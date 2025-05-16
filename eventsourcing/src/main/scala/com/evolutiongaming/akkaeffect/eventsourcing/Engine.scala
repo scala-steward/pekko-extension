@@ -1,8 +1,8 @@
 package com.evolutiongaming.akkaeffect.eventsourcing
 
-import akka.actor.ActorSystem
-import akka.stream.*
-import akka.stream.scaladsl.{Sink, Source}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.*
+import org.apache.pekko.stream.scaladsl.{Sink, Source}
 import cats.data.NonEmptyList as Nel
 import cats.effect.*
 import cats.effect.implicits.*

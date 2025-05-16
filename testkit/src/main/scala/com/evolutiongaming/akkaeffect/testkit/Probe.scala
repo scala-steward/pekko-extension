@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.testkit
 
-import akka.actor.{ActorRef, Props}
+import org.apache.pekko.actor.{ActorRef, Props}
 import cats.effect.implicits.effectResourceOps
 import cats.effect.kernel.Deferred
 import cats.effect.{Async, Ref, Resource, Sync}

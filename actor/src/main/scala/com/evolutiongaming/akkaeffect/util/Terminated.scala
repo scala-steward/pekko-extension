@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.util
 
-import akka.actor.{Actor, ActorRef, Props}
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
 import cats.effect.Concurrent
 import cats.effect.kernel.Deferred
 import cats.syntax.all.*
@@ -33,7 +33,7 @@ object Terminated {
               }
 
               def receive = {
-                case akka.actor.Terminated(`actorRef`) =>
+                case org.apache.pekko.actor.Terminated(`actorRef`) =>
                   deferred
                     .complete(())
                     .toFuture

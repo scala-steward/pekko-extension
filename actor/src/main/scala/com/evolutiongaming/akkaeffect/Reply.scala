@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorRef
-import akka.actor.Status.Status
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.actor.Status.Status
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, Contravariant, FlatMap, ~>}

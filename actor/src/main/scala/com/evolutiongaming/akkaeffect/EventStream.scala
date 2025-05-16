@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{ActorRef, ActorRefFactory, ActorSystem, Props}
+import org.apache.pekko.actor.{ActorRef, ActorRefFactory, ActorSystem, Props}
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.ToFuture
@@ -20,7 +20,7 @@ object EventStream {
     apply(actorSystem.eventStream, actorSystem)
 
   def apply[F[_]: Async: ToFuture](
-    eventStream: akka.event.EventStream,
+    eventStream: org.apache.pekko.event.EventStream,
     refFactory: ActorRefFactory,
   ): EventStream[F] = {
 

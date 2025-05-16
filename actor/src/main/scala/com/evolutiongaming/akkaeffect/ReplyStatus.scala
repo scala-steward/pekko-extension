@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.Status.Status
-import akka.actor.{ActorRef, Status}
+import org.apache.pekko.actor.Status.Status
+import org.apache.pekko.actor.{ActorRef, Status}
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Contravariant, FlatMap, ~>}
@@ -9,7 +9,7 @@ import cats.{Contravariant, FlatMap, ~>}
 /** Typesafe api for replying part of "ask pattern" in conjunction with `Status`
   *
   * @see
-  *   [[akka.actor.Status]]
+  *   [[org.apache.pekko.actor.Status]]
   * @tparam A
   *   reply
   */

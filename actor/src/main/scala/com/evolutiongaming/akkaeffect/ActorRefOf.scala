@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{ActorRef, ActorRefFactory, Props}
+import org.apache.pekko.actor.{ActorRef, ActorRefFactory, Props}
 import cats.effect.kernel.MonadCancel
 import cats.effect.{Resource, Sync}
 import cats.~>
@@ -8,7 +8,7 @@ import cats.~>
 /** Resource-full api for ActorRefFactory
   *
   * @see
-  *   [[akka.actor.ActorRefFactory]]
+  *   [[org.apache.pekko.actor.ActorRefFactory]]
   */
 trait ActorRefOf[F[_]] {
 

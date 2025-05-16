@@ -1,9 +1,9 @@
 package com.evolutiongaming.akkaeffect.cluster.sharding
 
-import akka.actor.*
-import akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import akka.cluster.sharding.ShardRegion.{ShardId, ShardState}
-import akka.cluster.sharding.{ClusterShardingSettings, ShardRegion}
+import org.apache.pekko.actor.*
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.syntax.resource.*
 import cats.effect.{Async, Ref, Resource}
 import cats.syntax.all.*
@@ -122,7 +122,7 @@ object ClusterShardingLocal {
                     .getOrElse(context.watch(context.actorOf(props, entityName)))
                     .forward(msg)
 
-                case _: akka.actor.Terminated =>
+                case _: org.apache.pekko.actor.Terminated =>
                   // stop itself when all children are stopped
                   if (context.children.isEmpty) {
                     context.stop(self)

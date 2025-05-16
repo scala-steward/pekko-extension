@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.eventsourcing
 
-import akka.persistence.SnapshotSelectionCriteria
+import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.Monad
 import cats.effect.*
 import cats.syntax.all.*

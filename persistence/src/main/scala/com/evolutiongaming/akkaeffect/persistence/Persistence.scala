@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Ref, Resource, Sync}
 import cats.syntax.all.*

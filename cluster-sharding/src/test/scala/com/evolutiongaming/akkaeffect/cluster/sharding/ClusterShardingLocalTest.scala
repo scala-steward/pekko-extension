@@ -1,9 +1,9 @@
 package com.evolutiongaming.akkaeffect.cluster.sharding
 
-import akka.actor.{Actor, ActorRef, Props}
-import akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import akka.cluster.sharding.ShardRegion.{ShardId, ShardState}
-import akka.cluster.sharding.{ClusterShardingSettings, ShardRegion}
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.evolutiongaming.akkaeffect.IOSuite.*
@@ -42,7 +42,7 @@ class ClusterShardingLocalTest extends AsyncFunSuite with ActorSuite with Matche
       }
     }
 
-    // Allocation strategy that doesn't use ActorSystem and Cluster extension (as opposed to Akka built-in strategies)
+    // Allocation strategy that doesn't use ActorSystem and Cluster extension (as opposed to Pekko built-in strategies)
     val noopAllocationStrategy = new ShardAllocationStrategy {
       override def allocateShard(
         requester: ActorRef,

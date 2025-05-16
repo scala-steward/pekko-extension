@@ -5,7 +5,7 @@ object Dependencies {
   val scalatest                   = "org.scalatest"         %% "scalatest"                 % "3.2.19"
   val `cats-helper`               = "com.evolutiongaming"   %% "cats-helper"               % "3.12.0"
   val retry                       = "com.evolutiongaming"   %% "retry"                     % "3.1.0"
-  val `akka-persistence-inmemory` = "com.github.dnvriend"   %% "akka-persistence-inmemory" % "2.5.15.2"
+  val `pekko-persistence-inmemory` = "io.github.alstanchev" %% "pekko-persistence-inmemory" % "1.3.0"
   val `kind-projector`            = "org.typelevel"          % "kind-projector"            % "0.13.3"
   val pureconfig                  = "com.github.pureconfig" %% "pureconfig"                % "0.17.8"
   val smetrics                    = "com.evolutiongaming"   %% "smetrics"                  % "2.3.1"
@@ -21,16 +21,16 @@ object Dependencies {
     val effect          = "org.typelevel" %% "cats-effect" % version
   }
 
-  object Akka {
-    private val version     = "2.6.21"
-    val actor               = "com.typesafe.akka" %% "akka-actor"             % version
-    val testkit             = "com.typesafe.akka" %% "akka-testkit"           % version
-    val stream              = "com.typesafe.akka" %% "akka-stream"            % version
-    val persistence         = "com.typesafe.akka" %% "akka-persistence"       % version
-    val `persistence-query` = "com.typesafe.akka" %% "akka-persistence-query" % version
-    val cluster             = "com.typesafe.akka" %% "akka-cluster"           % version
-    val `cluster-sharding`  = "com.typesafe.akka" %% "akka-cluster-sharding"  % version
-    val slf4j               = "com.typesafe.akka" %% "akka-slf4j"             % version
+  object Pekko {
+    private val version = "1.1.3"
+    val actor               = "org.apache.pekko" %% "pekko-actor"             % version
+    val testkit             = "org.apache.pekko" %% "pekko-testkit"           % version
+    val stream              = "org.apache.pekko" %% "pekko-stream"            % version
+    val persistence         = "org.apache.pekko" %% "pekko-persistence"       % version
+    val `persistence-query` = "org.apache.pekko" %% "pekko-persistence-query" % version
+    val cluster             = "org.apache.pekko" %% "pekko-cluster"           % version
+    val `cluster-sharding`  = "org.apache.pekko" %% "pekko-cluster-sharding"  % version
+    val slf4j               = "org.apache.pekko" %% "pekko-slf4j"             % version
   }
 
   object Logback {

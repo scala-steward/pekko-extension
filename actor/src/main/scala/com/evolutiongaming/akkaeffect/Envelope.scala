@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 import cats.Functor
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.CatsHelper.*

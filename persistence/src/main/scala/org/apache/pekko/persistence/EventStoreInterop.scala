@@ -1,4 +1,4 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
 import cats.effect.syntax.all.*
 import cats.effect.{Async, Sync}
@@ -19,24 +19,24 @@ object EventStoreInterop {
       )
       with NoStackTrace
 
-  /** Create instance of [[EventStore]] that uses Akka Persistence journal plugin under the hood.
+  /** Create instance of [[EventStore]] that uses Pekko Persistence journal plugin under the hood.
     *
     * Journal plugin uses "push" model to recover events (i.e. read events from underline DB) while [[EventStore]]
     * provides "pull" API via [[sstream.Stream]]. To overcome this limitation, the interop uses internal buffer to hold
-    * events provided by Akka' journal plugin before they will be consumed (i.e. deleted from buffer) as
+    * events provided by Pekko' journal plugin before they will be consumed (i.e. deleted from buffer) as
     * [[EventStore.events]] stream. The output stream is lazy by itself and actual event consumption from the buffer
     * will happened only on the stream materialization.
     *
     * @param persistence
-    *   Akka persistence [[Persistence]]
+    *   Pekko persistence [[Persistence]]
     * @param timeout
-    *   maximum time between messages from Akka' journal plugin (is the next message expected)
+    *   maximum time between messages from Pekko' journal plugin (is the next message expected)
     * @param capacity
     *   internal event buffer capacity, on overflow will raise [[BufferOverflowException]]
     * @param journalPluginId
-    *   Akka persistence journal plugin ID
+    *   Pekko persistence journal plugin ID
     * @param eventSourcedId
-    *   Akka persistence ID, unique per each actor
+    *   Pekko persistence ID, unique per each actor
     * @return
     *   instance of [[EventStore]]
     */
@@ -166,7 +166,7 @@ object EventStoreInterop {
             persistentActor = actor.ref,
           )
           _ <- journaller.tell(request)
-          _ <- log.debug("recovery: events from Akka persistence requested")
+          _ <- log.debug("recovery: events from Pekko persistence requested")
         } yield new sstream.Stream[F, EventStore.Persisted[Any]] {
 
           override def foldWhileM[L, R](l: L)(f: (L, EventStore.Persisted[Any]) => F[Either[L, R]]): F[Either[L, R]] = {

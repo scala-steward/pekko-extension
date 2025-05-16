@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.ActorRef
-import akka.persistence.{Recovery, SnapshotSelectionCriteria}
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.persistence.{Recovery, SnapshotSelectionCriteria}
 import cats.effect.{Ref, Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect.*

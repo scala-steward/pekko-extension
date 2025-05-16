@@ -1,9 +1,9 @@
 package com.evolutiongaming.akkaeffect.cluster.sharding
 
-import akka.actor.{Actor, Props}
-import akka.cluster.sharding.ClusterShardingSettings
-import akka.cluster.sharding.ShardCoordinator.LeastShardAllocationStrategy
-import akka.cluster.sharding.ShardRegion.Msg
+import org.apache.pekko.actor.{Actor, Props}
+import org.apache.pekko.cluster.sharding.ClusterShardingSettings
+import org.apache.pekko.cluster.sharding.ShardCoordinator.LeastShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.Msg
 import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, Resource}
 import cats.syntax.all.*

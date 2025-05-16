@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.Actor
-import akka.persistence.SnapshotSelectionCriteria
+import org.apache.pekko.actor.Actor
+import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Concurrent, Ref, Resource}
 import cats.syntax.all.*

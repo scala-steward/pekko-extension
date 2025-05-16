@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorContext
+import org.apache.pekko.actor.ActorContext
 import cats.effect.*
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect.util.Serially

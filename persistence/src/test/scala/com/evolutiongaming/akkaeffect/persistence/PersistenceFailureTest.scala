@@ -1,8 +1,8 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.Props
-import akka.persistence.journal.AsyncWriteJournal
-import akka.persistence.{AtomicWrite, PersistentRepr}
+import org.apache.pekko.actor.Props
+import org.apache.pekko.persistence.journal.AsyncWriteJournal
+import org.apache.pekko.persistence.{AtomicWrite, PersistentRepr}
 import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, Resource}
 import cats.syntax.all.*

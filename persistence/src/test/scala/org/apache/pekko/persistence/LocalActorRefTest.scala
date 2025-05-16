@@ -1,4 +1,4 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global

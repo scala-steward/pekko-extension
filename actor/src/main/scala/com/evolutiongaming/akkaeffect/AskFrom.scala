@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{Actor, ActorRef, Props}
-import akka.util.Timeout
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
+import org.apache.pekko.util.Timeout
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.FromFuture
@@ -39,7 +39,7 @@ object AskFrom {
       new AskFrom[F] {
         def apply[A, B: ClassTag](to: ActorRef)(f: ActorRef => A) =
           Sync[F]
-            .delay(akka.pattern.ask(actorRef, Msg(to, f), from)(timeout1))
+            .delay(org.apache.pekko.pattern.ask(actorRef, Msg(to, f), from)(timeout1))
             .map(future => FromFuture[F].apply(future.mapTo[B]))
       }
     }

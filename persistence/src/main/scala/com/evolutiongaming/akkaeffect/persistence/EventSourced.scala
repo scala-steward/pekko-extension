@@ -1,15 +1,15 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.persistence.Recovery
+import org.apache.pekko.persistence.Recovery
 import cats.syntax.all.*
 import cats.{Functor, Show}
 
 /** @param eventSourcedId
-  *   \@see [[akka.persistence.PersistentActor.persistenceId]]
+  *   \@see [[org.apache.pekko.persistence.PersistentActor.persistenceId]]
   * @param recovery
-  *   \@see [[akka.persistence.PersistentActor.recovery]]
+  *   \@see [[org.apache.pekko.persistence.PersistentActor.recovery]]
   * @param pluginIds
-  *   \@see [[akka.persistence.PersistentActor.journalPluginId]]
+  *   \@see [[org.apache.pekko.persistence.PersistentActor.journalPluginId]]
   * @param value
   *   usually something used to construct instance of an actor
   */

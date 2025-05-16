@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Contravariant, FlatMap, Functor, Monad, ~>}
@@ -8,7 +8,7 @@ import cats.{Contravariant, FlatMap, Functor, Monad, ~>}
 /** Api for Actor.receive
   *
   * @see
-  *   [[akka.actor.Actor.receive]]
+  *   [[org.apache.pekko.actor.Actor.receive]]
   * @tparam A
   *   message
   * @tparam B
@@ -22,7 +22,7 @@ trait Receive[F[_], -A, B] {
   def apply(msg: A): F[B]
 
   /** @see
-    *   [[akka.actor.ReceiveTimeout]]
+    *   [[org.apache.pekko.actor.ReceiveTimeout]]
     */
   def timeout: F[B]
 }

@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.testkit
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*

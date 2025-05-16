@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorSystem
-import akka.testkit.TestActors
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.testkit.TestActors
 import cats.arrow.FunctionK
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Async, IO, Sync}

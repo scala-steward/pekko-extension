@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.util
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import cats.effect.implicits.*
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Async, IO, Resource}

@@ -1,8 +1,8 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.ReceiveTimeout
-import akka.persistence as ap
-import akka.persistence.{PersistentActor, RecoveryCompleted}
+import org.apache.pekko.actor.ReceiveTimeout
+import org.apache.pekko.persistence as ap
+import org.apache.pekko.persistence.{PersistentActor, RecoveryCompleted}
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*

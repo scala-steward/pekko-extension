@@ -25,7 +25,7 @@ trait Recovering[F[_], S, E, +A] {
   /** Called when recovery completed, resource will be released upon actor termination
     *
     * @see
-    *   [[akka.persistence.RecoveryCompleted]]
+    *   [[org.apache.pekko.persistence.RecoveryCompleted]]
     */
   @deprecated("Use completed with RecoveryContext", "4.1.5")
   def completed(
@@ -37,7 +37,7 @@ trait Recovering[F[_], S, E, +A] {
   /** Called when recovery completed, resource will be released upon actor termination
     *
     * @see
-    *   [[akka.persistence.RecoveryCompleted]]
+    *   [[org.apache.pekko.persistence.RecoveryCompleted]]
     */
   def completed(context: Recovering.RecoveryContext[F, S, E]): Resource[F, A] = {
     @nowarn("msg=deprecated")

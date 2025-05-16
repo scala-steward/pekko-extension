@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.persistence.*
+import org.apache.pekko.persistence.*
 import cats.effect.kernel.Async
 import cats.effect.{Deferred, Resource, Sync}
 import cats.implicits.*
@@ -13,7 +13,7 @@ import com.evolutiongaming.catshelper.{Log, MeasureDuration, MonadThrowable, ToF
 import scala.collection.immutable.Queue
 
 /** @see
-  *   [[akka.persistence.PersistentActor.persistAllAsync]]
+  *   [[org.apache.pekko.persistence.PersistentActor.persistAllAsync]]
   */
 trait Append[F[_], -A] {
 

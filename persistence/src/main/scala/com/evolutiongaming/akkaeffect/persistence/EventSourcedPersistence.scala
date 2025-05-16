@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.ActorSystem
-import akka.persistence.{EventStoreInterop, SnapshotStoreInterop}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.persistence.{EventStoreInterop, SnapshotStoreInterop}
 import cats.effect.Async
 import com.evolutiongaming.catshelper.{FromFuture, LogOf, ToTry}
 
@@ -23,7 +23,7 @@ object EventSourcedPersistence {
     capacity: Int,
   ): EventSourcedPersistence[F, Any, Any] = new EventSourcedPersistence[F, Any, Any] {
 
-    val persistence = akka.persistence.Persistence(system)
+    val persistence = org.apache.pekko.persistence.Persistence(system)
 
     override def snapshotStore(eventSourced: EventSourced[_]): F[SnapshotStore[F, Any]] = {
       val pluginId = eventSourced.pluginIds.snapshot.getOrElse("")

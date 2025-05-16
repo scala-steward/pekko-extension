@@ -1,8 +1,8 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.{ActorIdentity, ActorRef, ActorSystem, Identify}
-import akka.persistence.Recovery
-import akka.testkit.TestActors
+import org.apache.pekko.actor.{ActorIdentity, ActorRef, ActorSystem, Identify}
+import org.apache.pekko.persistence.Recovery
+import org.apache.pekko.testkit.TestActors
 import cats.data.NonEmptyList as Nel
 import cats.effect.*
 import cats.effect.kernel.Ref
@@ -165,7 +165,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       for {
         terminated0 <- probe.watch(actorRef.toUnsafe)
         dispatcher  <- withCtx(_.executor.pure[F])
-        _           <- Sync[F].delay(dispatcher.toString shouldEqual "Dispatcher[akka.actor.default-dispatcher]")
+        _           <- Sync[F].delay(dispatcher.toString shouldEqual "Dispatcher[pekko.actor.default-dispatcher]")
         a <- withCtx { ctx =>
           ActorRefOf
             .fromActorRefFactory[F](ctx.actorRefFactory)
@@ -333,7 +333,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       saveSnapshot <- actions
       _ = saveSnapshot shouldEqual List(
-        Action.Created(EventSourcedId("1"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("1"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.AppendEvents(Events.of(0L)),
@@ -349,7 +349,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       )
       recover <- actions
       _ = recover shouldEqual List(
-        Action.Created(EventSourcedId("1"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("1"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(1L, SnapshotOffer(SnapshotMetadata(1, Instant.ofEpochMilli(0)), 1).some),
         Action.AppendEvents(Events.of(0L)),
@@ -421,7 +421,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       saveSnapshot <- actions
       _ = saveSnapshot shouldEqual List(
-        Action.Created(EventSourcedId("6"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("6"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.AppendEvents(Events.of(0L)),
@@ -443,7 +443,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       )
       recover <- actions
       _ = recover shouldEqual List(
-        Action.Created(EventSourcedId("6"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("6"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(1L, SnapshotOffer(SnapshotMetadata(1, Instant.ofEpochMilli(0)), 1).some),
         Action.AppendEvents(Events.of(0L)),
@@ -518,7 +518,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       appendEvents <- actions
       _ = appendEvents shouldEqual List(
-        Action.Created(EventSourcedId("2"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("2"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.AppendEvents(Events.batched(Nel.of(0, 1), Nel.of(2))),
@@ -531,7 +531,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       )
       recover <- actions
       _ = recover shouldEqual List(
-        Action.Created(EventSourcedId("2"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("2"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReplayAllocated,
@@ -605,7 +605,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       appendEvents <- actions
       _ = appendEvents shouldEqual List(
-        Action.Created(EventSourcedId("7"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("7"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.AppendEvents(Events.of(0)),
@@ -627,7 +627,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       )
       recover <- actions
       _ = recover shouldEqual List(
-        Action.Created(EventSourcedId("7"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("7"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReplayAllocated,
@@ -709,7 +709,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       write <- actions
       _ = write shouldEqual List(
-        Action.Created(EventSourcedId("3"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("3"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.AppendEvents(Events.of(0)),
@@ -728,7 +728,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       )
       recover <- actions
       _ = recover shouldEqual List(
-        Action.Created(EventSourcedId("3"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("3"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(1L, SnapshotOffer(SnapshotMetadata(1, Instant.ofEpochMilli(0)), 1).some),
         Action.ReplayAllocated,
@@ -807,7 +807,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       _       <- stopped.get
       actions <- actions.get
       _ = actions.reverse shouldEqual List(
-        Action.Created(EventSourcedId("10"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("10"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReceiveAllocated(0),
@@ -871,7 +871,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       _       <- Async[F].sleep(10.millis) // Make sure all actions are performed first
       actions <- actions.get
       _ = actions.reverse shouldEqual List(
-        Action.Created(EventSourcedId("4"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("4"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReceiveAllocated(0),
@@ -935,7 +935,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
       _       <- Async[F].sleep(10.millis) // Make sure all actions are performed first
       actions <- actions.get
       _ = actions.reverse shouldEqual List(
-        Action.Created(EventSourcedId("5"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("5"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReceiveAllocated(0),
@@ -1029,7 +1029,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     for {
       a <- actions
       _ = a shouldEqual List(
-        Action.Created(EventSourcedId("8"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("8"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
       ) ++
@@ -1037,7 +1037,7 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
         List(Action.ReceiveAllocated(0), Action.ReceiveReleased, Action.RecoveryReleased, Action.Released)
       a <- actions
       _ = a shouldEqual List(
-        Action.Created(EventSourcedId("8"), akka.persistence.Recovery(), PluginIds.Empty),
+        Action.Created(EventSourcedId("8"), org.apache.pekko.persistence.Recovery(), PluginIds.Empty),
         Action.Started,
         Action.RecoveryAllocated(0L, none),
         Action.ReplayAllocated,

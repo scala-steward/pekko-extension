@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.actor.{ActorPath, ActorRef, ActorRefProvider, MinimalActorRef}
+import org.apache.pekko.actor.{ActorPath, ActorRef, ActorRefProvider, MinimalActorRef}
 import cats.effect.syntax.all.*
 import cats.effect.{Async, Deferred, Sync, Temporal}
 import cats.syntax.all.*

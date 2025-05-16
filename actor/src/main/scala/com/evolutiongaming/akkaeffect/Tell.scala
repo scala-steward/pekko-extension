@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, Contravariant, FlatMap, ~>}
@@ -8,7 +8,7 @@ import cats.{Applicative, Contravariant, FlatMap, ~>}
 /** Typesafe api for ActorRef.tell
   *
   * @see
-  *   [[akka.actor.ActorRef.tell]]
+  *   [[org.apache.pekko.actor.ActorRef.tell]]
   * @tparam A
   *   message
   */

@@ -3,7 +3,7 @@ package com.evolutiongaming.akkaeffect.persistence
 import cats.{Order, Show}
 
 /** @see
-  *   [[akka.persistence.PersistentActor.persistenceId]]
+  *   [[org.apache.pekko.persistence.PersistentActor.persistenceId]]
   */
 final case class EventSourcedId(value: String) {
 

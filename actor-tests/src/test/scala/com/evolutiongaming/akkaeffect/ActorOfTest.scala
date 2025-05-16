@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.*
-import akka.testkit.TestActors
+import org.apache.pekko.actor.*
+import org.apache.pekko.testkit.TestActors
 import cats.effect.*
 import cats.effect.syntax.all.*
 import cats.effect.unsafe.implicits.global
@@ -95,7 +95,7 @@ class ActorOfTest extends AsyncFunSuite with ActorSuite with Matchers {
       for {
         terminated0 <- probe.watch(actorRef.toUnsafe)
         dispatcher  <- withCtx(_.executor.pure[F])
-        _            = dispatcher.toString shouldEqual "Dispatcher[akka.actor.default-dispatcher]"
+        _            = dispatcher.toString shouldEqual "Dispatcher[pekko.actor.default-dispatcher]"
         ab <- withCtx { ctx =>
           ActorRefOf
             .fromActorRefFactory[F](ctx.actorRefFactory)
@@ -564,8 +564,8 @@ class ActorOfTest extends AsyncFunSuite with ActorSuite with Matchers {
 
     // This test checks that using [[ActorCtx]] effectful methods after the actor is stopped will always terminate
 
-    import akka.pattern.ask
-    import akka.util.Timeout
+    import org.apache.pekko.pattern.ask
+    import org.apache.pekko.util.Timeout
 
     implicit val timeout: Timeout = 1.second
 

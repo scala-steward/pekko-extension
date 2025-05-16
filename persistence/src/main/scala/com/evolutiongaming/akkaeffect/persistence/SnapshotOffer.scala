@@ -2,7 +2,7 @@ package com.evolutiongaming.akkaeffect.persistence
 
 import cats.Functor
 
-/** Typesafe clone of [[akka.persistence.SnapshotOffer]]
+/** Typesafe clone of [[org.apache.pekko.persistence.SnapshotOffer]]
   */
 final case class SnapshotOffer[+A](metadata: SnapshotMetadata, snapshot: A)
 

@@ -4,9 +4,9 @@ import cats.Show
 import cats.syntax.all.*
 
 /** @param journal
-  *   \@see [[akka.persistence.PersistentActor.journalPluginId]]
+  *   \@see [[org.apache.pekko.persistence.PersistentActor.journalPluginId]]
   * @param snapshot
-  *   \@see [[akka.persistence.PersistentActor.snapshotPluginId]]
+  *   \@see [[org.apache.pekko.persistence.PersistentActor.snapshotPluginId]]
   */
 final case class PluginIds(journal: Option[String] = None, snapshot: Option[String] = None)
 

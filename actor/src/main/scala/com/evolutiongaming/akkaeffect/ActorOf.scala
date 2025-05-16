@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{Actor, ActorRef, ReceiveTimeout}
+import org.apache.pekko.actor.{Actor, ActorRef, ReceiveTimeout}
 import cats.effect.*
 import cats.effect.implicits.effectResourceOps
 import cats.syntax.all.*
@@ -9,7 +9,7 @@ import com.evolutiongaming.akkaeffect.Fail.implicits.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.ToFuture
 
-/** Creates instance of [[akka.actor.Actor]] out of [[ReceiveOf]]
+/** Creates instance of [[org.apache.pekko.actor.Actor]] out of [[ReceiveOf]]
   */
 object ActorOf {
 

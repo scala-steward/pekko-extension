@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.persistence.journal.AsyncWriteJournal
+import org.apache.pekko.persistence.journal.AsyncWriteJournal
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Deferred, IO}
 import cats.syntax.all.*

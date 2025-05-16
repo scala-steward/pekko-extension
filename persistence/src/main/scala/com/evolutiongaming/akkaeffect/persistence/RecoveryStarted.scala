@@ -20,7 +20,7 @@ trait RecoveryStarted[F[_], S, E, +A] {
   /** Called upon starting recovery, resource will be released upon actor termination
     *
     * @see
-    *   [[akka.persistence.SnapshotOffer]]
+    *   [[org.apache.pekko.persistence.SnapshotOffer]]
     */
   def apply(
     seqNr: SeqNr,

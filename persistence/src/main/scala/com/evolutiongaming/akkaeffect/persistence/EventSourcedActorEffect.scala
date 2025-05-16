@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.Props
+import org.apache.pekko.actor.Props
 import cats.effect.{Async, Resource}
 import com.evolutiongaming.akkaeffect.{ActorEffect, ActorRefOf}
 import com.evolutiongaming.catshelper.{FromFuture, LogOf, ToFuture}

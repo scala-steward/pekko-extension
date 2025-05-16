@@ -1,7 +1,7 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{ActorRef, ActorSelection}
-import akka.util.Timeout
+import org.apache.pekko.actor.{ActorRef, ActorSelection}
+import org.apache.pekko.util.Timeout
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, Contravariant, FlatMap, Functor, ~>}
@@ -12,7 +12,7 @@ import scala.concurrent.duration.FiniteDuration
 /** Typesafe api for so called "ask pattern"
   *
   * @see
-  *   [[akka.pattern.ask]]
+  *   [[org.apache.pekko.pattern.ask]]
   * @tparam A
   *   message
   * @tparam B
@@ -56,7 +56,7 @@ object Ask {
         val sender1  = sender getOrElse ActorRef.noSender
 
         Sync[F]
-          .delay(akka.pattern.ask(actorRef, msg, sender1)(timeout1))
+          .delay(org.apache.pekko.pattern.ask(actorRef, msg, sender1)(timeout1))
           .map(future => FromFuture[F].apply(future))
       }
 
@@ -73,7 +73,7 @@ object Ask {
         val timeout1 = Timeout(timeout)
         val sender1  = sender getOrElse ActorRef.noSender
         Sync[F]
-          .delay(akka.pattern.ask(actorSelection, msg, sender1)(timeout1))
+          .delay(org.apache.pekko.pattern.ask(actorSelection, msg, sender1)(timeout1))
           .map(future => FromFuture[F].apply(future))
       }
 

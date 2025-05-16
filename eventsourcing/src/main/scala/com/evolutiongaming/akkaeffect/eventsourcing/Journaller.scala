@@ -9,7 +9,7 @@ import com.evolutiongaming.catshelper.{Log, MeasureDuration}
 trait Journaller[F[_]] {
 
   /** @see
-    *   [[akka.persistence.Eventsourced.deleteMessages]]
+    *   [[org.apache.pekko.persistence.Eventsourced.deleteMessages]]
     * @return
     *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
     */

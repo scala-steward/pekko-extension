@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.actor.{ActorContext, ActorRef}
+import org.apache.pekko.actor.{ActorContext, ActorRef}
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect.*

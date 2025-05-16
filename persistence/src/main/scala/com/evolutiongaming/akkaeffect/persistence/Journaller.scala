@@ -12,12 +12,12 @@ import com.evolutiongaming.catshelper.{Log, MeasureDuration, MonadThrowable}
 trait Journaller[F[_], -A] {
 
   /** @see
-    *   [[akka.persistence.PersistentActor.persistAllAsync]]
+    *   [[org.apache.pekko.persistence.PersistentActor.persistAllAsync]]
     */
   def append: Append[F, A]
 
   /** @see
-    *   [[akka.persistence.Eventsourced.deleteMessages]]
+    *   [[org.apache.pekko.persistence.Eventsourced.deleteMessages]]
     * @return
     *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
     */

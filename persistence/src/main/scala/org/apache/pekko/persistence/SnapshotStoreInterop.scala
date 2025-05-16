@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.persistence.SnapshotSelectionCriteria
+import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.effect.Sync
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect.ActorEffect

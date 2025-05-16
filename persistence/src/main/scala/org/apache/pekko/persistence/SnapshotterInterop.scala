@@ -1,7 +1,7 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, Request, SaveSnapshot}
-import akka.util.Timeout
+import org.apache.pekko.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, Request, SaveSnapshot}
+import org.apache.pekko.util.Timeout
 import cats.effect.Sync
 import cats.syntax.all.*
 import com.evolutiongaming.akkaeffect
@@ -28,7 +28,7 @@ object SnapshotterInterop {
 
     def ask[B](a: Request)(pf: PartialFunction[Any, F[B]]): F[F[B]] =
       Sync[F]
-        .delay(akka.pattern.ask(snapshotStore, a, snapshotter.self)(timeout1))
+        .delay(org.apache.pekko.pattern.ask(snapshotStore, a, snapshotter.self)(timeout1))
         .map { future =>
           FromFuture
             .summon[F]

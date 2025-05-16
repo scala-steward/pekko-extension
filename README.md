@@ -1,20 +1,21 @@
-# Akka-Effect
-[![Build Status](https://github.com/evolution-gaming/akka-effect/workflows/CI/badge.svg)](https://github.com/evolution-gaming/akka-effect/actions?query=workflow%3ACI) 
-[![Coverage Status](https://coveralls.io/repos/evolution-gaming/akka-effect/badge.svg)](https://coveralls.io/r/evolution-gaming/akka-effect)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/42b363aa8ad54f569c4eb62831db5eeb)](https://app.codacy.com/gh/evolution-gaming/akka-effect/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=akka-effect-actor_2.13&repos=public)
+# Pekko-Effect
+[![Build Status](https://github.com/evolution-gaming/pekko-effect/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-effect/actions?query=workflow%3ACI) 
+[![Coverage Status](https://coveralls.io/repos/evolution-gaming/pekko-effect/badge.svg)](https://coveralls.io/r/evolution-gaming/pekko-effect)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/42b363aa8ad54f569c4eb62831db5eeb)](https://app.codacy.com/gh/evolution-gaming/pekko-effect/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-effect-actor_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
-This project aims to build a bridge between [akka](https://akka.io) and pure functional code based on [cats-effect](https://typelevel.org/cats-effect)
+This project aims to build a bridge between [Pekko](https://pekko.apache.org/docs/pekko) and pure functional code based 
+on [cats-effect](https://typelevel.org/cats-effect)
 
-Covered:
-* [Actors](https://doc.akka.io/docs/akka/current/actors.html)
-* [Persistence](https://doc.akka.io/docs/akka/current/persistence.html)
+Covered ("classic", not the "typed" kind of actors!):
+* [Actors](https://pekko.apache.org/docs/pekko/current/actors.html)
+* [Persistence](https://pekko.apache.org/docs/pekko/current/persistence.html)
 
 ## Building blocks
 
 
-### `akka-effect-actor` module 
+### `pekko-effect-actor` module 
 
 #### [Tell.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/Tell.scala)
 
@@ -101,7 +102,7 @@ trait ActorCtx[F[_]] {
 ```
 
 
-### `akka-effect-persistence` module
+### `pekko-effect-persistence` module
 
 #### [PersistentActorOf.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/PersistentActorOf.scala)
 
@@ -205,7 +206,7 @@ trait Snapshotter[F[_], -A] {
 ```
 
 
-### `akka-effect-eventsourced` module
+### `pekko-effect-eventsourced` module
 
 #### [Engine.scala](eventsourcing/src/main/scala/com/evolutiongaming/akkaeffect/eventsourcing/Engine.scala)
 
@@ -237,15 +238,15 @@ in [`build.sbt`](https://www.scala-sbt.org/1.x/docs/Basic-Def.html#What+is+a+bui
 ```scala
 addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-actor" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-actor" % "0.2.1"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-actor-tests" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-actor-tests" % "0.2.1"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-persistence" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-persistence" % "0.2.1"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-eventsourcing" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-eventsourcing" % "0.2.1"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-cluster" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-cluster" % "0.2.1"
 
-libraryDependencies += "com.evolutiongaming" %% "akka-effect-cluster-sharding" % "0.2.1"
+libraryDependencies += "com.evolutiongaming" %% "pekko-effect-cluster-sharding" % "0.2.1"
 ```

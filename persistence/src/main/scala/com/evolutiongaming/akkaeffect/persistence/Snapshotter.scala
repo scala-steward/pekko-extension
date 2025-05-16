@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect.persistence
 
-import akka.persistence.{SnapshotSelectionCriteria, Snapshotter as _, *}
+import org.apache.pekko.persistence.{SnapshotSelectionCriteria, Snapshotter as _, *}
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, FlatMap, ~>}
@@ -18,21 +18,21 @@ import scala.concurrent.duration.FiniteDuration
 trait Snapshotter[F[_], -A] {
 
   /** @see
-    *   [[akka.persistence.Snapshotter.saveSnapshot]]
+    *   [[org.apache.pekko.persistence.Snapshotter.saveSnapshot]]
     * @return
     *   outer F[_] is about saving in background, inner F[_] is about saving completed
     */
   def save(seqNr: SeqNr, snapshot: A): F[F[Instant]]
 
   /** @see
-    *   [[akka.persistence.Snapshotter.deleteSnapshot]]
+    *   [[org.apache.pekko.persistence.Snapshotter.deleteSnapshot]]
     * @return
     *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
     */
   def delete(seqNr: SeqNr): F[F[Unit]]
 
   /** @see
-    *   [[akka.persistence.Snapshotter.deleteSnapshots]]
+    *   [[org.apache.pekko.persistence.Snapshotter.deleteSnapshots]]
     * @return
     *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
     */
@@ -54,7 +54,7 @@ object Snapshotter {
     const(Instant.ofEpochMilli(0L).pure[F].pure[F], ().pure[F].pure[F])
 
   private[akkaeffect] def apply[F[_]: Sync: FromFuture, A](
-    snapshotter: akka.persistence.Snapshotter,
+    snapshotter: org.apache.pekko.persistence.Snapshotter,
     timeout: FiniteDuration,
   ): Snapshotter[F, A] =
     SnapshotterInterop(snapshotter, timeout)

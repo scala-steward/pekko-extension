@@ -1,6 +1,6 @@
 package com.evolutiongaming.akkaeffect
 
-import akka.actor.{Actor, ActorRef}
+import org.apache.pekko.actor.{Actor, ActorRef}
 import cats.effect.{Async, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.CatsHelper.*

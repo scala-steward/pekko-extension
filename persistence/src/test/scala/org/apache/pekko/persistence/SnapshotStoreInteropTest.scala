@@ -1,6 +1,6 @@
-package akka.persistence
+package org.apache.pekko.persistence
 
-import akka.pattern.AskTimeoutException
+import org.apache.pekko.pattern.AskTimeoutException
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
@@ -226,7 +226,7 @@ object FailingSnapshotter {
 
 }
 
-class FailingSnapshotter extends akka.persistence.snapshot.SnapshotStore {
+class FailingSnapshotter extends org.apache.pekko.persistence.snapshot.SnapshotStore {
 
   override def loadAsync(persistenceId: String, criteria: SnapshotSelectionCriteria): Future[Option[SelectedSnapshot]] =
     Future.failed(FailingSnapshotter.exception)
@@ -241,7 +241,7 @@ class FailingSnapshotter extends akka.persistence.snapshot.SnapshotStore {
 
 }
 
-class InfiniteSnapshotter extends akka.persistence.snapshot.SnapshotStore {
+class InfiniteSnapshotter extends org.apache.pekko.persistence.snapshot.SnapshotStore {
 
   override def loadAsync(persistenceId: String, criteria: SnapshotSelectionCriteria): Future[Option[SelectedSnapshot]] =
     Future.never
