@@ -1,0 +1,67 @@
+package com.evolution.pekkoeffect.cluster.sharding
+
+import org.apache.pekko.actor.{Actor, Props}
+import org.apache.pekko.cluster.sharding.ClusterShardingSettings
+import org.apache.pekko.cluster.sharding.ShardCoordinator.LeastShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.Msg
+import cats.effect.unsafe.implicits.global
+import cats.effect.{IO, Resource}
+import cats.syntax.all.*
+import com.evolution.pekkoeffect.IOSuite.*
+import com.evolution.pekkoeffect.persistence.TypeName
+import com.evolution.pekkoeffect.testkit.Probe
+import com.evolution.pekkoeffect.{ActorRefOf, ActorSuite}
+import com.evolutiongaming.catshelper.LogOf
+import com.typesafe.config.ConfigFactory
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
+
+class ClusterShardingTest extends AsyncFunSuite with ActorSuite with Matchers {
+
+  override def config =
+    IO {
+      ConfigFactory
+        .load("ClusterShardingTest.conf")
+        .some
+    }
+
+  test("start") {
+    case object HandOffStopMessage
+
+    val result = for {
+      logOf                   <- LogOf.slf4j[IO].toResource
+      log                     <- logOf(classOf[ClusterShardingTest]).toResource
+      clusterSharding         <- ClusterSharding.of[IO](actorSystem)
+      clusterSharding         <- clusterSharding.withLogging1(log).pure[Resource[IO, *]]
+      clusterShardingSettings <- IO(ClusterShardingSettings(actorSystem)).toResource
+      actorRefOf               = ActorRefOf.fromActorRefFactory[IO](actorSystem)
+      probe                   <- Probe.of[IO](actorRefOf)
+      props = {
+        def actor() = new Actor {
+          def receive = {
+            case ()                 => sender().tell((), self)
+            case HandOffStopMessage => context.stop(self)
+          }
+        }
+
+        Props(actor())
+      }
+      shardRegion <- clusterSharding.start(
+        TypeName("typeName"),
+        props,
+        clusterShardingSettings,
+        { case a => ("entityId", a) },
+        (_: Msg) => "shardId",
+        new LeastShardAllocationStrategy(1, 1),
+        HandOffStopMessage,
+      )
+    } yield for {
+      a <- probe.expect[Unit]
+      _ <- IO(shardRegion.tell((), probe.actorEffect.toUnsafe))
+      a <- a
+    } yield a.msg
+    result
+      .use(identity)
+      .run()
+  }
+}

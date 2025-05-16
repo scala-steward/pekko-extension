@@ -1,7 +1,7 @@
 import Dependencies._
 
 lazy val commonSettings = Seq(
-  organization         := "com.evolutiongaming",
+  organization         := "com.evolution",
   organizationName     := "Evolution",
   organizationHomepage := Some(url("http://evolution.com")),
   homepage             := Some(url("http://github.com/evolution-gaming/pekko-effect")),

@@ -17,7 +17,7 @@ Covered ("classic", not the "typed" kind of actors!):
 
 ### `pekko-effect-actor` module 
 
-#### [Tell.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/Tell.scala)
+#### [Tell.scala](actor/src/main/scala/com/evolution/pekkoeffect/Tell.scala)
 
 Represents `ActorRef.tell`
 
@@ -29,7 +29,7 @@ trait Tell[F[_], -A] {
 ```
 
 
-#### [Ask.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/Ask.scala)
+#### [Ask.scala](actor/src/main/scala/com/evolution/pekkoeffect/Ask.scala)
 
 Represents `ActorRef.ask` pattern
 
@@ -41,7 +41,7 @@ trait Ask[F[_], -A, B] {
 ```
 
 
-#### [Reply.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/Reply.scala)
+#### [Reply.scala](actor/src/main/scala/com/evolution/pekkoeffect/Reply.scala)
 
 Represents reply pattern: `sender() ! reply`
 
@@ -53,7 +53,7 @@ trait Reply[F[_], -A] {
 ```
 
 
-#### [Receive.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/Receive.scala)
+#### [Receive.scala](actor/src/main/scala/com/evolution/pekkoeffect/Receive.scala)
 
 This is what you need to implement instead of familiar `new Actor { ... }`  
 
@@ -67,12 +67,12 @@ trait Receive[F[_], -A, B] {
 ```
 
 
-#### [ActorOf.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/ActorOf.scala)
+#### [ActorOf.scala](actor/src/main/scala/com/evolution/pekkoeffect/ActorOf.scala)
 
 Constructs `Actor.scala` out of `receive: ActorCtx[F] => Resource[F, Receive[F, Any]]`
 
 
-#### [ActorCtx.scala](actor/src/main/scala/com/evolutiongaming/akkaeffect/ActorCtx.scala)
+#### [ActorCtx.scala](actor/src/main/scala/com/evolution/pekkoeffect/ActorCtx.scala)
 
 Wraps `ActorContext`
 
@@ -104,12 +104,12 @@ trait ActorCtx[F[_]] {
 
 ### `pekko-effect-persistence` module
 
-#### [PersistentActorOf.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/PersistentActorOf.scala)
+#### [PersistentActorOf.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/PersistentActorOf.scala)
 
 Constructs `PersistentActor.scala` out of `eventSourcedOf: ActorCtx[F] => F[EventSourced[F, S, E, C]]`
 
 
-#### [EventSourced.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/EventSourced.scala)
+#### [EventSourced.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/EventSourced.scala)
 
 Describes a lifecycle of entity with regard to event sourcing, phases are: Started, Recovering, Receiving and Termination
 
@@ -126,7 +126,7 @@ trait EventSourced[F[_], S, E, C] {
 }
 ```
 
-#### [RecoveryStarted.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/RecoveryStarted.scala)
+#### [RecoveryStarted.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/RecoveryStarted.scala)
 
 Describes start of recovery phase
  
@@ -141,7 +141,7 @@ trait RecoveryStarted[F[_], S, E, C] {
 ```
 
 
-#### [Recovering.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/Recovering.scala)
+#### [Recovering.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/Recovering.scala)
 
 Describes recovery phase
  
@@ -159,7 +159,7 @@ trait Recovering[F[_], S, E, C] {
 ```
 
 
-#### [Replay.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/Replay.scala)
+#### [Replay.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/Replay.scala)
 
 Used during recovery to replay events
  
@@ -171,7 +171,7 @@ trait Replay[F[_], A] {
 ```
 
 
-#### [Journaller.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/Journaller.scala)
+#### [Journaller.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/Journaller.scala)
 
 Describes communication with underlying journal
 
@@ -185,7 +185,7 @@ trait Journaller[F[_], -A] {
 ```
 
 
-#### [Snapshotter.scala](persistence/src/main/scala/com/evolutiongaming/akkaeffect/persistence/Snapshotter.scala)
+#### [Snapshotter.scala](persistence/src/main/scala/com/evolution/pekkoeffect/persistence/Snapshotter.scala)
 
 Describes communication with underlying snapshot storage
 
@@ -208,7 +208,7 @@ trait Snapshotter[F[_], -A] {
 
 ### `pekko-effect-eventsourced` module
 
-#### [Engine.scala](eventsourcing/src/main/scala/com/evolutiongaming/akkaeffect/eventsourcing/Engine.scala)
+#### [Engine.scala](eventsourcing/src/main/scala/com/evolution/pekkoeffect/eventsourcing/Engine.scala)
 
 This is the main runtime/queue where all actions against your state are processed in desired eventsourcing sequence:
 1. validate and finalize events

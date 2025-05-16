@@ -4,9 +4,9 @@ import org.apache.pekko.persistence.journal.AsyncWriteJournal
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Deferred, IO}
 import cats.syntax.all.*
-import com.evolutiongaming.akkaeffect.persistence.{EventSourcedId, EventStore, Events, SeqNr}
-import com.evolutiongaming.akkaeffect.testkit.TestActorSystem
-import com.evolutiongaming.akkaeffect.util.AtomicRef
+import com.evolution.pekkoeffect.persistence.{EventSourcedId, EventStore, Events, SeqNr}
+import com.evolution.pekkoeffect.testkit.TestActorSystem
+import com.evolution.pekkoeffect.util.AtomicRef
 import com.evolutiongaming.catshelper.LogOf
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers

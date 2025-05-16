@@ -4,8 +4,8 @@ import org.apache.pekko.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnap
 import org.apache.pekko.util.Timeout
 import cats.effect.Sync
 import cats.syntax.all.*
-import com.evolutiongaming.akkaeffect
-import com.evolutiongaming.akkaeffect.persistence.SeqNr
+import com.evolution.pekkoeffect
+import com.evolution.pekkoeffect.persistence.SeqNr
 import com.evolutiongaming.catshelper.FromFuture
 
 import java.time.Instant
@@ -16,7 +16,7 @@ object SnapshotterInterop {
   def apply[F[_]: Sync: FromFuture, A](
     snapshotter: Snapshotter,
     timeout: FiniteDuration,
-  ): akkaeffect.persistence.Snapshotter[F, A] = {
+  ): pekkoeffect.persistence.Snapshotter[F, A] = {
 
     val timeout1 = Timeout(timeout)
 
@@ -39,7 +39,7 @@ object SnapshotterInterop {
         }
 
     class Main
-    new Main with akkaeffect.persistence.Snapshotter[F, A] {
+    new Main with pekkoeffect.persistence.Snapshotter[F, A] {
 
       def save(seqNr: SeqNr, snapshot: A) =
         ask(SaveSnapshot(metadata(seqNr), snapshot)) {

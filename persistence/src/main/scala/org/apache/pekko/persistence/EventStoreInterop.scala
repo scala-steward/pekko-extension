@@ -3,8 +3,8 @@ package org.apache.pekko.persistence
 import cats.effect.syntax.all.*
 import cats.effect.{Async, Sync}
 import cats.syntax.all.*
-import com.evolutiongaming.akkaeffect.ActorEffect
-import com.evolutiongaming.akkaeffect.persistence.{EventSourcedId, EventStore, Events, SeqNr}
+import com.evolution.pekkoeffect.ActorEffect
+import com.evolution.pekkoeffect.persistence.{EventSourcedId, EventStore, Events, SeqNr}
 import com.evolutiongaming.catshelper.{FromFuture, LogOf, ToTry}
 import com.evolutiongaming.sstream
 

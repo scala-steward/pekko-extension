@@ -3,8 +3,8 @@ package org.apache.pekko.persistence
 import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.effect.Sync
 import cats.syntax.all.*
-import com.evolutiongaming.akkaeffect.ActorEffect
-import com.evolutiongaming.akkaeffect.persistence.{EventSourcedId, SeqNr, SnapshotStore}
+import com.evolution.pekkoeffect.ActorEffect
+import com.evolution.pekkoeffect.persistence.{EventSourcedId, SeqNr, SnapshotStore}
 import com.evolutiongaming.catshelper.{FromFuture, LogOf}
 
 import java.time.Instant
