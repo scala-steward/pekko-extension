@@ -1,6 +1,5 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.ActorRef
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Ref, Resource, Sync}
 import cats.syntax.all.*
@@ -8,6 +7,7 @@ import com.evolution.pekkoeffect.*
 import com.evolution.pekkoeffect.ActorVar.Directive
 import com.evolution.pekkoeffect.Fail.implicits.*
 import com.evolution.pekkoeffect.Releasable.implicits.*
+import org.apache.pekko.actor.ActorRef
 
 private[pekkoeffect] trait Persistence[F[_], S, E, C] {
 

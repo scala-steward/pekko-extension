@@ -1,10 +1,10 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.Status.Status
-import org.apache.pekko.actor.{ActorRef, Status}
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Contravariant, FlatMap, ~>}
+import org.apache.pekko.actor.Status.Status
+import org.apache.pekko.actor.{ActorRef, Status}
 
 /** Typesafe api for replying part of "ask pattern" in conjunction with `Status`
   *

@@ -1,6 +1,5 @@
 package com.evolution.pekkoeffect.testkit
 
-import org.apache.pekko.actor.{ActorRef, Props}
 import cats.effect.implicits.effectResourceOps
 import cats.effect.kernel.Deferred
 import cats.effect.{Async, Ref, Resource, Sync}
@@ -8,6 +7,7 @@ import cats.syntax.all.*
 import com.evolution.pekkoeffect.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.{ActorRef, Props}
 
 import scala.concurrent.duration.*
 import scala.reflect.ClassTag
@@ -28,10 +28,6 @@ object Probe {
   def of[F[_]: Async: ToFuture: FromFuture](
     actorRefOf: ActorRefOf[F],
   ): Resource[F, Probe[F]] = {
-
-    final case class Watch(actorRef: ActorRef)
-
-    final case class Terminated(actorRef: ActorRef)
 
     type Unsubscribe = Boolean
 
@@ -125,4 +121,8 @@ object Probe {
       }
     }
   }
+
+  final private case class Watch(actorRef: ActorRef)
+
+  final private case class Terminated(actorRef: ActorRef)
 }

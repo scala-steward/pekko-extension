@@ -1,8 +1,5 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.ReceiveTimeout
-import org.apache.pekko.persistence as ap
-import org.apache.pekko.persistence.{PersistentActor, RecoveryCompleted}
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
@@ -10,6 +7,9 @@ import com.evolution.pekkoeffect.*
 import com.evolution.pekkoeffect.util.AtomicRef
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, Memoize, ToFuture, ToTry}
+import org.apache.pekko.actor.ReceiveTimeout
+import org.apache.pekko.persistence as ap
+import org.apache.pekko.persistence.{PersistentActor, RecoveryCompleted}
 
 import scala.collection.immutable.Seq
 import scala.concurrent.duration.*

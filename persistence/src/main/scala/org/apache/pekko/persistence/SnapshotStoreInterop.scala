@@ -1,6 +1,5 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.effect.Sync
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.ActorEffect

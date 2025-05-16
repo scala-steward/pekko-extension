@@ -1,11 +1,11 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.{ActorContext, ActorRef}
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.*
 import com.evolution.pekkoeffect.ActorVar.Directive
 import com.evolutiongaming.catshelper.ToFuture
+import org.apache.pekko.actor.{ActorContext, ActorRef}
 
 private[pekkoeffect] trait PersistenceVar[F[_], S, E, C] {
 

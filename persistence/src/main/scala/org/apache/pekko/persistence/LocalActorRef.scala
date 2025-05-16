@@ -1,11 +1,11 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.actor.{ActorPath, ActorRef, ActorRefProvider, MinimalActorRef}
 import cats.effect.syntax.all.*
 import cats.effect.{Async, Deferred, Sync, Temporal}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.CatsHelper.OpsCatsHelper
 import com.evolutiongaming.catshelper.{SerialRef, ToTry}
+import org.apache.pekko.actor.{ActorPath, ActorRef, ActorRefProvider, MinimalActorRef}
 
 import java.util.concurrent.TimeoutException
 import scala.concurrent.duration.*

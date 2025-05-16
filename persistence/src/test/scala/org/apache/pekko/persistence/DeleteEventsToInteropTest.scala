@@ -1,7 +1,5 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.actor.{Actor, ActorRef, ActorSystem, Props}
-import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 import cats.effect.implicits.effectResourceOps
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Async, Deferred, IO, Sync}
@@ -12,6 +10,8 @@ import com.evolution.pekkoeffect.persistence.DeleteEventsTo
 import com.evolution.pekkoeffect.testkit.Probe
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.{Actor, ActorRef, ActorSystem, Props}
+import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 

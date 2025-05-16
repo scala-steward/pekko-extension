@@ -1,12 +1,12 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.pattern.AskTimeoutException
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.persistence.{EventSourcedId, SeqNr, SnapshotStore}
 import com.evolution.pekkoeffect.testkit.TestActorSystem
 import com.evolutiongaming.catshelper.LogOf
+import org.apache.pekko.pattern.AskTimeoutException
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -26,7 +26,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val persistenceId = EventSourcedId("#1")
     val payload       = Random.nextString(1024)
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, emptyPluginId, persistenceId)
@@ -46,7 +46,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val persistenceId = EventSourcedId("#2")
     val payload       = Random.nextString(1024)
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, emptyPluginId, persistenceId)
@@ -67,7 +67,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "failing-snapshot"
     val persistenceId = EventSourcedId("#3")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -85,7 +85,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val persistenceId = EventSourcedId("#4")
     val payload       = Random.nextString(1024)
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store  <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -103,7 +103,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "failing-snapshot"
     val persistenceId = EventSourcedId("#5")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -121,7 +121,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "failing-snapshot"
     val persistenceId = EventSourcedId("#6")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -139,7 +139,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "infinite-snapshot"
     val persistenceId = EventSourcedId("#7")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use(system =>
         for {
           store <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -160,7 +160,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val persistenceId = EventSourcedId("#8")
     val payload       = Random.nextString(1024)
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store  <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -181,7 +181,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "infinite-snapshot"
     val persistenceId = EventSourcedId("#9")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)
@@ -202,7 +202,7 @@ class SnapshotStoreInteropTest extends AnyFunSuite with Matchers {
     val pluginId      = "infinite-snapshot"
     val persistenceId = EventSourcedId("#10")
 
-    val io = TestActorSystem[IO]("testing", none)
+    val io = TestActorSystem[IO]("testing", None)
       .use { system =>
         for {
           store    <- SnapshotStoreInterop[IO](Persistence(system), 1.second, pluginId, persistenceId)

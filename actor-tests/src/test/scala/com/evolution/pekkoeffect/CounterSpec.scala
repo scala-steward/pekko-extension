@@ -1,12 +1,12 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorSystem
 import cats.effect.*
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.IOSuite.*
 import com.evolution.pekkoeffect.testkit.Probe
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -127,5 +127,5 @@ object CounterSpec {
     case object Stop extends Msg
   }
 
-  final case object PostStop
+  case object PostStop
 }

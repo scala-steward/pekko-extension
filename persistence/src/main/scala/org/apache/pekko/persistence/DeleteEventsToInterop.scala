@@ -1,12 +1,12 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.actor.{ActorContext, ActorRef}
-import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.persistence.{DeleteEventsTo, SeqNr}
 import com.evolution.pekkoeffect.{ActorRefOf, AskFrom}
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.actor.{ActorContext, ActorRef}
+import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
 
 import scala.concurrent.duration.FiniteDuration
 

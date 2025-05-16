@@ -1,10 +1,10 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorRef
 import cats.Functor
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.MonadThrowable
+import org.apache.pekko.actor.ActorRef
 
 import scala.reflect.ClassTag
 

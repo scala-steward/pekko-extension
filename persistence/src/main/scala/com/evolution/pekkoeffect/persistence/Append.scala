@@ -1,6 +1,5 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.persistence.*
 import cats.effect.kernel.Async
 import cats.effect.{Deferred, Resource, Sync}
 import cats.implicits.*
@@ -9,6 +8,7 @@ import com.evolution.pekkoeffect.util.AtomicRef
 import com.evolution.pekkoeffect.{Act, Fail}
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{Log, MeasureDuration, MonadThrowable, ToFuture}
+import org.apache.pekko.persistence.*
 
 import scala.collection.immutable.Queue
 

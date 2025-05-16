@@ -1,9 +1,5 @@
 package com.evolution.pekkoeffect.cluster.sharding
 
-import org.apache.pekko.actor.{ActorRef, ActorSystem, Props}
-import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import org.apache.pekko.cluster.sharding.ShardRegion.*
-import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.implicits.*
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
@@ -13,6 +9,10 @@ import com.evolution.pekkoeffect.util.Terminated
 import com.evolution.pekkoeffect.{ActorRefOf, Ask}
 import com.evolutiongaming.catshelper.*
 import com.evolutiongaming.catshelper.CatsHelper.*
+import org.apache.pekko.actor.{ActorRef, ActorSystem, Props}
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.*
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 
 import scala.concurrent.duration.*
 

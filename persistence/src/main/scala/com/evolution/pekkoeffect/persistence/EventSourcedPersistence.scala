@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.persistence.{EventStoreInterop, SnapshotStoreInterop}
 import cats.effect.Async
 import com.evolutiongaming.catshelper.{FromFuture, LogOf, ToTry}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.persistence.{EventStoreInterop, SnapshotStoreInterop}
 
 import scala.concurrent.duration.*
 

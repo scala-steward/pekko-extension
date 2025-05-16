@@ -1,11 +1,11 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorContext
 import cats.effect.*
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.util.Serially
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.ToFuture
+import org.apache.pekko.actor.ActorContext
 
 import scala.util.control.NoStackTrace
 
@@ -117,9 +117,9 @@ private[pekkoeffect] object ActorVar {
 
     final case class Update[A](value: A) extends Directive[A]
 
-    final case object Ignore extends Directive[Nothing]
+    case object Ignore extends Directive[Nothing]
 
-    final case object Stop extends Directive[Nothing]
+    case object Stop extends Directive[Nothing]
 
     implicit class DirectiveOps[A](val self: Directive[A]) extends AnyVal {
 

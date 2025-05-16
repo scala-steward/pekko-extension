@@ -1,10 +1,10 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{Actor, ActorRef}
 import cats.effect.{Async, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{Serial, ToTry}
+import org.apache.pekko.actor.{Actor, ActorRef}
 
 /** Act executes function in `receive` thread of an actor
   */
@@ -63,9 +63,9 @@ private[pekkoeffect] object Act {
       apply(tell)
     }
 
-    def apply[F[_]: Async](tell: Any => Unit): Adapter[F] = {
+    private case class Msg(f: () => Unit)
 
-      case class Msg(f: () => Unit)
+    def apply[F[_]: Async](tell: Any => Unit): Adapter[F] =
 
       new Adapter[F] { self =>
         private val selfOpt = self.some
@@ -128,6 +128,5 @@ private[pekkoeffect] object Act {
           finally threadLocal.set(None)
         }
       }
-    }
   }
 }

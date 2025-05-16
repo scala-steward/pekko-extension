@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{ActorRef, ActorRefFactory, ActorSystem, Props}
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.ToFuture
+import org.apache.pekko.actor.{ActorRef, ActorRefFactory, ActorSystem, Props}
 
 import scala.reflect.ClassTag
 

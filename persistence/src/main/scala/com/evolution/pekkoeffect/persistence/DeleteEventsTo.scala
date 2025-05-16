@@ -1,11 +1,11 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.persistence.DeleteEventsToInterop
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import cats.{Applicative, FlatMap, ~>}
 import com.evolution.pekkoeffect.Fail
 import com.evolutiongaming.catshelper.{FromFuture, Log, MeasureDuration, MonadThrowable}
+import org.apache.pekko.persistence.DeleteEventsToInterop
 
 import scala.concurrent.duration.FiniteDuration
 

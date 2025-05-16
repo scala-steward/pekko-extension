@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect.eventsourcing.util
 
-import org.apache.pekko.stream.scaladsl.SourceQueueWithComplete
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.stream.scaladsl.SourceQueueWithComplete
 
 object ResourceFromQueue {
 
