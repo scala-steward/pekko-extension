@@ -1,8 +1,5 @@
 package com.evolution.pekkoeffect.eventsourcing
 
-import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.stream.*
-import org.apache.pekko.stream.scaladsl.{Sink, Source}
 import cats.data.NonEmptyList as Nel
 import cats.effect.*
 import cats.effect.implicits.*
@@ -14,6 +11,9 @@ import com.evolution.pekkoeffect.persistence.{Events, SeqNr}
 import com.evolution.pekkoeffect.util.CloseOnError
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, Runtime, SerParQueue, ToFuture}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.*
+import org.apache.pekko.stream.scaladsl.{Sink, Source}
 
 trait Engine[F[_], S, E] {
   import Engine._

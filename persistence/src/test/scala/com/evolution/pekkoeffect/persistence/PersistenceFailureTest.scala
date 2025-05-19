@@ -1,14 +1,14 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.Props
-import org.apache.pekko.persistence.journal.AsyncWriteJournal
-import org.apache.pekko.persistence.{AtomicWrite, PersistentRepr}
 import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.testkit.TestActorSystem
 import com.evolution.pekkoeffect.{Envelope, Receive}
 import com.evolutiongaming.catshelper.LogOf
+import org.apache.pekko.actor.Props
+import org.apache.pekko.persistence.journal.AsyncWriteJournal
+import org.apache.pekko.persistence.{AtomicWrite, PersistentRepr}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -55,9 +55,9 @@ class PersistenceFailureTest extends AnyFunSuite with Matchers {
 
   test("EventSourcedActorOf based actor must fail if journal fails to persist message") {
 
-    implicit val log = LogOf.empty[IO]
+    implicit val log: LogOf[IO] = LogOf.empty[IO]
 
-    TestActorSystem[IO]("testing", none)
+    TestActorSystem[IO]("testing", None)
       .use { system =>
         val persistence = EventSourcedPersistence.fromPekkoPlugins[IO](system, 1.second, 100)
         def actor       = EventSourcedActorOf.actor[IO, Any, Any](eventSourced, persistence)
@@ -84,7 +84,7 @@ class PersistenceFailureTest extends AnyFunSuite with Matchers {
 
   test("PersistentActorOf based actor must fail if journal fails to persist message") {
 
-    TestActorSystem[IO]("testing", none)
+    TestActorSystem[IO]("testing", None)
       .use { system =>
         def actor = PersistentActorOf[IO](eventSourced)
         val ref   = system.actorOf(Props(actor))

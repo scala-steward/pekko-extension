@@ -26,8 +26,6 @@ class AppendTest extends AsyncFunSuite with Matchers {
 
   private def adapter[F[_]: Async: ToFuture: ToTry](act: Act[F]): F[Unit] = {
 
-    case class Event(fa: F[Unit])
-
     def eventsourced(act: Act[F], ref: Ref[F, Queue[F[Unit]]]): F[Append.Eventsourced] =
       Ref[F]
         .of(SeqNr.Min)

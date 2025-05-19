@@ -1,13 +1,13 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.Actor
-import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Concurrent, Ref, Resource}
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.*
 import com.evolution.pekkoeffect.persistence.SeqNr
 import com.evolutiongaming.catshelper.{Log, LogOf, ToFuture}
+import org.apache.pekko.actor.Actor
+import org.apache.pekko.persistence.SnapshotSelectionCriteria
 
 import java.time.Instant
 
@@ -69,11 +69,10 @@ object EventSourcedActorOf {
     LogOf
       .log[F, EventSourcedActorOf.type]
       .toResource
-      .flatMap { implicit log0 =>
-        implicit val log =
+      .flatMap { log0 =>
+        implicit val log: Log[F] =
           log0
             .prefixed(actorCtx.self.path.name)
-            .mapK(Resource.liftK[F])
         val receive = for {
           eventSourced    <- eventSourcedOf(actorCtx).toResource
           recoveryStarted <- eventSourced.value
@@ -82,7 +81,7 @@ object EventSourcedActorOf {
           eventStore    <- persistence.eventStore(eventSourced).toResource
 
           snapshot <- snapshotStore.latest.toResource
-          _        <- log.debug(s"using snapshot $snapshot")
+          _        <- log.debug(s"using snapshot $snapshot").toResource
 
           recovering <- recoveryStarted(
             snapshot.map(_.metadata.seqNr).getOrElse(SeqNr.Min),
@@ -97,7 +96,7 @@ object EventSourcedActorOf {
             // used to recover events _following_ the snapshot OR if no snapshot available then [[SeqNr.Min]]
             val fromSeqNr = snapshot.map(_.metadata.seqNr + 1).getOrElse(SeqNr.Min)
             for {
-              _      <- log.debug(s"snapshot seqNr: $snapSeqNr, load events from seqNr: $fromSeqNr").allocated
+              _ <- log.debug(s"snapshot seqNr: $snapSeqNr, load events from seqNr: $fromSeqNr").toResource.allocated
               events <- eventStore.events(fromSeqNr)
               seqNrL <- events.foldWhileM(snapSeqNr) {
                 case (_, EventStore.Event(event, seqNr)) => replay(event, seqNr).as(seqNr.asLeft[Unit])
@@ -114,14 +113,14 @@ object EventSourcedActorOf {
             } yield seqNr
           }.toResource
 
-          _          <- log.debug(s"recovery completed with seqNr $seqNr")
+          _          <- log.debug(s"recovery completed with seqNr $seqNr").toResource
           journaller <- eventStore.asJournaller(actorCtx, seqNr).toResource
           context     = Recovering.RecoveryContext(seqNr, journaller, snapshotStore.asSnapshotter)
           receive    <- recovering.completed(context)
         } yield receive
 
         receive.onError {
-          case err: Throwable => log.error(s"failed to allocate receive", err)
+          case err: Throwable => log.error(s"failed to allocate receive", err).toResource
         }
       }
   }
@@ -136,8 +135,7 @@ object EventSourcedActorOf {
 
   }
 
-  implicit final private[evolution] class SnapshotStoreOps[F[_], A](val store: SnapshotStore[F, A])
-      extends AnyVal {
+  implicit final private[evolution] class SnapshotStoreOps[F[_], A](val store: SnapshotStore[F, A]) extends AnyVal {
 
     def asSnapshotter: Snapshotter[F, A] = new Snapshotter[F, A] {
 
@@ -174,10 +172,11 @@ object EventSourcedActorOf {
                 }
               }
               .flatMap { events =>
-                def handleError(err: Throwable) = {
-                  val from = events.values.head.head.seqNr
-                  val to   = events.values.last.last.seqNr
-                  stopActor(from, to, err)
+                def handleError: PartialFunction[Throwable, F[Unit]] = {
+                  case err: Throwable =>
+                    val from = events.values.head.head.seqNr
+                    val to   = events.values.last.last.seqNr
+                    stopActor(from, to, err)
                 }
                 store
                   .save(events)

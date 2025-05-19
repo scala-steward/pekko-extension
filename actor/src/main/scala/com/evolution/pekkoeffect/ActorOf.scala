@@ -1,6 +1,5 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{Actor, ActorRef, ReceiveTimeout}
 import cats.effect.*
 import cats.effect.implicits.effectResourceOps
 import cats.syntax.all.*
@@ -8,6 +7,7 @@ import com.evolution.pekkoeffect.ActorVar.Directive
 import com.evolution.pekkoeffect.Fail.implicits.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.ToFuture
+import org.apache.pekko.actor.{Actor, ActorRef, ReceiveTimeout}
 
 /** Creates instance of [[org.apache.pekko.actor.Actor]] out of [[ReceiveOf]]
   */

@@ -1,12 +1,12 @@
 package org.apache.pekko.persistence
 
-import org.apache.pekko.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, Request, SaveSnapshot}
-import org.apache.pekko.util.Timeout
 import cats.effect.Sync
 import cats.syntax.all.*
 import com.evolution.pekkoeffect
 import com.evolution.pekkoeffect.persistence.SeqNr
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.persistence.SnapshotProtocol.{DeleteSnapshot, DeleteSnapshots, Request, SaveSnapshot}
+import org.apache.pekko.util.Timeout
 
 import java.time.Instant
 import scala.concurrent.duration.FiniteDuration

@@ -1,12 +1,12 @@
 package com.evolution.pekkoeffect.util
 
-import org.apache.pekko.actor.{Actor, ActorRef, Props}
 import cats.effect.Concurrent
 import cats.effect.kernel.Deferred
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.{ActorEffect, ActorRefOf}
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.ToFuture
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
 
 trait Terminated[F[_]] {
 

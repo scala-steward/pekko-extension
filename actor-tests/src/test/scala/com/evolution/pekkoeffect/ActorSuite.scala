@@ -1,12 +1,12 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorSystem
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.testkit.TestActorSystem
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.typesafe.config.Config
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.{BeforeAndAfterAll, Suite}
 
 trait ActorSuite extends BeforeAndAfterAll { self: Suite =>

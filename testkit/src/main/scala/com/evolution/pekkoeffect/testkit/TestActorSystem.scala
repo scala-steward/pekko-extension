@@ -1,11 +1,11 @@
 package com.evolution.pekkoeffect.testkit
 
-import org.apache.pekko.actor.ActorSystem
 import cats.effect.implicits.effectResourceOps
 import cats.effect.{Async, Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.FromFuture
 import com.typesafe.config.{Config, ConfigFactory}
+import org.apache.pekko.actor.ActorSystem
 
 import scala.concurrent.ExecutionContext
 

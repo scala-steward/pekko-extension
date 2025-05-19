@@ -1,10 +1,10 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{Actor, ActorRef, Props}
-import org.apache.pekko.util.Timeout
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
+import org.apache.pekko.util.Timeout
 
 import scala.concurrent.duration.FiniteDuration
 import scala.reflect.ClassTag
@@ -24,8 +24,6 @@ object AskFrom {
     timeout: FiniteDuration,
   ): Resource[F, AskFrom[F]] = {
 
-    final case class Msg(to: ActorRef, f: ActorRef => Any)
-
     def actor() = new Actor {
       def receive = {
         case Msg(to, f) => to.tell(f(sender()), sender())
@@ -44,4 +42,6 @@ object AskFrom {
       }
     }
   }
+
+  final private case class Msg(to: ActorRef, f: ActorRef => Any)
 }

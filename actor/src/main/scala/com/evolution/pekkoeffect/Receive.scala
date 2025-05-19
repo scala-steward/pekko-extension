@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Contravariant, FlatMap, Functor, Monad, ~>}
+import org.apache.pekko.actor.ActorRef
 
 /** Api for Actor.receive
   *

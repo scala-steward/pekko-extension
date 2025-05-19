@@ -1,4 +1,4 @@
-import Dependencies._
+import Dependencies.*
 
 lazy val commonSettings = Seq(
   organization         := "com.evolution",
@@ -6,22 +6,43 @@ lazy val commonSettings = Seq(
   organizationHomepage := Some(url("http://evolution.com")),
   homepage             := Some(url("http://github.com/evolution-gaming/pekko-effect")),
   startYear            := Some(2019),
-  scalaVersion         := "2.13.16",
+  scalaVersion         := crossScalaVersions.value.head,
+  crossScalaVersions   := Seq("2.13.16", "3.3.6"),
   Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings"),
   Compile / doc / scalacOptions -= "-Xfatal-warnings",
-  scalacOptions ++= Seq(
-    "-release:17",
-    "-Xsource:3",
-    "-deprecation",
+  scalacOptions ++= crossSettings(
+    scalaVersion.value,
+    if3 = List(
+      "-release:17",
+      "-Ykind-projector",
+      "-language:implicitConversions",
+      "-unchecked",
+      "-feature",
+      "-explain",
+      "-explain-types",
+      "-deprecation",
+      "-Wunused:all",
+    ),
+    if2 = List("-release:17", "-Xsource:3", "-deprecation"),
+  ),
+  libraryDependencies ++= crossSettings(
+    scalaVersion.value,
+    if3 = Nil,
+    if2 = Seq(compilerPlugin(`kind-projector` cross CrossVersion.full)),
   ),
   publishTo              := Some(Resolver.evolutionReleases),
   versionPolicyIntention := Compatibility.BinaryCompatible, // sbt-version-policy
   versionScheme          := Some("semver-spec"),
-  libraryDependencies += compilerPlugin(`kind-projector` cross CrossVersion.full),
-  licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT"))),
+  licenses               := Seq(("MIT", url("https://opensource.org/licenses/MIT"))),
 )
 
-val alias: Seq[sbt.Def.Setting[_]] =
+def crossSettings[T](scalaVersion: String, if3: T, if2: T): T =
+  scalaVersion match {
+    case version if version.startsWith("3") => if3
+    case _                                  => if2
+  }
+
+val alias: Seq[sbt.Def.Setting[?]] =
   addCommandAlias("fmt", "scalafixEnable; scalafixAll; all scalafmtAll scalafmtSbt") ++
     addCommandAlias(
       "check",
@@ -86,7 +107,7 @@ lazy val testkit = project
   .settings(
     libraryDependencies ++= Seq(
       Pekko.testkit % Test,
-      scalatest    % Test,
+      scalatest     % Test,
     ),
   )
 
@@ -107,7 +128,7 @@ lazy val `persistence-api` = project
       sstream,
       Pekko.slf4j   % Test,
       Pekko.testkit % Test,
-      scalatest    % Test,
+      scalatest     % Test,
     ),
   )
 
@@ -132,10 +153,14 @@ lazy val persistence = project
       Cats.core,
       CatsEffect.effect,
       `cats-helper`,
-      pureconfig,
       smetrics,
-      scalatest                   % Test,
+      scalatest                    % Test,
       `pekko-persistence-inmemory` % Test,
+    ),
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = List(pureconfig),
+      if3 = List(`pureconfig-scala3`, `pureconfig-generic-scala3`),
     ),
   )
 
@@ -149,6 +174,11 @@ lazy val eventsourcing = project
       Pekko.stream,
       retry,
     ),
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = Nil,
+      if3 = List(`pureconfig-generic-scala3`),
+    ),
   )
 
 lazy val cluster = project
@@ -159,7 +189,11 @@ lazy val cluster = project
   .settings(
     libraryDependencies ++= Seq(
       Pekko.cluster,
-      pureconfig,
+    ),
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = List(pureconfig),
+      if3 = List(`pureconfig-scala3`, `pureconfig-generic-scala3`),
     ),
   )
 

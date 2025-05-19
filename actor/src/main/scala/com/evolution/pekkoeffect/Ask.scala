@@ -1,11 +1,11 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{ActorRef, ActorSelection}
-import org.apache.pekko.util.Timeout
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, Contravariant, FlatMap, Functor, ~>}
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.actor.{ActorRef, ActorSelection}
+import org.apache.pekko.util.Timeout
 
 import scala.concurrent.duration.FiniteDuration
 

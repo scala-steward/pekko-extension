@@ -1,8 +1,8 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.persistence.Recovery
 import cats.syntax.all.*
 import cats.{Functor, Show}
+import org.apache.pekko.persistence.Recovery
 
 /** @param eventSourcedId
   *   \@see [[org.apache.pekko.persistence.PersistentActor.persistenceId]]

@@ -1,15 +1,15 @@
 package com.evolution.pekkoeffect.cluster.sharding
 
-import org.apache.pekko.actor.{Actor, ActorRef, Props}
-import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
-import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.evolution.pekkoeffect.IOSuite.*
 import com.evolution.pekkoeffect.persistence.TypeName
 import com.evolution.pekkoeffect.testkit.Probe
 import com.evolution.pekkoeffect.{ActorEffect, ActorRefOf, ActorSuite}
+import org.apache.pekko.actor.{Actor, ActorRef, Props}
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -19,11 +19,11 @@ import scala.concurrent.duration.*
 
 class ClusterShardingLocalTest extends AsyncFunSuite with ActorSuite with Matchers {
 
+  private case class ShardedMsg(id: String, msg: Int)
+
   test("clusterShardingLocal") {
 
     case object HandOffStopMsg
-
-    case class ShardedMsg(id: String, msg: Int)
 
     val actorRefOf = ActorRefOf.fromActorRefFactory[IO](actorSystem)
 

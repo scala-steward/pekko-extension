@@ -1,7 +1,5 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.*
-import org.apache.pekko.testkit.TestActors
 import cats.effect.*
 import cats.effect.syntax.all.*
 import cats.effect.unsafe.implicits.global
@@ -10,6 +8,8 @@ import com.evolution.pekkoeffect.IOSuite.*
 import com.evolution.pekkoeffect.testkit.Probe
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.*
+import org.apache.pekko.testkit.TestActors
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -167,19 +167,19 @@ class ActorOfTest extends AsyncFunSuite with ActorSuite with Matchers {
     } yield result
   }
 
+  private case class GetAndInc[F[_]](delay: F[Unit])
+
   private def receive[F[_]: Async: ToFuture: FromFuture](
     actorSystem: ActorSystem,
     shift: F[Unit],
   ): F[Unit] = {
-
-    case class GetAndInc(delay: F[Unit])
 
     def receiveOf = ReceiveOf.const {
       val receive = for {
         state <- Ref[F].of(0)
       } yield Receive[Call[F, Any, Any]] { call =>
         call.msg match {
-          case a: GetAndInc =>
+          case a: GetAndInc[F] @unchecked =>
             for {
               _ <- shift
               _ <- a.delay

@@ -1,20 +1,20 @@
 package com.evolution.pekkoeffect.persistence
 
-import org.apache.pekko.actor.{ActorIdentity, ActorRef, ActorSystem, Identify}
-import org.apache.pekko.persistence.Recovery
-import org.apache.pekko.testkit.TestActors
 import cats.data.NonEmptyList as Nel
 import cats.effect.*
 import cats.effect.kernel.Ref
 import cats.effect.syntax.all.*
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
+import com.evolution.pekkoeffect.*
 import com.evolution.pekkoeffect.IOSuite.*
 import com.evolution.pekkoeffect.persistence.InstrumentEventSourced.Action
 import com.evolution.pekkoeffect.testkit.Probe
-import com.evolution.pekkoeffect.*
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture, ToTry}
+import org.apache.pekko.actor.{ActorIdentity, ActorRef, ActorSystem, Identify}
+import org.apache.pekko.persistence.Recovery
+import org.apache.pekko.testkit.TestActors
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -82,8 +82,8 @@ class PersistentActorOfTest extends AsyncFunSuite with ActorSuite with Matchers 
     sealed trait Cmd
 
     object Cmd {
-      final case object Inc                               extends Cmd
-      final case object Stop                              extends Cmd
+      case object Inc                                     extends Cmd
+      case object Stop                                    extends Cmd
       final case class WithCtx[A](f: ActorCtx[F] => F[A]) extends Cmd
     }
 

@@ -1,9 +1,5 @@
 package com.evolution.pekkoeffect.cluster.sharding
 
-import org.apache.pekko.actor.*
-import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
-import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
-import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 import cats.effect.syntax.resource.*
 import cats.effect.{Async, Ref, Resource}
 import cats.syntax.all.*
@@ -13,6 +9,10 @@ import com.evolution.pekkoeffect.util.Terminated
 import com.evolution.pekkoeffect.{ActorRefOf, Ask}
 import com.evolutiongaming.catshelper.CatsHelper.*
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture, ToTry}
+import org.apache.pekko.actor.*
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.{ShardId, ShardState}
+import org.apache.pekko.cluster.sharding.{ClusterShardingSettings, ShardRegion}
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -42,16 +42,6 @@ object ClusterShardingLocal {
   ): Resource[F, ClusterShardingLocal[F]] = {
 
     def actorNameOf(a: String) = URLEncoder.encode(a, StandardCharsets.UTF_8.name())
-
-    case class ShardingMsg(f: ActorContext => Unit)
-
-    sealed trait RegionMsg
-
-    object RegionMsg {
-
-      final case object Rebalance extends RegionMsg
-      final case object State     extends RegionMsg
-    }
 
     def shardingActor(): Actor = new Actor {
 
@@ -274,4 +264,15 @@ object ClusterShardingLocal {
       }
     }
   }
+
+  private case class ShardingMsg(f: ActorContext => Unit)
+
+  sealed private trait RegionMsg
+
+  private object RegionMsg {
+
+    case object Rebalance extends RegionMsg
+    case object State     extends RegionMsg
+  }
+
 }

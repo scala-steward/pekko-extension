@@ -1,9 +1,5 @@
 package com.evolution.pekkoeffect.cluster.sharding
 
-import org.apache.pekko.actor.{Actor, Props}
-import org.apache.pekko.cluster.sharding.ClusterShardingSettings
-import org.apache.pekko.cluster.sharding.ShardCoordinator.LeastShardAllocationStrategy
-import org.apache.pekko.cluster.sharding.ShardRegion.Msg
 import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, Resource}
 import cats.syntax.all.*
@@ -13,6 +9,10 @@ import com.evolution.pekkoeffect.testkit.Probe
 import com.evolution.pekkoeffect.{ActorRefOf, ActorSuite}
 import com.evolutiongaming.catshelper.LogOf
 import com.typesafe.config.ConfigFactory
+import org.apache.pekko.actor.{Actor, Props}
+import org.apache.pekko.cluster.sharding.ClusterShardingSettings
+import org.apache.pekko.cluster.sharding.ShardCoordinator.LeastShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardRegion.Msg
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 

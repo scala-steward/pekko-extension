@@ -1,6 +1,5 @@
 package com.evolution.pekkoeffect.eventsourcing
 
-import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import cats.Applicative
 import cats.effect.implicits.*
 import cats.effect.{Clock, Concurrent, Ref}
@@ -10,6 +9,7 @@ import com.evolution.pekkoeffect.ActorStoppedError
 import com.evolution.pekkoeffect.persistence.{SeqNr, SnapshotMetadata, Snapshotter}
 import com.evolutiongaming.catshelper.ClockHelper.*
 import com.evolutiongaming.catshelper.Log
+import org.apache.pekko.persistence.SnapshotSelectionCriteria
 import pureconfig.ConfigReader
 import pureconfig.generic.semiauto.deriveReader
 

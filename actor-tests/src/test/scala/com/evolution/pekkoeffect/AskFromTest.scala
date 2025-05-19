@@ -1,12 +1,12 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorRef
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Async, IO, Resource, Sync}
 import cats.syntax.all.*
 import com.evolution.pekkoeffect.IOSuite.*
 import com.evolution.pekkoeffect.testkit.Probe
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.ActorRef
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 

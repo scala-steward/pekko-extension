@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{ActorContext, ActorRef, ActorRefFactory}
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Monad, ~>}
+import org.apache.pekko.actor.{ActorContext, ActorRef, ActorRefFactory}
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.concurrent.duration.Duration

@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.syntax.all.*
 import cats.{Applicative, Contravariant, FlatMap, ~>}
+import org.apache.pekko.actor.ActorRef
 
 /** Typesafe api for ActorRef.tell
   *

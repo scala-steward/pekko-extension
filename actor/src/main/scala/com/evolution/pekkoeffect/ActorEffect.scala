@@ -1,9 +1,9 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.{ActorPath, ActorRef, Props}
 import cats.effect.{Async, Resource, Sync}
 import cats.{Applicative, FlatMap, ~>}
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
+import org.apache.pekko.actor.{ActorPath, ActorRef, Props}
 
 /** Typesafe api for ActorRef
   *

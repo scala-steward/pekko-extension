@@ -1,8 +1,8 @@
 package com.evolution.pekkoeffect
 
-import org.apache.pekko.actor.ActorRef
 import cats.syntax.all.*
 import com.evolutiongaming.catshelper.{ApplicativeThrowable, MonadThrowable}
+import org.apache.pekko.actor.ActorRef
 
 trait Fail[F[_]] {
 
