@@ -1,51 +1,52 @@
 package com.evolution.cluster.ddata
 
-import org.apache.pekko.cluster.ddata.Replicator.{ReadLocal, WriteLocal}
-import org.apache.pekko.cluster.ddata.{GCounter, GCounterKey, Replicator => R}
-import cats.effect.{Clock, IO}
 import cats.effect.unsafe.implicits.global
-import cats.implicits._
-import com.evolution.cluster.ddata.IOSuite._
+import cats.effect.{Clock, IO}
+import cats.syntax.all.*
+import com.evolution.cluster.ddata.IOSuite.*
 import com.evolution.cluster.ddata.SafeReplicator.Metrics
 import com.evolutiongaming.catshelper.MeasureDuration
 import com.evolutiongaming.smetrics.CollectorRegistry
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.cluster.ddata.Replicator.{ReadLocal, WriteLocal}
+import org.apache.pekko.cluster.ddata.{GCounter, GCounterKey, Replicator as R}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.concurrent.{Await, Future}
 import scala.util.control.NoStackTrace
 import scala.util.{Failure, Success, Try}
 
 class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
-  import SafeReplicatorSpec._
+  import SafeReplicatorSpec.*
 
-  private implicit val readConsistency = ReadLocal
-  private implicit val writeConsistency = WriteLocal
+  private implicit val readConsistency: R.ReadConsistency = ReadLocal
+  private implicit val writeConsistency: R.WriteConsistency = WriteLocal
 
   "proxy get" in new Scope {
-    val result = replicator.get.unsafeToFuture()
+    val result: Future[Option[GCounter]] = replicator.get.unsafeToFuture()
     expectMsg(R.Get(key, readConsistency))
     lastSender ! R.GetSuccess(key, None)(counter)
     result.await shouldEqual Success(Some(counter))
   }
 
   "proxy get and reply with DataDeleted" in new Scope {
-    val result = replicator.get.unsafeToFuture()
+    val result: Future[Option[GCounter]] = replicator.get.unsafeToFuture()
     expectMsg(R.Get(key, readConsistency))
     lastSender ! R.DataDeleted(key, None)
     result.await shouldEqual Failure(ReplicatorError.dataDeleted)
   }
 
   "proxy get and reply with NotFound" in new Scope {
-    val result = replicator.get.unsafeToFuture()
+    val result: Future[Option[GCounter]] = replicator.get.unsafeToFuture()
     expectMsg(R.Get(key, readConsistency))
     lastSender ! R.NotFound(key, None)
     result.await shouldEqual Success(None)
   }
 
   "proxy get and reply with GetFailure" in new Scope {
-    val result = replicator.get.unsafeToFuture()
+    val result: Future[Option[GCounter]] = replicator.get.unsafeToFuture()
     expectMsg(R.Get(key, readConsistency))
     lastSender ! R.GetFailure(key, None)
     result.await shouldEqual Failure(ReplicatorError.getFailure)
@@ -53,7 +54,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy update" in new Scope {
     val modify: Option[GCounter] => GCounter = _ => counter
-    val result = replicator.update(modify).unsafeToFuture()
+    val result: Future[Unit] = replicator.update(modify).unsafeToFuture()
     expectMsg(R.Update(key, writeConsistency, None)(modify))
     lastSender ! R.UpdateSuccess(key, None)
     result.await shouldEqual Success(())
@@ -61,7 +62,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy update and reply with Failure" in new Scope {
     val modify: Option[GCounter] => GCounter = _ => counter
-    val result = replicator.update(modify).unsafeToFuture()
+    val result: Future[Unit] = replicator.update(modify).unsafeToFuture()
     expectMsg(R.Update(key, writeConsistency, None)(modify))
     lastSender ! R.ModifyFailure(key, "errorMsg", failure, None)
     result.await shouldEqual Failure(ReplicatorError.modifyFailure("errorMsg", failure))
@@ -69,7 +70,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy update and reply with Timeout" in new Scope {
     val modify: Option[GCounter] => GCounter = _ => counter
-    val result = replicator.update(modify).unsafeToFuture()
+    val result: Future[Unit] = replicator.update(modify).unsafeToFuture()
     expectMsg(R.Update(key, writeConsistency, None)(modify))
     lastSender ! R.UpdateTimeout(key, None)
     result.await shouldEqual Failure(ReplicatorError.timeout)
@@ -77,7 +78,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy update and reply with StoreFailure" in new Scope {
     val modify: Option[GCounter] => GCounter = _ => counter
-    val result = replicator.update(modify).unsafeToFuture()
+    val result: Future[Unit] = replicator.update(modify).unsafeToFuture()
     expectMsg(R.Update(key, writeConsistency, None)(modify))
     lastSender ! R.StoreFailure(key, None)
     result.await shouldEqual Failure(ReplicatorError.storeFailure)
@@ -85,35 +86,35 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy update and reply with Deleted" in new Scope {
     val modify: Option[GCounter] => GCounter = _ => counter
-    val result = replicator.update(modify).unsafeToFuture()
+    val result: Future[Unit] = replicator.update(modify).unsafeToFuture()
     expectMsg(R.Update(key, writeConsistency, None)(modify))
     lastSender ! R.DataDeleted(key, None)
     result.await shouldEqual Failure(ReplicatorError.dataDeleted)
   }
 
   "proxy delete" in new Scope {
-    val result = replicator.delete.unsafeToFuture()
+    val result: Future[Boolean] = replicator.delete.unsafeToFuture()
     expectMsg(R.Delete(key, writeConsistency, None))
     lastSender ! R.DeleteSuccess(key, None)
     result.await shouldEqual Success(true)
   }
 
   "proxy delete and reply with AlreadyDeleted" in new Scope {
-    val result = replicator.delete.unsafeToFuture()
+    val result: Future[Boolean] = replicator.delete.unsafeToFuture()
     expectMsg(R.Delete(key, writeConsistency, None))
     lastSender ! R.DataDeleted(key, None)
     result.await shouldEqual Success(false)
   }
 
   "proxy delete and reply with ReplicationFailure" in new Scope {
-    val result = replicator.delete.unsafeToFuture()
+    val result: Future[Boolean] = replicator.delete.unsafeToFuture()
     expectMsg(R.Delete(key, writeConsistency, None))
     lastSender ! R.ReplicationDeleteFailure(key, None)
     result.await shouldEqual Failure(ReplicatorError.replicationFailure)
   }
 
   "proxy delete and reply with StoreFailure" in new Scope {
-    val result = replicator.delete.unsafeToFuture()
+    val result: Future[Boolean] = replicator.delete.unsafeToFuture()
     expectMsg(R.Delete(key, writeConsistency, None))
     lastSender ! R.StoreFailure(key, None)
     result.await shouldEqual Failure(ReplicatorError.storeFailure)
@@ -121,7 +122,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy subscribe" in new Scope {
     val (_, unsubscribe) = replicator.subscribe(().pure[IO], onChanged).allocated.unsafeRunSync()
-    val ref = expectMsgPF() { case R.Subscribe(`key`, ref) => ref }
+    val ref: ActorRef = expectMsgPF() { case R.Subscribe(`key`, ref) => ref }
     ref ! R.Changed(key)(counter)
     expectMsg(counter)
     unsubscribe.unsafeRunSync()
@@ -130,7 +131,7 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
 
   "proxy subscribe and stop when data deleted" in new Scope {
     replicator.subscribe(().pure[IO], onChanged).allocated.unsafeRunSync()
-    val ref = expectMsgPF() { case R.Subscribe(`key`, ref) => ref }
+    val ref: ActorRef = expectMsgPF() { case R.Subscribe(`key`, ref) => ref }
     ref ! R.DataDeleted(key, None)
     expectMsg(R.Unsubscribe(key, ref))
   }
@@ -141,13 +142,13 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
   }
 
   private trait Scope extends ActorScope {
-    val key = GCounterKey("key")
-    val counter = GCounter.empty
-    val onChanged = (data: GCounter) => IO { testActor ! data }
-    val replicator = {
-      implicit val measureDuration = MeasureDuration.fromClock(Clock[IO])
+    val key: GCounterKey = GCounterKey("key")
+    val counter: GCounter = GCounter.empty
+    val onChanged: GCounter => IO[Unit] = (data: GCounter) => IO { testActor ! data }
+    val replicator: SafeReplicator[IO, GCounter] = {
+      implicit val measureDuration: MeasureDuration[IO] = MeasureDuration.fromClock(Clock[IO])
       val resource = for {
-        metrics    <- Metrics.of(CollectorRegistry.empty[IO])
+        metrics <- Metrics.of(CollectorRegistry.empty[IO])
         replicator <- SafeReplicator[IO, GCounter](key, 5.seconds, testActor).withMetrics1(metrics("ddata"), system)
       } yield replicator
 
@@ -157,13 +158,13 @@ class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
     }
   }
 
-  private val failure = new RuntimeException with NoStackTrace
 }
 
 object SafeReplicatorSpec {
 
-  implicit class FutureOps[A](val self: Future[A]) extends AnyVal {
+  private val failure = new RuntimeException with NoStackTrace
 
+  implicit class FutureOps[A](val self: Future[A]) extends AnyVal {
     def await: Try[A] = Try { Await.result(self, 3.seconds) }
   }
 }

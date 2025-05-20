@@ -8,7 +8,7 @@ trait ActorSpec extends BeforeAndAfterAll { this: Suite =>
 
   lazy val actorSystem: ActorSystem = ActorSystem(getClass.getSimpleName)
 
-  override protected def afterAll() = {
+  override protected def afterAll(): Unit = {
     TestKit.shutdownActorSystem(actorSystem)
   }
 
