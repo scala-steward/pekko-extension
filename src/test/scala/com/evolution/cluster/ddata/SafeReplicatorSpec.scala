@@ -1,13 +1,13 @@
-package com.evolutiongaming.cluster.ddata
+package com.evolution.cluster.ddata
 
 import org.apache.pekko.cluster.ddata.Replicator.{ReadLocal, WriteLocal}
 import org.apache.pekko.cluster.ddata.{GCounter, GCounterKey, Replicator => R}
 import cats.effect.{Clock, IO}
 import cats.effect.unsafe.implicits.global
 import cats.implicits._
+import com.evolution.cluster.ddata.IOSuite._
+import com.evolution.cluster.ddata.SafeReplicator.Metrics
 import com.evolutiongaming.catshelper.MeasureDuration
-import com.evolutiongaming.cluster.ddata.IOSuite._
-import com.evolutiongaming.cluster.ddata.SafeReplicator.Metrics
 import com.evolutiongaming.smetrics.CollectorRegistry
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

@@ -2,10 +2,10 @@ import sbt._
 
 object Dependencies {
 
-  val `executor-tools` = "com.evolutiongaming" %% "executor-tools" % "1.0.2"
+  val `executor-tools` = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
   val scalatest        = "org.scalatest"       %% "scalatest"      % "3.2.19"
   val `cats-helper`    = "com.evolutiongaming" %% "cats-helper"    % "3.12.0"
-  val smetrics         = "com.evolutiongaming" %% "smetrics"       % "2.0.0"
+  val smetrics         = "com.evolutiongaming" %% "smetrics"       % "2.3.1"
 
   object Cats {
     val core   = "org.typelevel" %% "cats-core"   % "2.13.0"

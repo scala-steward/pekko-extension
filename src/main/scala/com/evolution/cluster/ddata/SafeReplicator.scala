@@ -1,4 +1,4 @@
-package com.evolutiongaming.cluster.ddata
+package com.evolution.cluster.ddata
 
 import org.apache.pekko.actor.{Actor, ActorLogging, ActorRef, ActorRefFactory, ActorSystem, Props}
 import org.apache.pekko.cluster.ddata.Replicator.{ReadConsistency, WriteConsistency}
@@ -8,8 +8,8 @@ import org.apache.pekko.util.Timeout
 import cats.effect.{Resource, Sync}
 import cats.implicits._
 import cats.{Applicative, Monad}
+import com.evolution.cluster.ddata.{ReplicatorError => E}
 import com.evolutiongaming.catshelper.{FromFuture, MeasureDuration, ToFuture}
-import com.evolutiongaming.cluster.ddata.{ReplicatorError => E}
 import com.evolutiongaming.smetrics.MetricsHelper._
 import com.evolutiongaming.smetrics._
 

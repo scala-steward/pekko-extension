@@ -32,5 +32,5 @@ trait SafeReplicator[F[_], A <: ReplicatedData] {
 ```scala
 addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 
-libraryDependencies += "com.evolutiongaming" %% "ddata-tools" % "2.0.8"
+libraryDependencies += "com.evolution" %% "pekko-ddata-tools" % "1.0.0"
 ```

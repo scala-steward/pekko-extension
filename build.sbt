@@ -2,7 +2,7 @@ import Dependencies._
 
 name := "pekko-ddata-tools"
 
-organization := "com.evolutiongaming"
+organization := "com.evolution"
 
 homepage := Some(url("https://github.com/evolution-gaming/pekko-ddata-tools"))
 
