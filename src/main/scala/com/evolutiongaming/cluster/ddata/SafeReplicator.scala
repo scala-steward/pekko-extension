@@ -1,10 +1,10 @@
 package com.evolutiongaming.cluster.ddata
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorRefFactory, ActorSystem, Props}
-import akka.cluster.ddata.Replicator.{ReadConsistency, WriteConsistency}
-import akka.cluster.ddata.{DistributedData, Flag, GCounter, GSet, Key, LWWMap, ManyVersionVector, ORMap, ORMultiMap, ORSet, OneVersionVector, PNCounter, PNCounterMap, ReplicatedData, VersionVector, Replicator => R}
-import akka.pattern.ask
-import akka.util.Timeout
+import org.apache.pekko.actor.{Actor, ActorLogging, ActorRef, ActorRefFactory, ActorSystem, Props}
+import org.apache.pekko.cluster.ddata.Replicator.{ReadConsistency, WriteConsistency}
+import org.apache.pekko.cluster.ddata.{DistributedData, Flag, GCounter, GSet, Key, LWWMap, ManyVersionVector, ORMap, ORMultiMap, ORSet, OneVersionVector, PNCounter, PNCounterMap, ReplicatedData, VersionVector, Replicator => R}
+import org.apache.pekko.pattern.ask
+import org.apache.pekko.util.Timeout
 import cats.effect.{Resource, Sync}
 import cats.implicits._
 import cats.{Applicative, Monad}
@@ -17,9 +17,9 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * Typesafe api for [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html]]
+  * Typesafe api for [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html]]
   *
-  * Akka Distributed Data is useful when you need to share data between nodes in an Akka Cluster.
+  * Pekko Distributed Data is useful when you need to share data between nodes in an Pekko Cluster.
   * The data is accessed with an actor providing a key-value store like API.
   * The keys are unique identifiers with type information of the data values.
   * The values are Conflict Free Replicated Data Types (CRDTs).
@@ -29,16 +29,16 @@ import scala.concurrent.{ExecutionContext, Future}
 trait SafeReplicator[F[_], A <: ReplicatedData] {
 
   /**
-    * [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#get]]
+    * [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#get]]
     *
     * To retrieve the current value of a data
     *
-    * @param consistency [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#consistency]]
+    * @param consistency [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#consistency]]
     */
   def get(implicit consistency: ReadConsistency): F[Option[A]]
 
   /**
-    * [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#update]]
+    * [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#update]]
     *
     * To modify and replicate a data value
     * The current data value for the key of the Update is passed as parameter to the modify function of the Update.
@@ -47,23 +47,23 @@ trait SafeReplicator[F[_], A <: ReplicatedData] {
     * @param modify      The modify function is called by the Replicator actor and must therefore be a pure function
     *                    that only uses the data parameter and stable fields from enclosing scope.
     *                    It must for example not access the sender (sender()) reference of an enclosing actor.
-    * @param consistency [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#consistency]]
+    * @param consistency [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#consistency]]
     */
   def update(modify: Option[A] => A)(implicit consistency: WriteConsistency): F[Unit]
 
   /**
-    * [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#delete]]
+    * [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#delete]]
     *
     * A deleted key cannot be reused again,
     * but it is still recommended to delete unused data entries because that reduces the replication overhead when new nodes join the cluster.
     * Subsequent delete, update and get calls will fail with Deleted or AlreadyDeleted. Subscribers will stop
     *
-    * @param consistency [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#consistency]]
+    * @param consistency [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#consistency]]
     */
   def delete(implicit consistency: WriteConsistency): F[Boolean]
 
   /**
-    * [[https://doc.akka.io/docs/akka/2.5.22/distributed-data.html#subscribe]]
+    * [[https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html#subscribe]]
     *
     * Subscribers will be notified periodically with the configured notify-subscribers-interval
     *

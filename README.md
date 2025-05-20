@@ -1,11 +1,11 @@
 # DData Tools
-[![Build Status](https://github.com/evolution-gaming/ddata-tools/workflows/CI/badge.svg)](https://github.com/evolution-gaming/ddata-tools/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/ddata-tools/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/ddata-tools?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/91f43a46edcf44e7829e4ef10aae3ba1)](https://www.codacy.com/app/evolution-gaming/ddata-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/ddata-tools&amp;utm_campaign=Badge_Grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=ddata-tools_2.13&repos=public)
+[![Build Status](https://github.com/evolution-gaming/pekko-ddata-tools/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-ddata-tools/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-ddata-tools/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-ddata-tools?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/91f43a46edcf44e7829e4ef10aae3ba1)](https://www.codacy.com/app/evolution-gaming/pekko-ddata-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-ddata-tools&amp;utm_campaign=Badge_Grade)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-ddata-tools_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
-### SafeReplicator - is a typesafe api for [DData replicator](https://doc.akka.io/docs/akka/2.5.9/distributed-data.html)
+### SafeReplicator - is a typesafe api for [DData replicator](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html)
 
 ```scala
 trait SafeReplicator[F[_], A <: ReplicatedData] {

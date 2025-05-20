@@ -1,7 +1,7 @@
 package com.evolutiongaming.cluster.ddata
 
-import akka.actor.ActorSystem
-import akka.testkit.{DefaultTimeout, ImplicitSender, TestKit}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.testkit.{DefaultTimeout, ImplicitSender, TestKit}
 import org.scalatest.{BeforeAndAfterAll, Suite}
 
 trait ActorSpec extends BeforeAndAfterAll { this: Suite =>

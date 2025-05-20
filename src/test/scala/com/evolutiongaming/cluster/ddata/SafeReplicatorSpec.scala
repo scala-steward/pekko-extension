@@ -1,7 +1,7 @@
 package com.evolutiongaming.cluster.ddata
 
-import akka.cluster.ddata.Replicator.{ReadLocal, WriteLocal}
-import akka.cluster.ddata.{GCounter, GCounterKey, Replicator => R}
+import org.apache.pekko.cluster.ddata.Replicator.{ReadLocal, WriteLocal}
+import org.apache.pekko.cluster.ddata.{GCounter, GCounterKey, Replicator => R}
 import cats.effect.{Clock, IO}
 import cats.effect.unsafe.implicits.global
 import cats.implicits._
@@ -9,14 +9,15 @@ import com.evolutiongaming.catshelper.MeasureDuration
 import com.evolutiongaming.cluster.ddata.IOSuite._
 import com.evolutiongaming.cluster.ddata.SafeReplicator.Metrics
 import com.evolutiongaming.smetrics.CollectorRegistry
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.util.control.NoStackTrace
 import scala.util.{Failure, Success, Try}
 
-class SafeReplicatorSpec extends WordSpec with ActorSpec with Matchers {
+class SafeReplicatorSpec extends AnyWordSpec with ActorSpec with Matchers {
   import SafeReplicatorSpec._
 
   private implicit val readConsistency = ReadLocal

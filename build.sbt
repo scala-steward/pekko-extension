@@ -1,10 +1,10 @@
 import Dependencies._
 
-name := "ddata-tools"
+name := "pekko-ddata-tools"
 
 organization := "com.evolutiongaming"
 
-homepage := Some(url("https://github.com/evolution-gaming/ddata-tools"))
+homepage := Some(url("https://github.com/evolution-gaming/pekko-ddata-tools"))
 
 startYear := Some(2018)
 
@@ -14,23 +14,24 @@ organizationHomepage := Some(url("https://evolution.com"))
 
 scalaVersion := crossScalaVersions.value.head
 
-crossScalaVersions := Seq("2.13.11", "2.12.18")
+crossScalaVersions := Seq("2.13.11")
 
 Compile / doc / scalacOptions ++= Seq("-no-link-warnings")
 
 publishTo := Some(Resolver.evolutionReleases)
 
 libraryDependencies ++= Seq(
-  Akka.actor,
-  Akka.cluster,
-  Akka.`distributed-data`,
-  Akka.testkit % Test,
+  Pekko.actor,
+  Pekko.cluster,
+  Pekko.`distributed-data`,
+  Pekko.testkit % Test,
   Cats.core,
   Cats.effect,
   `executor-tools`,
   `cats-helper`,
   smetrics,
-  scalatest % Test)
+  scalatest % Test,
+)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 
