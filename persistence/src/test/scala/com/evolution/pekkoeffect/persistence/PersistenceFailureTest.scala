@@ -26,7 +26,7 @@ class PersistenceFailureTest extends AnyFunSuite with Matchers {
     IO {
 
       val journal  = "fail-on-event-journal"
-      val snapshot = "inmemory-snapshot-store"
+      val snapshot = "pekko.persistence.snapshot-store.inmem"
 
       EventSourced(
         eventSourcedId = EventSourcedId("test"),

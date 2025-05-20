@@ -2,16 +2,15 @@ import sbt._
 
 object Dependencies {
 
-  val scalatest                    = "org.scalatest"         %% "scalatest"                  % "3.2.19"
-  val `cats-helper`                = "com.evolutiongaming"   %% "cats-helper"                % "3.12.0"
-  val retry                        = "com.evolutiongaming"   %% "retry"                      % "3.1.0"
-  val `pekko-persistence-inmemory` = "io.github.alstanchev"  %% "pekko-persistence-inmemory" % "1.3.0"
-  val `kind-projector`             = "org.typelevel"          % "kind-projector"             % "0.13.3"
-  val pureconfig                   = "com.github.pureconfig" %% "pureconfig"                 % "0.17.8"
-  val `pureconfig-scala3`          = "com.github.pureconfig" %% "pureconfig-core"            % "0.17.8"
-  val `pureconfig-generic-scala3`  = "com.github.pureconfig" %% "pureconfig-generic-scala3"  % "0.17.8"
-  val smetrics                     = "com.evolutiongaming"   %% "smetrics"                   % "2.3.1"
-  val sstream                      = "com.evolutiongaming"   %% "sstream"                    % "1.1.0"
+  val scalatest                   = "org.scalatest"         %% "scalatest"                 % "3.2.19"
+  val `cats-helper`               = "com.evolutiongaming"   %% "cats-helper"               % "3.12.0"
+  val retry                       = "com.evolutiongaming"   %% "retry"                     % "3.1.0"
+  val `kind-projector`            = "org.typelevel"          % "kind-projector"            % "0.13.3"
+  val pureconfig                  = "com.github.pureconfig" %% "pureconfig"                % "0.17.8"
+  val `pureconfig-scala3`         = "com.github.pureconfig" %% "pureconfig-core"           % "0.17.8"
+  val `pureconfig-generic-scala3` = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.8"
+  val smetrics                    = "com.evolutiongaming"   %% "smetrics"                  % "2.3.1"
+  val sstream                     = "com.evolutiongaming"   %% "sstream"                   % "1.1.0"
 
   object Cats {
     private val version = "2.13.0"
@@ -24,15 +23,17 @@ object Dependencies {
   }
 
   object Pekko {
-    private val version     = "1.1.3"
-    val actor               = "org.apache.pekko" %% "pekko-actor"             % version
-    val testkit             = "org.apache.pekko" %% "pekko-testkit"           % version
-    val stream              = "org.apache.pekko" %% "pekko-stream"            % version
-    val persistence         = "org.apache.pekko" %% "pekko-persistence"       % version
-    val `persistence-query` = "org.apache.pekko" %% "pekko-persistence-query" % version
-    val cluster             = "org.apache.pekko" %% "pekko-cluster"           % version
-    val `cluster-sharding`  = "org.apache.pekko" %% "pekko-cluster-sharding"  % version
-    val slf4j               = "org.apache.pekko" %% "pekko-slf4j"             % version
+    private val version       = "1.1.3"
+    val actor                 = "org.apache.pekko" %% "pekko-actor"               % version
+    val testkit               = "org.apache.pekko" %% "pekko-testkit"             % version
+    val stream                = "org.apache.pekko" %% "pekko-stream"              % version
+    val persistence           = "org.apache.pekko" %% "pekko-persistence"         % version
+    val `persistence-testkit` = "org.apache.pekko" %% "pekko-persistence-testkit" % version
+    val `persistence-query`   = "org.apache.pekko" %% "pekko-persistence-query"   % version
+    val cluster               = "org.apache.pekko" %% "pekko-cluster"             % version
+    val `cluster-typed`       = "org.apache.pekko" %% "pekko-cluster-typed"       % version
+    val `cluster-sharding`    = "org.apache.pekko" %% "pekko-cluster-sharding"    % version
+    val slf4j                 = "org.apache.pekko" %% "pekko-slf4j"               % version
   }
 
   object Logback {

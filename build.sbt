@@ -147,6 +147,7 @@ lazy val persistence = project
       Pekko.actor,
       Pekko.stream,
       Pekko.persistence,
+      Pekko.`persistence-testkit` % Test,
       Pekko.`persistence-query`,
       Pekko.slf4j   % Test,
       Pekko.testkit % Test,
@@ -154,8 +155,7 @@ lazy val persistence = project
       CatsEffect.effect,
       `cats-helper`,
       smetrics,
-      scalatest                    % Test,
-      `pekko-persistence-inmemory` % Test,
+      scalatest % Test,
     ),
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
@@ -189,6 +189,7 @@ lazy val cluster = project
   .settings(
     libraryDependencies ++= Seq(
       Pekko.cluster,
+      Pekko.`cluster-typed` % Test,
     ),
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
