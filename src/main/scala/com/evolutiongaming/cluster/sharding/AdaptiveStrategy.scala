@@ -1,16 +1,16 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.*
-import akka.cluster.ddata.Replicator.{WriteConsistency, WriteLocal}
-import akka.cluster.ddata.*
-import akka.cluster.sharding.ShardRegion
-import akka.cluster.sharding.ShardRegion.ExtractShardId
+import org.apache.pekko.actor.*
+import org.apache.pekko.cluster.ddata.Replicator.{WriteConsistency, WriteLocal}
+import org.apache.pekko.cluster.ddata.*
+import org.apache.pekko.cluster.sharding.ShardRegion
+import org.apache.pekko.cluster.sharding.ShardRegion.ExtractShardId
 import cats.effect.syntax.resource.*
 import cats.effect.{Ref, Resource, Sync}
 import cats.implicits.*
 import cats.{Applicative, FlatMap, Monad, Parallel, ~>}
+import com.evolution.cluster.ddata.SafeReplicator
 import com.evolutiongaming.catshelper.*
-import com.evolutiongaming.cluster.ddata.SafeReplicator
 import com.evolutiongaming.cluster.sharding.AdaptiveStrategy.Counters
 
 import scala.concurrent.duration.*

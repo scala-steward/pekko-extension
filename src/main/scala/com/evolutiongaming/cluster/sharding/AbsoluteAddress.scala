@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.{Address, ExtendedActorSystem, Extension, ExtensionId}
+import org.apache.pekko.actor.{Address, ExtendedActorSystem, Extension, ExtensionId}
 
 trait AbsoluteAddress extends Extension {
   def apply(address: Address): Address

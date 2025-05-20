@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.Address
+import org.apache.pekko.actor.Address
 import cats.arrow.FunctionK
 import cats.effect.{IO, Ref}
 import com.evolutiongaming.cluster.sharding.AdaptiveStrategy.Counters

@@ -1,16 +1,16 @@
 package com.evolutiongaming.cluster.sharding
 
 
-import akka.actor.{ActorRef, ActorRefFactory, ActorSystem, Address, ExtendedActorSystem, Extension, ExtensionId}
-import akka.cluster.ddata.Replicator.{ReadConsistency, ReadLocal, WriteConsistency, WriteLocal}
-import akka.cluster.ddata.*
+import org.apache.pekko.actor.{ActorRef, ActorRefFactory, ActorSystem, Address, ExtendedActorSystem, Extension, ExtensionId}
+import org.apache.pekko.cluster.ddata.Replicator.{ReadConsistency, ReadLocal, WriteConsistency, WriteLocal}
+import org.apache.pekko.cluster.ddata.*
 import cats.effect.kernel.Ref
 import cats.effect.{Resource, Sync}
 import cats.implicits.*
 import cats.effect.syntax.resource.*
 import cats.{FlatMap, Parallel, ~>}
+import com.evolution.cluster.ddata.SafeReplicator
 import com.evolutiongaming.catshelper.{FromFuture, ToFuture}
-import com.evolutiongaming.cluster.ddata.SafeReplicator
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.*

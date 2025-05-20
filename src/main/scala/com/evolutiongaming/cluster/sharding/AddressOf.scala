@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.{ActorSystem, Address}
+import org.apache.pekko.actor.{ActorSystem, Address}
 
 trait AddressOf {
   def apply(region: Region): Address

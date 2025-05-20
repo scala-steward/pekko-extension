@@ -1,11 +1,11 @@
 import Dependencies.*
 
-name := "sharding-strategy"
+name := "pekko-sharding-strategy"
 
 organization := "com.evolutiongaming"
 organizationName := "Evolution"
 organizationHomepage := Some(url("https://evolution.com"))
-homepage := Some(url("https://github.com/evolution-gaming/sharding-strategy"))
+homepage := Some(url("https://github.com/evolution-gaming/pekko-sharding-strategy"))
 startYear := Some(2018)
 
 crossScalaVersions := Seq("2.13.16")
@@ -14,20 +14,21 @@ scalacOptions := Seq(
   "-release:17",
   "-Xsource:3",
 )
-publishTo := Some(Resolver.evolutionReleases) // sbt-release
+publishTo := Some(Resolver.evolutionReleases)
 versionPolicyIntention := Compatibility.BinaryCompatible // sbt-version-policy
 
 libraryDependencies ++= Seq(
   `ddata-tools`,
   `cats-helper`,
-  Akka.actor,
-  Akka.`distributed-data`,
-  Akka.cluster,
-  Akka.sharding,
-  Akka.testkit % Test,
+  Pekko.actor,
+  Pekko.`distributed-data`,
+  Pekko.cluster,
+  Pekko.sharding,
+  Pekko.testkit % Test,
   Cats.core,
   Cats.effect,
-  scalatest % Test)
+  scalatest % Test,
+)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 

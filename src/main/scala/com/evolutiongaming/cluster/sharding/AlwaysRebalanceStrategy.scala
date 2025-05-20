@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.ActorRef
+import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.implicits.*
 

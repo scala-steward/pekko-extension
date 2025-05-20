@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.{Actor, Address, Props}
+import org.apache.pekko.actor.{Actor, Address, Props}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -14,6 +14,6 @@ class AbsoluteAddressSpec extends AnyFunSuite with ActorSpec with Matchers {
 
     val props = Props(actor())
     val ref = actorSystem.actorOf(props)
-    AbsoluteAddress(actorSystem).apply(ref.path.address) shouldEqual Address("akka", "AbsoluteAddressSpec")
+    AbsoluteAddress(actorSystem).apply(ref.path.address) shouldEqual Address("pekko", "AbsoluteAddressSpec")
   }
 }

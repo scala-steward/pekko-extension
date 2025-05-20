@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.{Address, ExtendedActorSystem}
+import org.apache.pekko.actor.{Address, ExtendedActorSystem}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 

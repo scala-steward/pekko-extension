@@ -1,15 +1,11 @@
-## Versions
-From version `2.0.0` this library is based on **cats-effect-3**. If you want to use it with **cats-effect-2**,
-you need to use version prior to `2.0.0`, for example, `1.0.7`
-
 # Sharding Strategies
-[![Build Status](https://github.com/evolution-gaming/sharding-strategy/workflows/CI/badge.svg)](https://github.com/evolution-gaming/sharding-strategy/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/sharding-strategy/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/sharding-strategy?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d60baa5803c542d6b4437cb2a5541ab4)](https://www.codacy.com/app/evolution-gaming/sharding-strategy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/sharding-strategy&amp;utm_campaign=Badge_Grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=sharding-strategy_2.13&repos=public)
+[![Build Status](https://github.com/evolution-gaming/pekko-sharding-strategy/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-sharding-strategy/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-sharding-strategy/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-sharding-strategy?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d60baa5803c542d6b4437cb2a5541ab4)](https://www.codacy.com/app/evolution-gaming/pekko-sharding-strategy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-sharding-strategy&amp;utm_campaign=Badge_Grade)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-sharding-strategy_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
-Alternative to [akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy](https://github.com/akka/akka/blob/master/akka-cluster-sharding/src/main/scala/akka/cluster/sharding/ShardCoordinator.scala#L72)
+Alternative to [org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy](https://github.com/apache/pekko/blob/main/cluster-sharding/src/main/scala/org/apache/pekko/cluster/sharding/ShardCoordinator.scala#L78)
 
 ## Api
 
@@ -36,15 +32,9 @@ val strategy = LeastShardsStrategy()
 ```
 
 ## Setup
-For **cats-effect-3**
+
 ```scala
 addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 
-libraryDependencies += "com.evolutiongaming" %% "sharding-strategy" % "2.0.0"
-```
-For **cats-effect-2**
-```scala
-addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
-
-libraryDependencies += "com.evolutiongaming" %% "sharding-strategy" % "1.0.7"
+libraryDependencies += "com.evolutiongaming" %% "pekko-sharding-strategy" % "1.0.0"
 ```

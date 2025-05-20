@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
 
 import scala.concurrent.{ExecutionContext, Future}
 

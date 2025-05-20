@@ -4,7 +4,7 @@ object Dependencies {
 
   val scalatest     = "org.scalatest"       %% "scalatest"   % "3.2.19"
   val `cats-helper` = "com.evolutiongaming" %% "cats-helper" % "3.12.0"
-  val `ddata-tools` = "com.evolutiongaming" %% "ddata-tools" % "4.0.0"
+  val `ddata-tools` = "com.evolution"       %% "pekko-ddata-tools" % "0.0.0+67-e1b5ef32"
 
   object Cats {
     private val version = "2.13.0"
@@ -13,12 +13,12 @@ object Dependencies {
     val effect = "org.typelevel" %% "cats-effect" % effectVersion
   }
 
-  object Akka {
-    private val version = "2.6.21"
-    val actor              = "com.typesafe.akka" %% "akka-actor"            % version
-    val cluster            = "com.typesafe.akka" %% "akka-cluster"          % version
-    val sharding           = "com.typesafe.akka" %% "akka-cluster-sharding" % version
-    val `distributed-data` = "com.typesafe.akka" %% "akka-distributed-data" % version
-    val testkit            = "com.typesafe.akka" %% "akka-testkit"          % version
+  object Pekko {
+    private val version = "1.1.3"
+    val actor              = "org.apache.pekko" %% "pekko-actor"           % version
+    val cluster            = "org.apache.pekko" %% "pekko-cluster"         % version
+    val sharding           = "org.apache.pekko" %% "pekko-cluster-sharding" % version
+    val `distributed-data` = "org.apache.pekko" %% "pekko-distributed-data" % version
+    val testkit            = "org.apache.pekko" %% "pekko-testkit"         % version
   }
 }

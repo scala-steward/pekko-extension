@@ -1,7 +1,7 @@
 package com.evolutiongaming.cluster
 
-import akka.actor.ActorRef
-import akka.cluster.sharding.ShardRegion
+import org.apache.pekko.actor.ActorRef
+import org.apache.pekko.cluster.sharding.ShardRegion
 
 package object sharding {
 

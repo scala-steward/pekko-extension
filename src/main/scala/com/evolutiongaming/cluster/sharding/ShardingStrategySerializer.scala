@@ -2,8 +2,8 @@ package com.evolutiongaming.cluster.sharding
 
 import java.nio.ByteBuffer
 
-import akka.actor.{Address, ExtendedActorSystem}
-import akka.serialization.{SerializationExtension, SerializerWithStringManifest}
+import org.apache.pekko.actor.{Address, ExtendedActorSystem}
+import org.apache.pekko.serialization.{SerializationExtension, SerializerWithStringManifest}
 import java.nio.charset.StandardCharsets.UTF_8
 
 class ShardingStrategySerializer(system: ExtendedActorSystem) extends SerializerWithStringManifest {

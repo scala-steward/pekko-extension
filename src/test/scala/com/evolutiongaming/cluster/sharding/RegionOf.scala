@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import org.apache.pekko.actor.{Actor, ActorRef, ActorSystem, Props}
 
 object RegionOf {
 

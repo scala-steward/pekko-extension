@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.actor.Address
+import org.apache.pekko.actor.Address
 import cats.Applicative
 import cats.implicits.*
 

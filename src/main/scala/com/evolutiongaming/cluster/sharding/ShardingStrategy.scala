@@ -1,6 +1,6 @@
 package com.evolutiongaming.cluster.sharding
 
-import akka.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
 import cats.effect.{Clock, Ref, Sync}
 import cats.implicits.*
 import cats.{Applicative, FlatMap, Monad, ~>}
@@ -10,16 +10,16 @@ import com.evolutiongaming.catshelper.ToFuture
 import scala.concurrent.duration.FiniteDuration
 
 /**
-  * Interface of the pluggable shard allocation and rebalancing logic used by the [[akka.cluster.sharding.ShardCoordinator]].
+  * Interface of the pluggable shard allocation and rebalancing logic used by the [[org.apache.pekko.cluster.sharding.ShardCoordinator]].
   *
-  * @see check [[ShardAllocationStrategy]] from [[https://github.com/akka/akka/blob/main/akka-cluster-sharding/src/main/scala/akka/cluster/sharding/ShardCoordinator.scala]]
+  * @see check [[ShardAllocationStrategy]] from [[https://github.com/apache/pekko/blob/main/cluster-sharding/src/main/scala/org/apache/pekko/cluster/sharding/ShardCoordinator.scala#L109]]
   */
 trait ShardingStrategy[F[_]] {
 
   /**
     * Invoked when the location of a new shard is to be decided.
     *
-    * @param requester actor reference to the [[akka.cluster.sharding.ShardRegion]] that requested the location of the
+    * @param requester actor reference to the [[org.apache.pekko.cluster.sharding.ShardRegion]] that requested the location of the
     *                  shard, can be returned if preference should be given to the node where the shard was first accessed
     * @param shard     the id of the shard to allocate
     * @param current   all actor refs to `ShardRegion` and their current allocated shards, in the order they were allocated
