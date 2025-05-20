@@ -226,7 +226,7 @@ object ShardingStrategy {
         } mkString ", "
       }
 
-      def iterToStr(iter: Iterable[_]) = {
+      def iterToStr(iter: Iterable[?]): String = {
         iter.toSeq.map { _.toString }.sorted.mkString("[", ",", "]")
       }
 
