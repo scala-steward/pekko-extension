@@ -2,7 +2,7 @@
 [![Build Status](https://github.com/evolution-gaming/pekko-sharding-strategy/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-sharding-strategy/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-sharding-strategy/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-sharding-strategy?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d60baa5803c542d6b4437cb2a5541ab4)](https://www.codacy.com/app/evolution-gaming/pekko-sharding-strategy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-sharding-strategy&amp;utm_campaign=Badge_Grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-sharding-strategy_2.13&repos=public)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolution&a=pekko-sharding-strategy_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
 This project is forked from [sharding-strategy](https://github.com/evolution-gaming/sharding-strategy) at v3.0.2 by replacing 
@@ -39,5 +39,5 @@ val strategy = LeastShardsStrategy()
 ```scala
 addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 
-libraryDependencies += "com.evolutiongaming" %% "pekko-sharding-strategy" % "1.0.0"
+libraryDependencies += "com.evolution" %% "pekko-sharding-strategy" % "1.0.0"
 ```
