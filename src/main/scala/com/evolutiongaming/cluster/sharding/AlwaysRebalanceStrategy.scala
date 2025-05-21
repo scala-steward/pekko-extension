@@ -1,14 +1,14 @@
 package com.evolutiongaming.cluster.sharding
 
-import org.apache.pekko.actor.ActorRef
 import cats.effect.Sync
 import cats.implicits.*
+import org.apache.pekko.actor.ActorRef
 
 import scala.util.Random
 
 object AlwaysRebalanceStrategy {
 
-  def apply[F[_] : Sync](random: Random = new Random()): ShardingStrategy[F] = new ShardingStrategy[F] {
+  def apply[F[_]: Sync](random: Random = new Random()): ShardingStrategy[F] = new ShardingStrategy[F] {
 
     def allocate(requester: ActorRef, shard: Shard, current: Allocation) = {
       Sync[F].delay { random.shuffle(current.keys).headOption }

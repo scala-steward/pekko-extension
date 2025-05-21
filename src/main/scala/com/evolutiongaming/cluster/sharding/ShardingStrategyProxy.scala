@@ -1,13 +1,13 @@
 package com.evolutiongaming.cluster.sharding
 
-import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
 import cats.FlatMap
 import cats.implicits.*
 import com.evolutiongaming.catshelper.FromFuture
+import org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy
 
 object ShardingStrategyProxy {
 
-  def apply[F[_] : FlatMap : FromFuture](strategy: ShardAllocationStrategy): ShardingStrategy[F] = {
+  def apply[F[_]: FlatMap: FromFuture](strategy: ShardAllocationStrategy): ShardingStrategy[F] = {
 
     new ShardingStrategy[F] {
 
