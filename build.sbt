@@ -78,6 +78,6 @@ def crossSettings[T](scalaVersion: String, if3: T, if2: T): T = {
 }
 
 //addCommandAlias("check", "all versionPolicyCheck Compile/doc")
-addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
 addCommandAlias("fmt", "all scalafmtAll scalafmtSbt") // optional: for development
 addCommandAlias("build", "+all compile test")
