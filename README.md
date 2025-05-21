@@ -1,7 +1,7 @@
 # DData Tools
 [![Build Status](https://github.com/evolution-gaming/pekko-ddata-tools/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-ddata-tools/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-ddata-tools/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-ddata-tools?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/91f43a46edcf44e7829e4ef10aae3ba1)](https://www.codacy.com/app/evolution-gaming/pekko-ddata-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-ddata-tools&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9460691128bb4ba5b8a4b0006aca195a)](https://app.codacy.com/gh/evolution-gaming/pekko-ddata-tools/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-ddata-tools_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
