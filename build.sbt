@@ -2,7 +2,7 @@ import Dependencies.*
 
 name := "pekko-sharding-strategy"
 
-organization := "com.evolutiongaming"
+organization := "com.evolution"
 organizationName := "Evolution"
 organizationHomepage := Some(url("https://evolution.com"))
 homepage := Some(url("https://github.com/evolution-gaming/pekko-sharding-strategy"))
