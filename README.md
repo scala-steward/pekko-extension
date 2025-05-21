@@ -5,6 +5,8 @@
 [![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-ddata-tools_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
+This project is forked from [ddata-tools](https://github.com/evolution-gaming/ddata-tools/) at v3.1.0 by replacing `akka` with `pekko`. 
+
 ### SafeReplicator - is a typesafe api for [DData replicator](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html)
 
 ```scala
