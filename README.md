@@ -6,7 +6,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
 This project aims to build a bridge between [Pekko](https://pekko.apache.org/docs/pekko) and pure functional code based 
-on [cats-effect](https://typelevel.org/cats-effect)
+on [cats-effect](https://typelevel.org/cats-effect).
+
+It is forked from [akka-effect](https://github.com/evolution-gaming/akka-effect) at v4.1.10 by replacing `akka` with `pekko`.
 
 Covered ("classic", not the "typed" kind of actors!):
 * [Actors](https://pekko.apache.org/docs/pekko/current/actors.html)
