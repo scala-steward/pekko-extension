@@ -1,104 +1,118 @@
-import Dependencies._
+import Dependencies.*
 import sbt.Keys.{homepage, organizationName, startYear}
 
 lazy val commonSettings = Seq(
-  scalacOptions in(Compile, doc) ++= Seq("-no-link-warnings"),
+  Compile / doc / scalacOptions ++= Seq("-no-link-warnings"),
   scalaVersion := crossScalaVersions.value.head,
-  crossScalaVersions := Seq("2.13.14", "2.12.19", "3.3.3"),
+  crossScalaVersions := Seq("2.13.16", "3.3.6"),
   publishTo := Some(Resolver.evolutionReleases),
-  versionScheme := Some("semver-spec")
+  versionScheme := Some("semver-spec"),
 )
 
 lazy val publishSettings = Seq(
-  homepage := Some(new URL("http://github.com/evolution-gaming/akka-tools")),
+  homepage := Some(url("https://github.com/evolution-gaming/pekko-tools")),
   startYear := Some(2016),
   organizationName := "Evolution",
-  organizationHomepage := Some(url("http://evolution.com")),
-  releaseCrossBuild := true,
-  organization := "com.evolutiongaming",
-  licenses := Seq("MIT" -> url("http://www.opensource.org/licenses/mit-license.html"))
+  organizationHomepage := Some(url("https://evolution.com")),
+  organization := "com.evolution",
+  licenses := Seq("MIT" -> url("https://www.opensource.org/licenses/mit-license.html")),
 )
 
 lazy val allSettings = commonSettings ++ publishSettings
 
-lazy val akkaTools = (project
-  in file(".")
-  settings (name := "akka-tools")
-  settings allSettings                        
-  aggregate(instrumentation, cluster, persistence, serialization, util, test))
+lazy val pekkoTools = project
+  .in(file("."))
+  .settings(name := "pekko-tools")
+  .settings(allSettings)
+  .aggregate(instrumentation, cluster, persistence, serialization, util, test)
 
-lazy val instrumentation = (project
-  in file("instrumentation")
-  dependsOn util
-  settings (
-    name := "akka-tools-instrumentation",
+lazy val instrumentation = project
+  .in(file("instrumentation"))
+  .dependsOn(util)
+  .settings(
+    name := "pekko-tools-instrumentation",
     libraryDependencies ++= Seq(
-      Akka.Actor,
+      Pekko.Actor,
       ConfigTools,
-      Prometheus.simpleclient))
-  settings allSettings)
+      Prometheus.simpleclient,
+    ),
+  )
+  .settings(allSettings)
 
-lazy val cluster = (project
-  in file("cluster")
-  dependsOn (test % "test->compile")
-  settings(
-    name := "akka-tools-cluster",
+lazy val cluster = project
+  .in(file("cluster"))
+  .dependsOn(test % "test->compile")
+  .settings(
+    name := "pekko-tools-cluster",
     libraryDependencies ++= Seq(
-      Akka.Actor,
-      Akka.Cluster,
-      Akka.ClusterSharding,
-      Akka.TestKit % Test,
+      Pekko.Actor,
+      Pekko.Cluster,
+      Pekko.ClusterSharding,
+      Pekko.TestKit % Test,
       Logging,
       ConfigTools,
       Nel,
-      ScalaTest % Test))
-  settings allSettings)
+      ScalaTest % Test,
+    ),
+  )
+  .settings(allSettings)
 
-lazy val persistence = (project
-  in file("persistence")
-  dependsOn (serialization, test % "test->compile")
-  settings(
-    name := "akka-tools-persistence",
+lazy val persistence = project
+  .in(file("persistence"))
+  .dependsOn(serialization, test % "test->compile")
+  .settings(
+    name := "pekko-tools-persistence",
     libraryDependencies ++= Seq(
-      Akka.Actor,
+      Pekko.Actor,
       ScalaTools,
       ConfigTools,
-      Akka.TestKit % Test,
-      ScalaTest % Test))
-  settings allSettings)
-
-lazy val serialization = (project
-  in file("serialization")
-  dependsOn (test % "test->compile")
-  settings(
-    name := "akka-tools-serialization",
-    libraryDependencies ++= Seq(
-      Akka.Actor,
-      Logging,
-      Akka.AkkaPersistence,
-      ScalaTest % Test))
-  settings allSettings)
-
-lazy val util = (project
-  in file("util")
-  dependsOn (test % "test->compile")
-  settings(
-    name := "akka-tools-util",
-    libraryDependencies ++= Seq(
-      Akka.Actor,
-      Akka.TestKit % Test,
+      Pekko.TestKit % Test,
       ScalaTest % Test,
-      Logging))
-  settings allSettings)
+    ),
+  )
+  .settings(allSettings)
 
-lazy val test = (project
-  in file("test")
-  settings(
-    name := "akka-tools-test",
+lazy val serialization = project
+  .in(file("serialization"))
+  .dependsOn(test % "test->compile")
+  .settings(
+    name := "pekko-tools-serialization",
     libraryDependencies ++= Seq(
-        Akka.Actor, 
-        Akka.TestKit, 
-        ScalaTest))
-  settings allSettings)
+      Pekko.Actor,
+      Logging,
+      Pekko.Persistence,
+      ScalaTest % Test,
+    ),
+  )
+  .settings(allSettings)
 
-addCommandAlias("check", "show version")
+lazy val util = project
+  .in(file("util"))
+  .dependsOn(test % "test->compile")
+  .settings(
+    name := "pekko-tools-util",
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.TestKit % Test,
+      ScalaTest % Test,
+      Logging,
+    ),
+  )
+  .settings(allSettings)
+
+lazy val test = project
+  .in(file("test"))
+  .settings(
+    name := "pekko-tools-test",
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.TestKit,
+      ScalaTest,
+    ),
+  )
+  .settings(allSettings)
+
+addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
+//addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("fmt", "all scalafmtAll scalafmtSbt") // optional: for development
+addCommandAlias("build", "+all compile test")
