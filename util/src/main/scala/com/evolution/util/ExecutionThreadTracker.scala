@@ -93,7 +93,7 @@ object ExecutionThreadTracker extends LazyLogging {
       }
 
       def start(): () => Unit = {
-        val threadId = Thread.currentThread().threadId
+        val threadId = Thread.currentThread().getId
         add(threadId)
         () => remove(threadId)
       }
