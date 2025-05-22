@@ -1,12 +1,16 @@
 import Dependencies.*
-import sbt.Keys.{homepage, organizationName, startYear}
 
 lazy val commonSettings = Seq(
   Compile / doc / scalacOptions ++= Seq("-no-link-warnings"),
   scalaVersion := crossScalaVersions.value.head,
   crossScalaVersions := Seq("2.13.16", "3.3.6"),
   publishTo := Some(Resolver.evolutionReleases),
-  versionScheme := Some("semver-spec"),
+  scalacOptions ++= Seq(
+    "-release:17",
+    "-deprecation",
+  ),
+  versionScheme := Some("early-semver"),
+  versionPolicyIntention := Compatibility.BinaryCompatible, // sbt-version-policy
 )
 
 lazy val publishSettings = Seq(
@@ -112,7 +116,6 @@ lazy val test = project
   )
   .settings(allSettings)
 
-addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
-//addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
 addCommandAlias("fmt", "all scalafmtAll scalafmtSbt") // optional: for development
 addCommandAlias("build", "+all compile test")
