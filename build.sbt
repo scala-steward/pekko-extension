@@ -54,8 +54,7 @@ licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 
 Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
 
-//addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
-addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
 addCommandAlias("fmt", "all scalafmtAll scalafmtSbt")
 addCommandAlias("build", "+all compile test")
 
