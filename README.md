@@ -2,7 +2,7 @@
 [![Build Status](https://github.com/evolution-gaming/pekko-effect/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-effect/actions?query=workflow%3ACI) 
 [![Coverage Status](https://coveralls.io/repos/evolution-gaming/pekko-effect/badge.svg)](https://coveralls.io/r/evolution-gaming/pekko-effect)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/addac6520ff440acb0b2d3a05b37740b)](https://app.codacy.com/gh/evolution-gaming/pekko-effect/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pekko-effect-actor_2.13&repos=public)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolution&a=pekko-effect-actor_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
 This project aims to build a bridge between [Pekko](https://pekko.apache.org/docs/pekko) and pure functional code based 
