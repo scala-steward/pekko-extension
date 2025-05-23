@@ -4,13 +4,13 @@ object Dependencies {
 
   val scalatest = "org.scalatest" %% "scalatest" % "3.2.19"
 
-  object Akka {
-    private val version = "2.6.21"
-    val actor = "com.typesafe.akka" %% "akka-actor" % version
+  object Pekko {
+    private val version = "1.1.3"
+    val actor           = "org.apache.pekko" %% "pekko-actor" % version
   }
 
   object Scodec {
-    val core = "org.scodec" %% "scodec-core" % "2.3.1"
-    val core2 = "org.scodec" %% "scodec-core" % "1.11.10"
+    val core  = "org.scodec" %% "scodec-core" % "2.3.2"
+    val core2 = "org.scodec" %% "scodec-core" % "1.11.11"
   }
 }

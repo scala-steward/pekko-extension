@@ -1,7 +1,7 @@
-package com.evolutiongaming.serialization
+package com.evolution.serialization
 
-import akka.actor.{ExtendedActorSystem, Extension, ExtensionId}
-import akka.serialization.{Serialization, SerializationExtension, SerializerWithStringManifest}
+import org.apache.pekko.actor.{ExtendedActorSystem, Extension, ExtensionId}
+import org.apache.pekko.serialization.{Serialization, SerializationExtension, SerializerWithStringManifest}
 import scodec.bits.ByteVector
 import scodec.{Codec, codecs}
 
@@ -10,8 +10,7 @@ import scala.util.Try
 
 /** Object serialized to a binary with the metadata allowing to decode it.
   *
-  * The actual fields could be used as the arguments for
-  * [[Serialization#deserialize]] call.
+  * The actual fields could be used as the arguments for [[Serialization#deserialize]] call.
   */
 final case class SerializedMsg(identifier: Int, manifest: String, bytes: ByteVector)
 
@@ -25,14 +24,12 @@ object SerializedMsg {
 
 /** Provides ability to convert an object to [[SerializedMsg]] and back.
   *
-  * This class by itself does not know how to convert `AnyRef` from a binary
-  * form and back, and requires an underlying implementation such
-  * [[SerializedMsgSerializer]] configured using
-  * `akka.actor.serialization-bindings` property in `application.conf` file.
+  * This class by itself does not know how to convert `AnyRef` from a binary form and back, and requires an underlying
+  * implementation such [[SerializedMsgSerializer]] configured using `pekko.actor.serialization-bindings` property in
+  * `application.conf` file.
   *
-  * Roughly speaking, this class is just a wrapper over [[Serialization]],
-  * using [[SerializedMsg]] instead of passing serializer identifier,
-  * manifest and the payload to various [[Serialization]] methods.
+  * Roughly speaking, this class is just a wrapper over [[Serialization]], using [[SerializedMsg]] instead of passing
+  * serializer identifier, manifest and the payload to various [[Serialization]] methods.
   *
   * @see
   *   [[Serialization#findSerializerFor]] for more details.
@@ -48,13 +45,13 @@ object SerializedMsgConverter {
 
   def apply(serialization: Serialization): SerializedMsgConverter = new SerializedMsgConverter {
 
-    def toMsg(msg: AnyRef): SerializedMsg = {
+    def toMsg(msg: AnyRef): SerializedMsg =
       msg match {
         case msg: SerializedMsg => msg
-        case _                  =>
+        case _ =>
           val serializer = serialization.findSerializerFor(msg)
-          val array = serializer.toBinary(msg)
-          val bytes = ByteVector.view(array)
+          val array      = serializer.toBinary(msg)
+          val bytes      = ByteVector.view(array)
           val manifest = serializer match {
             case serializer: SerializerWithStringManifest => serializer.manifest(msg)
             case _ if serializer.includeManifest          => msg.getClass.getName
@@ -62,9 +59,8 @@ object SerializedMsgConverter {
           }
           SerializedMsg(serializer.identifier, manifest, bytes)
       }
-    }
 
-    def fromMsg(msg: SerializedMsg) = {
+    def fromMsg(msg: SerializedMsg): Try[AnyRef] = {
       val array = msg.bytes.toArray
       serialization.deserialize(array, msg.identifier, msg.manifest)
     }

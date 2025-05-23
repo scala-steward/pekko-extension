@@ -1,10 +1,9 @@
-package com.evolutiongaming.serialization
+package com.evolution.serialization
 
 import scodec.bits.ByteVector
 
-/**
-  * provides ability to have compile time check for serialization presence for remote messages
-  * and use passed serialization during remoting
+/** provides ability to have compile time check for serialization presence for remote messages and use passed
+  * serialization during remoting
   */
 sealed trait ToBytesAble extends Product with Serializable {
 
@@ -21,12 +20,10 @@ object ToBytesAble {
 
   def bytes[T](bytes: ByteVector): ToBytesAble = Bytes(bytes)
 
-
   final case class Raw[T](msg: T)(toBytes: ToBytes[T]) extends ToBytesAble {
 
-    def bytes = toBytes(msg)
+    def bytes: ByteVector = toBytes(msg)
   }
-
 
   final case class Bytes(bytes: ByteVector) extends ToBytesAble
 }
