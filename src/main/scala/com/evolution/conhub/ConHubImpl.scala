@@ -16,17 +16,6 @@ object ConHubImpl extends LazyLogging {
 
   type Connect[Id, T, L, M] = OnMsgs[M] => (SearchEngine[Id, T, M, L], ConStates[Id, T, M], SendMsgs[Id, T, M])
 
-  @deprecated("use another `apply` with separate sequentially", "1.2.0")
-  def apply[Id, A, L, K, M](
-    sequentially: Sequentially[K],
-    msgOps: ConHubImpl.MsgOps[M, L, K],
-    metrics: ConMetrics[Id, A, M],
-    connect: Connect[Id, A, L, M],
-  )(implicit
-    ec: ExecutionContext,
-  ): ConHub[Id, A, M, L] =
-    apply(sequentiallyLocal = sequentially, sequentiallyRemote = sequentially, msgOps, metrics, connect, ec)
-
   def apply[Id, A, L, K, M](
     sequentiallyLocal: Sequentially[K],
     sequentiallyRemote: Sequentially[K],
