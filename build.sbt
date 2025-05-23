@@ -78,7 +78,6 @@ Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warning
 ThisBuild / versionPolicyIntention := Compatibility.BinaryCompatible
 ThisBuild / versionScheme          := Some("early-semver")
 
-//addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
-addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
 addCommandAlias("fmt", "all scalafmtAll scalafmtSbt")
 addCommandAlias("build", "+all compile test")
