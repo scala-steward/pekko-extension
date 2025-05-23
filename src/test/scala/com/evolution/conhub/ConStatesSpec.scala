@@ -1,15 +1,15 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import java.time.Instant
 
-import akka.actor.{ActorRef, Address}
-import akka.testkit.TestProbe
+import org.apache.pekko.actor.{ActorRef, Address}
+import org.apache.pekko.testkit.TestProbe
+import com.evolution.conhub.transport.SendMsg
 import com.evolutiongaming.concurrent.sequentially.{SequentialMap, Sequentially}
-import com.evolutiongaming.conhub.ConHubSpecHelper.*
-import com.evolutiongaming.conhub.ConStates.{Ctx, Diff}
-import com.evolutiongaming.conhub.transport.SendMsg
-import com.evolutiongaming.conhub.RemoteEvent as R
-import com.evolutiongaming.test.ActorSpec
+import com.evolution.conhub.ConHubSpecHelper.*
+import com.evolution.conhub.ConStates.{Ctx, Diff}
+import com.evolution.conhub.RemoteEvent as R
+import com.evolution.test.ActorSpec
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.*
@@ -97,7 +97,9 @@ class ConStatesSpec extends AnyWordSpec with ActorSpec with Matchers with ConHub
       conStates.update(id, version, connection, address).get shouldEqual UpdateResult(updated = true, connection)
       state shouldEqual Some(remote)
 
-      conStates.disconnect(id, version.dec, reconnectTimeout, Ctx.Remote(address)).get shouldEqual UpdateResult(connection)
+      conStates.disconnect(id, version.dec, reconnectTimeout, Ctx.Remote(address)).get shouldEqual UpdateResult(
+        connection,
+      )
       state shouldEqual Some(remote)
 
       conStates.disconnect(id, version, reconnectTimeout, Ctx.Remote(address))
@@ -175,13 +177,13 @@ class ConStatesSpec extends AnyWordSpec with ActorSpec with Matchers with ConHub
   }
 
   private trait Scope extends ActorScope {
-    val id = newId()
-    val connection = Connection(id)
-    val local = newLocal(connection, new Send)
-    val instant = Instant.now() plusSeconds 1.day.toSeconds
+    val id           = newId()
+    val connection   = Connection(id)
+    val local        = newLocal(connection, new Send)
+    val instant      = Instant.now() plusSeconds 1.day.toSeconds
     val disconnected = Conn.Disconnected(connection, reconnectTimeout, instant, version = version)
-    val address = system.deadLetters.path.address
-    val remote = Conn.Remote(connection, address, version)
+    val address      = system.deadLetters.path.address
+    val remote       = Conn.Remote(connection, address, version)
 
     val pubSubProbe = TestProbe()
 
@@ -194,23 +196,18 @@ class ConStatesSpec extends AnyWordSpec with ActorSpec with Matchers with ConHub
       SendEvent(sendMsg, Serializer.identity[Id], ConnectionSerializer)
     }
 
-    val conStates = ConStates(
-      states,
-      1.minute,
-      system.scheduler,
-      ConnectionSerializer,
-      onStateChanged,
-      () => instant,
-      connect)(ExecutionContext.parasitic)
+    val conStates =
+      ConStates(states, 1.minute, system.scheduler, ConnectionSerializer, onStateChanged, () => instant, connect)(
+        ExecutionContext.parasitic,
+      )
 
     def onStateChanged(diff: Diff[Id, C]) = {
       testActor ! diff
       Future.unit
     }
 
-    def expectDiff(before: Option[C], after: Option[C]) = {
+    def expectDiff(before: Option[C], after: Option[C]) =
       expectMsg(Diff(connection.id, before, after))
-    }
 
     def state = states.values.get(id)
 
@@ -220,12 +217,11 @@ class ConStatesSpec extends AnyWordSpec with ActorSpec with Matchers with ConHub
 
     def expectPublish(event: R.Event) = pubSubProbe expectMsg R(event)
 
-    def expectUpdated(connection: Connection) = {
+    def expectUpdated(connection: Connection) =
       pubSubProbe.expectMsgPF() {
         case R(R.Event.Updated(value)) if value.id == id =>
           ConnectionSerializer.from(value.bytes) shouldEqual connection
       }
-    }
   }
 
   implicit class FutureOps[A](self: Future[A]) {

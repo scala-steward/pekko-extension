@@ -1,13 +1,12 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import java.time.Instant
 
-import akka.actor.Address
+import org.apache.pekko.actor.Address
 
 import scala.concurrent.duration.FiniteDuration
 
-/**
-  * Named Conn rather than Con just for sake of avoiding Windows limitations
+/** Named Conn rather than Con just for sake of avoiding Windows limitations
   * http://kizu514.com/blog/forbidden-file-names-on-windows-10/
   */
 sealed trait Conn[A, +M] {
@@ -46,7 +45,7 @@ object Conn {
     timeout: FiniteDuration,
     timestamp: Instant,
     version: Version,
-    isLocal: Boolean = true
+    isLocal: Boolean = true,
   ) extends Conn[A, Nothing] {
 
     def expired(now: Instant = Instant.now()): Boolean = {

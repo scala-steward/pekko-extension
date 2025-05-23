@@ -1,4 +1,4 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import scodec.bits.ByteVector
 
@@ -15,9 +15,8 @@ object Serializer {
 
   type Str[A] = Serializer[A, String]
 
-
   def identity[A]: Serializer[A, A] = new Serializer[A, A] {
-    def to(a: A): A = a
+    def to(a: A): A   = a
     def from(b: A): A = b
   }
 }

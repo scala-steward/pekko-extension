@@ -1,4 +1,4 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import java.time.Instant
 

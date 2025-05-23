@@ -1,9 +1,9 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
-/**
-  *
-  * @param updated whether action did update the value
-  * @param value   value before the update if it was updated or current value otherwise
+/** @param updated
+  *   whether action did update the value
+  * @param value
+  *   value before the update if it was updated or current value otherwise
   */
 final case class UpdateResult[+A](updated: Boolean = false, value: Option[A] = None)
 
@@ -12,7 +12,6 @@ object UpdateResult {
   private val Empty = UpdateResult()
 
   private val Created = UpdateResult(updated = true)
-
 
   def empty[A]: UpdateResult[A] = Empty
 

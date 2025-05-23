@@ -1,4 +1,4 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import com.evolutiongaming.nel.Nel
 import scodec.bits.ByteVector
@@ -10,7 +10,6 @@ final case class RemoteEvent(event: RemoteEvent.Event)
 object RemoteEvent {
 
   final case class Value(id: String, bytes: ByteVector, version: Version)
-
 
   sealed trait Event
 
@@ -27,6 +26,5 @@ object RemoteEvent {
     case object ConHubJoined extends Event
   }
 }
-
 
 final case class RemoteMsgs(values: Nel[ByteVector])

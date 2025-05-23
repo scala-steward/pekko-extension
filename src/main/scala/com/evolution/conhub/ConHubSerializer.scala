@@ -1,9 +1,9 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
 import java.io.NotSerializableException
 
-import akka.serialization.SerializerWithStringManifest
-import com.evolutiongaming.conhub.RemoteEvent as R
+import org.apache.pekko.serialization.SerializerWithStringManifest
+import com.evolution.conhub.RemoteEvent as R
 import com.evolutiongaming.nel.Nel
 import scodec.bits.{BitVector, ByteVector}
 import scodec.{Attempt, Codec, DecodeResult, codecs}
@@ -15,38 +15,35 @@ class ConHubSerializer extends SerializerWithStringManifest {
   import ConHubSerializer.*
 
   private val EventManifest = "A"
-  private val MsgsManifest = "C"
+  private val MsgsManifest  = "C"
 
   def identifier: Int = 1869692879
 
-  def manifest(x: AnyRef): String = {
+  def manifest(x: AnyRef): String =
     x match {
       case _: RemoteEvent => EventManifest
       case _: RemoteMsgs  => MsgsManifest
-      case _              => illegalArgument(s"Cannot serialize message of ${ x.getClass } in ${ getClass.getName }")
+      case _              => illegalArgument(s"Cannot serialize message of ${x.getClass} in ${getClass.getName}")
     }
-  }
 
-  def toBinary(x: AnyRef): Array[Byte] = {
+  def toBinary(x: AnyRef): Array[Byte] =
     x match {
       case x: RemoteEvent => eventToBinary(x).require.toArray
       case x: RemoteMsgs  => msgsToBinary(x).require.toByteArray
-      case _              => illegalArgument(s"Cannot serialize message of ${ x.getClass } in ${ getClass.getName }")
+      case _              => illegalArgument(s"Cannot serialize message of ${x.getClass} in ${getClass.getName}")
     }
-  }
 
-  def fromBinary(bytes: Array[Byte], manifest: String): AnyRef = {
+  def fromBinary(bytes: Array[Byte], manifest: String): AnyRef =
     manifest match {
       case EventManifest => eventFromBinary(BitVector.view(bytes))
       case MsgsManifest  => msgsFromBinary(BitVector.view(bytes))
-      case _             => notSerializable(s"Cannot deserialize message for manifest $manifest in ${ getClass.getName }")
+      case _             => notSerializable(s"Cannot deserialize message for manifest $manifest in ${getClass.getName}")
     }
-  }
 }
 
 //suppresses comp warning for 2.13 with -Xsource:3
 @nowarn(
-  "msg=Implicit method .+ was found in a package prefix of the required type, which is not part of the implicit scope in Scala 3"
+  "msg=Implicit method .+ was found in a package prefix of the required type, which is not part of the implicit scope in Scala 3",
 )
 object ConHubSerializer {
 
@@ -77,7 +74,6 @@ object ConHubSerializer {
 
   private def illegalArgument(msg: String): Nothing = throw new IllegalArgumentException(msg)
 
-
   private def eventFromBinary(bits: BitVector) = {
     val result = for {
       result <- codecs.int32.decode(bits)
@@ -88,24 +84,21 @@ object ConHubSerializer {
         case 2 => codecDisconnected.decode(bits)
         case 3 => codecSync.decode(bits)
         case 4 => Attempt.successful(DecodeResult(R.Event.ConHubJoined, bits))
-        case x => notSerializable(s"Cannot deserialize event for id $x in ${ getClass.getName }")
+        case x => notSerializable(s"Cannot deserialize event for id $x in ${getClass.getName}")
       }
-    } yield {
-      RemoteEvent(result.value)
-    }
+    } yield RemoteEvent(result.value)
     result.require
   }
 
   private def eventToBinary(x: RemoteEvent) = {
 
-    def withMark(mark: Int, bits: Attempt[BitVector]) = {
+    def withMark(mark: Int, bits: Attempt[BitVector]) =
       for {
         bits <- bits
       } yield {
         val markBits = BitVector.fromInt(mark)
         (markBits ++ bits).bytes
       }
-    }
 
     x.event match {
       case a: R.Event.Updated      => withMark(0, codecUpdated.encode(a))
@@ -116,11 +109,9 @@ object ConHubSerializer {
     }
   }
 
-  private def msgsToBinary(a: RemoteMsgs) = {
+  private def msgsToBinary(a: RemoteMsgs) =
     codecMsgs.encode(a)
-  }
 
-  private def msgsFromBinary(bits: BitVector) = {
+  private def msgsFromBinary(bits: BitVector) =
     codecMsgs.decode(bits).require.value
-  }
 }

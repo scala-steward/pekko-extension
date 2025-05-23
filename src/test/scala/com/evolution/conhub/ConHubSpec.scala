@@ -1,6 +1,6 @@
-package com.evolutiongaming.conhub
+package com.evolution.conhub
 
-import akka.actor.Address
+import org.apache.pekko.actor.Address
 import com.evolutiongaming.concurrent.sequentially.Sequentially
 import com.evolutiongaming.concurrent.FutureHelper.*
 import com.evolutiongaming.nel.Nel
@@ -32,37 +32,42 @@ class ConHubSpec extends AnyWordSpec {
     def connect: ConHubImpl.Connect[Void, Void, Void, Void]
 
     object MsgOps extends ConHubImpl.MsgOps[Void, Void, Void] {
-      def lookup(x: Void): Void = x
+      def lookup(x: Void): Void      = x
       def key(x: Void): Option[Void] = Some(x)
     }
 
     object EmptyConMetrics extends ConMetrics[Void, Void, Void] {
-      def onTell(m: Void): Unit = {}
-      def registerGauges(cons: => Iterable[Conn[Void, Void]]): Unit = {}
+      def onTell(m: Void): Unit                                         = {}
+      def registerGauges(cons: => Iterable[Conn[Void, Void]]): Unit     = {}
       def onChanged(diff: ConStates.Diff[Void, Conn[Void, Void]]): Unit = {}
     }
 
     val searchEngine = new SearchEngine[Void, Void, Void, Void] {
-      def apply(l: Void, cons: Cons, localCall: Boolean): Iterable[C] = Iterable.empty
-      def update(diff: ConStates.Diff[Void, C], cons: Cons): Future[Unit] = Future.successful({})
+      def apply(l: Void, cons: Cons, localCall: Boolean): Iterable[C]     = Iterable.empty
+      def update(diff: ConStates.Diff[Void, C], cons: Cons): Future[Unit] = Future.successful {}
     }
 
     val conStates = new ConStates[Void, Void, Void] {
-      private val result = UpdateResult.empty[Void].future
-      def values: collection.Map[Void, C] = Map.empty
+      private val result                           = UpdateResult.empty[Void].future
+      def values: collection.Map[Void, C]          = Map.empty
       def update(id: Void, local: C.Local): Result = result
       def update(id: Void, version: Version, value: ByteVector, address: Address): Result = result
-      def update(id: Void, version: Version, conn: Void, address: Address): Result = result
-      def disconnect(id: Void, version: Version, timeout: FiniteDuration, ctx: ConStates.Ctx = ConStates.Ctx.Local): Result = result
+      def update(id: Void, version: Version, conn: Void, address: Address): Result        = result
+      def disconnect(
+        id: Void,
+        version: Version,
+        timeout: FiniteDuration,
+        ctx: ConStates.Ctx = ConStates.Ctx.Local,
+      ): Result = result
       def remove(id: Void, version: Version, ctx: ConStates.Ctx = ConStates.Ctx.Local): Result = result
-      def checkConsistency(id: Void): Result = result
-      def sync(id: Void): Result = result
+      def checkConsistency(id: Void): Result                                                   = result
+      def sync(id: Void): Result                                                               = result
     }
 
-    val sendMsgs  = new SendMsgs[Void, Void, Void] {
-      def apply(msg: Void, con: C.Connected): Unit = {}
+    val sendMsgs = new SendMsgs[Void, Void, Void] {
+      def apply(msg: Void, con: C.Connected): Unit                    = {}
       def remote(msgs: Nel[Void], addresses: Iterable[Address]): Unit = {}
-      def local(msg: Void, cons: Iterable[C], remote: Boolean): Unit = {}
+      def local(msg: Void, cons: Iterable[C], remote: Boolean): Unit  = {}
     }
 
     def conHub = ConHubImpl[Void, Void, Void, Void, Void](
@@ -71,6 +76,7 @@ class ConHubSpec extends AnyWordSpec {
       MsgOps,
       EmptyConMetrics,
       connect,
-      ExecutionContext.parasitic)
+      ExecutionContext.parasitic,
+    )
   }
 }
