@@ -56,7 +56,7 @@ object SendMsg {
     }
   }
 
-  private final case class Retry(address: Address)
+  final private case class Retry(address: Address)
 
   private def apply[A](
     name: String,
