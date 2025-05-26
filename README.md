@@ -1,12 +1,11 @@
 # PubSub
-[![Build Status](https://github.com/evolution-gaming/pubsub/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pubsub/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pubsub/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pubsub?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c1e3dc82255463f82583a3fa69fd56f)](https://www.codacy.com/app/evolution-gaming/pubsub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pubsub&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://github.com/evolution-gaming/pekko-pubsub/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-pubsub/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-pubsub/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-pubsub?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c1e3dc82255463f82583a3fa69fd56f)](https://www.codacy.com/app/evolution-gaming/pekko-pubsub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-pubsub&amp;utm_campaign=Badge_Grade)
 [![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pubsub_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
-
-The library is based on cats-effect 3 since 7.0.0 version, for cats-effect 2.x.x back ports use [series/6.x.x](https://github.com/evolution-gaming/pubsub/tree/series/6.x.x)
+It is forked from [pubsub](https://github.com/evolution-gaming/pekko-pubsub) at v10.0.0 by replacing `akka` with `pekko`.
 
 ### Typesafe layer for DistributedPubSubMediator
 
@@ -28,22 +27,14 @@ trait PubSub[F[_]] {
 }
 ```
 
-### Ability to serialize/deserialize messages to offload akka remoting and improve throughput
+### Ability to serialize/deserialize messages to offload pekko remoting and improve throughput
 
-Check `DistributedPubSubMediatorSerializing.scala`
-
+Check [`DistributedPubSubMediatorSerializing.scala`](src/main/scala/org/apache/pekko/cluster/pubsub/DistributedPubSubMediatorSerializing.scala).
 
 ## Setup
 
 ```scala
 addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 
-libraryDependencies += "com.evolutiongaming" %% "pubsub" % "7.0.0"
+libraryDependencies += "com.evolution" %% "pekko-pubsub" % "1.0.0"
 ```
-
-## CHANGELOG
-
-### 7.0.0
-
-##### Upgrades
-- cats-effect 2.5.4 to 3.3.11

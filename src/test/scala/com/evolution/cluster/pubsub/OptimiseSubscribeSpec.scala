@@ -1,12 +1,12 @@
-package com.evolutiongaming.cluster.pubsub
+package com.evolution.cluster.pubsub
 
-import akka.actor.{ActorPath, ActorSystem}
-import akka.testkit.TestActors
+import org.apache.pekko.actor.{ActorPath, ActorSystem}
+import org.apache.pekko.testkit.TestActors
 import cats.Parallel
 import cats.effect.{Async, IO, Ref, Resource, Sync}
 import cats.implicits._
-import com.evolutiongaming.cluster.pubsub.IOSuite._
-import com.evolutiongaming.cluster.pubsub.PubSub.OnMsg
+import IOSuite._
+import PubSub.OnMsg
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -23,9 +23,9 @@ class OptimiseSubscribeSpec extends AsyncFunSuite with ActorSpec with Matchers {
     implicit val topic = Topic[String]
 
     val sender = Resource.make {
-      Sync[F].delay { actorSystem.actorOf(TestActors.blackholeProps) }
+      Sync[F].delay(actorSystem.actorOf(TestActors.blackholeProps))
     } { actorRef =>
-      Sync[F].delay { actorSystem.stop(actorRef) }
+      Sync[F].delay(actorSystem.stop(actorRef))
     }
 
     sender.use { sender =>
@@ -33,19 +33,20 @@ class OptimiseSubscribeSpec extends AsyncFunSuite with ActorSpec with Matchers {
         optimiseSubscribe <- OptimiseSubscribe.of[F]
         msgsRef           <- Ref[F].of(Set.empty[Msg])
         listenersRef      <- Ref[F].of(List.empty[OnMsg[F, Msg]])
-        publish            = (msg: Msg) => for {
-          listeners <- listenersRef.get
-          _         <- listeners.foldMapM { onMsg => onMsg(msg, sender.path) }
+        publish = (msg: Msg) =>
+          for {
+            listeners <- listenersRef.get
+            _         <- listeners.foldMapM(onMsg => onMsg(msg, sender.path))
 
-        } yield {}
+          } yield {}
 
-        subscribe          = (prefix: String) => {
-          val onMsg = (msg: Msg, _: ActorPath) => msgsRef.update { _ + s"$prefix-$msg" }
+        subscribe = (prefix: String) => {
+          val onMsg = (msg: Msg, _: ActorPath) => msgsRef.update(_ + s"$prefix-$msg")
           val subscribe = (onMsg: OnMsg[F, Msg]) => {
             val result = for {
-              _ <- listenersRef.update { onMsg :: _ }
+              _ <- listenersRef.update(onMsg :: _)
             } yield {
-              val release = listenersRef.update { _.filter(_ != onMsg) }
+              val release = listenersRef.update(_.filter(_ != onMsg))
               ((), release)
             }
             Resource(result)
@@ -59,21 +60,21 @@ class OptimiseSubscribeSpec extends AsyncFunSuite with ActorSpec with Matchers {
           }
         }
 
-        listeners0        <- listenersRef.get
-        _                 <- publish("0")
-        msgs0             <- msgsRef.get
-        unsubscribe0      <- subscribe("1")
-        listeners1        <- listenersRef.get
-        _                 <- publish("1")
-        msgs1             <- msgsRef.get
-        unsubscribe1      <- subscribe("2")
-        listeners2        <- listenersRef.get
-         _                <- publish("2")
-        msgs2             <- msgsRef.get
-        _                 <- unsubscribe0
-        listeners3        <- listenersRef.get
-        _                 <- unsubscribe1
-        listeners4        <- listenersRef.get
+        listeners0   <- listenersRef.get
+        _            <- publish("0")
+        msgs0        <- msgsRef.get
+        unsubscribe0 <- subscribe("1")
+        listeners1   <- listenersRef.get
+        _            <- publish("1")
+        msgs1        <- msgsRef.get
+        unsubscribe1 <- subscribe("2")
+        listeners2   <- listenersRef.get
+        _            <- publish("2")
+        msgs2        <- msgsRef.get
+        _            <- unsubscribe0
+        listeners3   <- listenersRef.get
+        _            <- unsubscribe1
+        listeners4   <- listenersRef.get
       } yield {
         listeners0.size shouldEqual 0
         msgs0 shouldEqual Set.empty[String]

@@ -1,7 +1,7 @@
-package com.evolutiongaming.cluster.pubsub
+package com.evolution.cluster.pubsub
 
-import akka.actor._
-import akka.cluster.pubsub.{DistributedPubSubMediator => Mediator}
+import org.apache.pekko.actor._
+import org.apache.pekko.cluster.pubsub.{DistributedPubSubMediator => Mediator}
 import com.github.t3hnar.scalax.RichSetMap
 
 class LocalPubSub extends Actor with ActorLogging {
@@ -24,13 +24,13 @@ class LocalPubSub extends Actor with ActorLogging {
 
     case Terminated(ref) =>
       context unwatch ref
-      map = map.keys.foldLeft(map) {
-        (map, topic) => map.updatedSet(topic, _ - ref)
+      map = map.keys.foldLeft(map) { (map, topic) =>
+        map.updatedSet(topic, _ - ref)
       }
 
     case GetState => sender() ! State(map)
 
-    case Mediator.Count => sender() ! map.values.foldLeft(0) { _ + _.size }
+    case Mediator.Count => sender() ! map.values.foldLeft(0)(_ + _.size)
 
     case Mediator.GetTopics => sender() ! Mediator.CurrentTopics(map.keySet)
   }
@@ -49,5 +49,5 @@ object LocalPubSub {
   }
 
   private[cluster] case object GetState
-  private[cluster] final case class State(value: Map[String, Set[ActorRef]])
+  final private[cluster] case class State(value: Map[String, Set[ActorRef]])
 }

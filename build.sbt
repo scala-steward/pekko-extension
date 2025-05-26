@@ -1,10 +1,10 @@
-import Dependencies._
+import Dependencies.*
 
-name := "pubsub"
+name := "pekko-pubsub"
 
-organization := "com.evolutiongaming"
+organization := "com.evolution"
 
-homepage := Some(url("https://github.com/evolution-gaming/pubsub"))
+homepage := Some(url("https://github.com/evolution-gaming/pekko-pubsub"))
 
 startYear := Some(2017)
 
@@ -19,20 +19,21 @@ crossScalaVersions := Seq("2.13.16")
 publishTo := Some(Resolver.evolutionReleases)
 
 libraryDependencies ++= Seq(
-  Akka.Actor,
-  Akka.Stream,
-  Akka.ClusterTools,
-  Akka.Testkit % Test,
+  Pekko.Actor,
+  Pekko.Stream,
+  Pekko.ClusterTools,
+  Pekko.Testkit % Test,
   Scodec.core,
   Scodec.bits,
   Cats.core,
   Cats.effect,
   scalax,
   `metric-tools`,
-  `akka-serialization`,
+  `pekko-serialization`,
   `cats-helper`,
   scache,
-  scalatest % Test)
+  scalatest % Test,
+)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 
@@ -43,6 +44,7 @@ scalacOptions ++= Seq(
 
 Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
 
-//addCommandAlias("check", "all versionPolicyCheck Compile/doc")
-addCommandAlias("check", "show version")
+//addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("check", "all scalafmtCheckAll scalafmtSbtCheck")
+addCommandAlias("fmt", "all scalafmtAll scalafmtSbt")
 addCommandAlias("build", "+all compile test")

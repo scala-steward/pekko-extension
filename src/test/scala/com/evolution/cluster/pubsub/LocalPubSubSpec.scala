@@ -1,8 +1,8 @@
-package com.evolutiongaming.cluster.pubsub
+package com.evolution.cluster.pubsub
 
-import akka.cluster.pubsub.{DistributedPubSubMediator => Mediator}
-import akka.testkit.{TestActorRef, TestProbe}
-import com.evolutiongaming.cluster.pubsub.LocalPubSub._
+import org.apache.pekko.cluster.pubsub.{DistributedPubSubMediator => Mediator}
+import org.apache.pekko.testkit.{TestActorRef, TestProbe}
+import LocalPubSub._
 import org.scalatest.concurrent.Eventually
 
 import scala.concurrent.duration._
@@ -108,12 +108,12 @@ class LocalPubSubSpec extends AnyFlatSpec with ActorSpec with Matchers with Even
   }
 
   private trait Scope extends ActorScope {
-    val topic1 = "topic1"
-    val topic2 = "topic2"
-    val actor = TestActorRef(LocalPubSub.props)
+    val topic1      = "topic1"
+    val topic2      = "topic2"
+    val actor       = TestActorRef(LocalPubSub.props)
     lazy val probe1 = TestProbe()
     lazy val probe2 = TestProbe()
-    val msg = "msg"
+    val msg         = "msg"
 
     def state() = {
       actor ! GetState

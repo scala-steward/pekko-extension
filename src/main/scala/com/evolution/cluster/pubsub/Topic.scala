@@ -1,4 +1,4 @@
-package com.evolutiongaming.cluster.pubsub
+package com.evolution.cluster.pubsub
 
 import scala.reflect.ClassTag
 

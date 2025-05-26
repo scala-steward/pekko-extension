@@ -1,4 +1,4 @@
-package com.evolutiongaming.cluster.pubsub
+package com.evolution.cluster.pubsub
 
 import scodec.bits.ByteVector
 
@@ -7,13 +7,10 @@ trait ToBytes[-A] {
 }
 
 object ToBytes {
-  implicit val StrToBytes: ToBytes[String] = (value: String) => {
-    ByteVector.encodeUtf8(value).fold(throw _, identity)
-  }
+  implicit val StrToBytes: ToBytes[String] = (value: String) => ByteVector.encodeUtf8(value).fold(throw _, identity)
 
   implicit val BytesToBytes: ToBytes[ByteVector] = (value: ByteVector) => value
 }
-
 
 trait FromBytes[A] {
   def apply(bytes: ByteVector): A
@@ -21,9 +18,7 @@ trait FromBytes[A] {
 
 object FromBytes {
 
-  implicit val StrFromBytes: FromBytes[String] = (bytes: ByteVector) => {
-    bytes.decodeUtf8.fold(throw _, identity)
-  }
+  implicit val StrFromBytes: FromBytes[String] = (bytes: ByteVector) => bytes.decodeUtf8.fold(throw _, identity)
 
   implicit val BytesFromBytes: FromBytes[ByteVector] = (bytes: ByteVector) => bytes
 }
