@@ -3,9 +3,9 @@ package com.evolution.conhub
 import org.apache.pekko.actor.{Actor, ActorRefFactory, Props}
 import org.apache.pekko.cluster.Cluster
 import org.apache.pekko.cluster.ClusterEvent.*
-import org.apache.pekko.event.{Logging, LoggingAdapter}
+import com.typesafe.scalalogging.StrictLogging
 
-object MemberEventSubscribe {
+object MemberEventSubscribe extends StrictLogging {
 
   type Unsubscribe = () => Unit
 
@@ -17,12 +17,10 @@ object MemberEventSubscribe {
   ): Unsubscribe = {
 
     def actor() = new Actor {
-      private lazy val log: LoggingAdapter = Logging(context.system, classOf[MemberEventSubscribe.type])
-
       def receive: Receive = {
         case x: CurrentClusterState => onState(x)
         case x: MemberEvent         => onEvent(x)
-        case x                      => log.warning(s"unexpected $x")
+        case x                      => logger.warn(s"unexpected $x")
       }
     }
 
