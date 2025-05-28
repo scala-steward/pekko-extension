@@ -1,24 +1,24 @@
-package com.evolutiongaming.akkatest
+package com.evolution.pekkotest
 
-import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-trait AkkaActorSuite extends AsyncFunSuite {
-  import AkkaActorSuite._
+trait PekkoActorSuite extends AsyncFunSuite {
+  import PekkoActorSuite.*
 
-  test("akka modules are of same version") {
-    `akka modules are of same version`
+  test("pekko modules are of same version") {
+    `pekko modules are of same version`
   }
 }
 
-object AkkaActorSuite {
+object PekkoActorSuite {
 
-  def `akka modules are of same version`(
+  def `pekko modules are of same version`(
     implicit
     executor: ExecutionContext,
   ): Future[Assertion] = {

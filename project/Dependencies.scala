@@ -4,24 +4,24 @@ object Dependencies {
 
   val scalatest = "org.scalatest" %% "scalatest" % "3.2.19"
 
-  sealed abstract class Akka(version: String) {
-    val actor = "com.typesafe.akka" %% "akka-actor" % version
-    val stream = "com.typesafe.akka" %% "akka-stream" % version
-    val slf4j = "com.typesafe.akka" %% "akka-slf4j" % version
+  sealed abstract class Pekko(version: String) {
+    val actor = "org.apache.pekko" %% "pekko-actor" % version
+    val stream = "org.apache.pekko" %% "pekko-stream" % version
+    val slf4j = "org.apache.pekko" %% "pekko-slf4j" % version
   }
 
-  object Akka {
-    val older: Akka = new Akka("2.6.20") {}
-    val default: Akka = new Akka("2.6.21") {}
+  object Pekko {
+    val older: Pekko = new Pekko("1.0.3") {}
+    val default: Pekko = new Pekko("1.1.3") {}
   }
 
-  sealed abstract class AkkaHttp(version: String) {
-    val core = "com.typesafe.akka" %% "akka-http-core" % version
-    val testkit = "com.typesafe.akka" %% "akka-http-testkit" % version
+  sealed abstract class PekkoHttp(version: String) {
+    val core = "org.apache.pekko" %% "pekko-http-core" % version
+    val testkit = "org.apache.pekko" %% "pekko-http-testkit" % version
   }
 
-  object AkkaHttp {
-    val older: AkkaHttp = new AkkaHttp("10.2.9") {}
-    val default: AkkaHttp = new AkkaHttp("10.2.10") {}
+  object PekkoHttp {
+    val older: PekkoHttp = new PekkoHttp("1.1.0") {}
+    val default: PekkoHttp = new PekkoHttp("1.2.0") {}
   }
 }

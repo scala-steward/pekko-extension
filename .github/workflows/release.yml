@@ -9,7 +9,3 @@ jobs:
   release:
     uses: evolution-gaming/scala-github-actions/.github/workflows/release.yml@v4
     secrets: inherit
-    with:
-      # override sbt commands so they don't use "+" because the project uses mixed Scala versions
-      verify_sbt_command: 'clean; check; all test package'
-      publish_sbt_command: 'publish'
