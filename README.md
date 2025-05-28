@@ -5,6 +5,8 @@
 [![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolution&a=pekko-conhub_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
+It is forked from [conhub](https://github.com/evolution-gaming/conhub) at v3.0.0 by replacing `akka` with `pekko`.
+
 ConHub is a distributed registry used to manage websocket connections on the different nodes of an application.
 It enables you to send serializable message to one or many connections hiding away complexity of distributed system. 
 In short: user provides `lookup` criteria and a `message`, there after `conHub` does the job routing message to physical instances of a matched connections
