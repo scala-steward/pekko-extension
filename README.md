@@ -1,8 +1,8 @@
 # PubSub
 [![Build Status](https://github.com/evolution-gaming/pekko-pubsub/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-pubsub/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-pubsub/badge.svg?branch=master)](https://coveralls.io/github/evolution-gaming/pekko-pubsub?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c1e3dc82255463f82583a3fa69fd56f)](https://www.codacy.com/app/evolution-gaming/pekko-pubsub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evolution-gaming/pekko-pubsub&amp;utm_campaign=Badge_Grade)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=pubsub_2.13&repos=public)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/260032c4cece4be08b1c3e79792b39ab)](https://app.codacy.com/gh/evolution-gaming/pekko-pubsub/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolution&a=pekko-pubsub_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
 It is forked from [pubsub](https://github.com/evolution-gaming/pekko-pubsub) at v10.0.0 by replacing `akka` with `pekko`.
