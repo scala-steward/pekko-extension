@@ -117,5 +117,5 @@ lazy val test = project
   .settings(allSettings)
 
 addCommandAlias("check", "all versionPolicyCheck scalafmtCheckAll scalafmtSbtCheck")
-addCommandAlias("fmt", "all scalafmtAll scalafmtSbt") // optional: for development
+addCommandAlias("fmt", "all scalafmtAll scalafmtSbt")
 addCommandAlias("build", "+all compile test")
