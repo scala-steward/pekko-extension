@@ -7,7 +7,6 @@ import org.scalatest.matchers.should.Matchers
 import scala.util.{Failure, Success, Try}
 
 class PekkoHttpTest extends AsyncFunSuite with Matchers {
-  import PekkoHttpSuite.*
 
   test("pekko-http modules are not of same version") {
     `pekko-http modules are of same version`

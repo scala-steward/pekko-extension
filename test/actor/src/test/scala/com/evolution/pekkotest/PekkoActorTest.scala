@@ -1,6 +1,5 @@
 package com.evolution.pekkotest
 
-import com.evolution.pekkotest.PekkoActorSuite.*
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
