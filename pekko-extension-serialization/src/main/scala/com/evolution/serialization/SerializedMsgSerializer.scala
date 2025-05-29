@@ -1,10 +1,10 @@
 package com.evolution.serialization
 
-import java.io.NotSerializableException
-
 import org.apache.pekko.serialization.SerializerWithStringManifest
 import scodec.Codec
 import scodec.bits.ByteVector
+
+import java.io.NotSerializableException
 
 class SerializedMsgSerializer extends SerializerWithStringManifest {
 
@@ -14,19 +14,19 @@ class SerializedMsgSerializer extends SerializerWithStringManifest {
 
   def manifest(x: AnyRef): String = x match {
     case _: SerializedMsg => Manifest
-    case _                => illegalArgument(s"Cannot serialize message of ${x.getClass} in ${getClass.getName}")
+    case _ => illegalArgument(s"Cannot serialize message of ${ x.getClass } in ${ getClass.getName }")
   }
 
   def toBinary(x: AnyRef): Array[Byte] =
     x match {
       case x: SerializedMsg => SerializedMsgSerializer.toBinary(x).toArray
-      case _                => illegalArgument(s"Cannot serialize message of ${x.getClass} in ${getClass.getName}")
+      case _ => illegalArgument(s"Cannot serialize message of ${ x.getClass } in ${ getClass.getName }")
     }
 
   def fromBinary(bytes: Array[Byte], manifest: String): AnyRef =
     manifest match {
       case Manifest => SerializedMsgSerializer.fromBinary(ByteVector.view(bytes))
-      case _        => notSerializable(s"Cannot deserialize message for manifest $manifest in ${getClass.getName}")
+      case _ => notSerializable(s"Cannot deserialize message for manifest $manifest in ${ getClass.getName }")
     }
 
   private def notSerializable(msg: String): Nothing = throw new NotSerializableException(msg)

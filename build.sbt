@@ -1,6 +1,6 @@
 import Dependencies.*
 
-val commonSettings = Seq(
+val commonSettings = inThisBuild(Seq(
   organization := "com.evolution",
   organizationName := "Evolution",
   organizationHomepage := Some(url("https://evolution.com")),
@@ -44,7 +44,7 @@ val commonSettings = Seq(
   autoAPIMappings := true,
   versionScheme := Some("early-semver"),
   versionPolicyIntention := Compatibility.BinaryCompatible,
-)
+))
 
 val alias =
   addCommandAlias("build", "+all compile test") ++
@@ -53,13 +53,30 @@ val alias =
     // TODO add `versionPolicyCheck`
     addCommandAlias("check", "all Compile/doc scalafmtCheckAll scalafmtSbtCheck")
 
-lazy val root = project
+val root = project
   .in(file("."))
   .settings(name := "pekko-extension")
   .settings(commonSettings)
   .settings(publish / skip := true)
   .settings(alias)
   .aggregate(
+    `pekko-extension-serialization`,
+  )
+
+lazy val `pekko-extension-serialization` = project
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      TestLib.ScalaTest % Test,
+    ) ++ crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = Seq(
+        Scodec.Scala2.core % Optional,
+      ),
+      if3 = Seq(
+        Scodec.Scala3.core % Optional,
+      ),
+    ),
   )
 
 // TODO add all modules
