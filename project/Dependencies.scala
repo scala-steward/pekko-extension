@@ -20,6 +20,7 @@ object Dependencies {
     val Slf4j = "org.apache.pekko" %% "pekko-slf4j" % version
     val DistributedData = "org.apache.pekko" %% "pekko-distributed-data" % version
     val Sharding = "org.apache.pekko" %% "pekko-cluster-sharding" % version
+    val Persistence = "org.apache.pekko" %% "pekko-persistence" % version
 
     val OlderSlf4j = "org.apache.pekko" %% "pekko-slf4j" % "1.0.3"
   }

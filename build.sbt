@@ -191,6 +191,17 @@ lazy val `pekko-extension-tools-util` = project
     ),
   )
 
+lazy val `pekko-extension-tools-serialization` = project
+  .dependsOn(`pekko-extension-tools-test` % "test->compile")
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Persistence,
+      Misc.Logging,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+
 // TODO add all modules
 
 def crossSettings[T](scalaVersion: String, if3: T, if2: T): T = {
