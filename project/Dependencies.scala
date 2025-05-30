@@ -14,6 +14,17 @@ object Dependencies {
     val ClusterTools = "org.apache.pekko" %% "pekko-cluster-tools" % version
     val Testkit = "org.apache.pekko" %% "pekko-testkit" % version
     val Stream = "org.apache.pekko" %% "pekko-stream" % version
+    val Slf4j = "org.apache.pekko" %% "pekko-slf4j" % version
+
+    val OlderSlf4j = "org.apache.pekko" %% "pekko-slf4j" % "1.0.3"
+  }
+
+  object PekkoHttp {
+    private val version = "1.2.0"
+    val Core = "org.apache.pekko" %% "pekko-http-core" % version
+    val Testkit = "org.apache.pekko" %% "pekko-http-testkit" % version
+
+    val OlderTestkit = "org.apache.pekko" %% "pekko-http-testkit" % "1.1.0"
   }
 
   object Cats {

@@ -50,9 +50,64 @@ trait PubSub[F[_]] {
 For an ability to serialize/deserialize messages to offload `pekko` remoting and improve throughput, 
 check [`DistributedPubSubMediatorSerializing.scala`](src/main/scala/org/apache/pekko/cluster/pubsub/DistributedPubSubMediatorSerializing.scala).
 
+### pekko-extension-test
+
+These two libraries were created to provide a set of tests to be used in projects dependent on [Pekko](https://pekko.apache.org)
+libraries.
+For instance, to prevent the following "surprise" at runtime:
+
+```
+java.lang.IllegalStateException: You are using version 1.2.0 of Pekko HTTP, but it appears you (perhaps indirectly) also depend on older versions of related artifacts. You can solve this by adding an explicit dependency on version 1.2.0 of the [pekko-http, pekko-http-testkit] artifacts to your project. Here's a complete collection of detected artifacts: (1.1.0, [pekko-http, pekko-http-testkit]), (1.2.0, [pekko-http-core, pekko-parsing]). See also: https://pekko.apache.org/docs/pekko/current/common/binary-compatibility-rules.html#mixed-versioning-is-not-allowed
+	at org.apache.pekko.util.ManifestInfo.checkSameVersion(ManifestInfo.scala:188)
+	at org.apache.pekko.util.ManifestInfo.checkSameVersion(ManifestInfo.scala:166)
+	at org.apache.pekko.http.scaladsl.HttpExt.<init>(Http.scala:89)
+	at org.apache.pekko.http.scaladsl.Http$.createExtension(Http.scala:1140)
+	at org.apache.pekko.http.scaladsl.Http$.createExtension(Http.scala:871)
+	at org.apache.pekko.actor.ActorSystemImpl.registerExtension(ActorSystem.scala:1175)
+	at org.apache.pekko.actor.ExtensionId.apply(Extension.scala:87)
+	at org.apache.pekko.actor.ExtensionId.apply$(Extension.scala:86)
+```
+
+#### pekko-extension-test-actor
+
+For [pekko-actor](https://pekko.apache.org/docs/pekko/current/) tests that all `pekko` modules are of the same version.
+
+Set up the dependency in `Test` scope:
+```scala
+libraryDependencies += "com.evolution" %% "pekko-extension-test-actor" % "<version>" % Test
+```
+
+And add the following test into your project:
+```scala
+import com.evolution.pekkotest.PekkoActorSuite
+
+class PekkoActorTest extends PekkoActorSuite
+```
+
+#### pekko-extension-test-http
+
+For [pekko-http](https://pekko.apache.org/docs/pekko-http/current/) tests that all `pekko-http` modules are of the same version.
+
+Set up the dependency in `Test` scope:
+```scala
+libraryDependencies += "com.evolution" %% "pekko-extension-test-http" % "<version>" % Test
+```
+
+And add the following test into your project.
+```scala
+import com.evolution.pekkotest.PekkoHttpSuite
+
+class PekkoHttpTest extends PekkoHttpSuite
+```
+
+
+
 ## Library mappings `pekko` to `akka` 
 
 | pekko                         | akka                                                                         | migrated from version |
 |-------------------------------|------------------------------------------------------------------------------|-----------------------|
 | pekko-extension-serialization | [akka-serialization](https://github.com/evolution-gaming/akka-serialization) | 1.1.0                 |
 | pekko-extension-pubsub        | [pubsub](https://github.com/evolution-gaming/pekko-pubsub)                   | 10.0.0                |
+| pekko-extension-test-actor    | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
+| pekko-extension-test-http     | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
+

@@ -62,6 +62,8 @@ val root = project
   .aggregate(
     `pekko-extension-serialization`,
     `pekko-extension-pubsub`,
+    `pekko-extension-test-actor`,
+    `pekko-extension-test-http`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -106,6 +108,26 @@ lazy val `pekko-extension-pubsub` = project
       if3 = Seq(
         Scodec.Scala3.Core,
       ),
+    ),
+  )
+
+lazy val `pekko-extension-test-actor` = project
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      TestLib.ScalaTest,
+      Pekko.OlderSlf4j % Test,
+    ),
+  )
+
+lazy val `pekko-extension-test-http` = project
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Stream,
+      PekkoHttp.Core,
+      TestLib.ScalaTest,
+      PekkoHttp.OlderTestkit % Test,
     ),
   )
 
