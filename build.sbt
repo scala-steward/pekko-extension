@@ -66,6 +66,8 @@ val root = project
     `pekko-extension-test-http`,
     `pekko-extension-distributed-data-tools`,
     `pekko-extension-sharding-strategy`,
+    `pekko-extension-tools-test`,
+    `pekko-extension-tools-util`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -165,6 +167,26 @@ lazy val `pekko-extension-sharding-strategy` = project
       Cats.Core,
       Cats.Effect,
       Evo.CatsHelper,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+
+lazy val `pekko-extension-tools-test` = project
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Testkit,
+      TestLib.ScalaTest,
+    ),
+  )
+
+lazy val `pekko-extension-tools-util` = project
+  .dependsOn(`pekko-extension-tools-test` % "test->compile")
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Misc.Logging,
+      Pekko.Testkit % Test,
       TestLib.ScalaTest % Test,
     ),
   )

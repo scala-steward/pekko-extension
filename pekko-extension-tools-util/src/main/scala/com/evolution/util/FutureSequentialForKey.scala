@@ -96,10 +96,10 @@ extends FutureSequentialForKey {
 
 object FutureSequentialForKey extends ExtensionId[FutureSequentialForKey] {
   val Blocking: FutureSequentialForKey = new FutureSequentialForKey {
-    def apply[T](key: Any)(f: => T) = Future fromTry Try(f)
+    def apply[T](key: Any)(f: => T): Future[T] = Future fromTry Try(f)
   }
 
-  def createExtension(system: ExtendedActorSystem) = {
+  def createExtension(system: ExtendedActorSystem): FutureSequentialForKey = {
     new FutureSequentialForKeyImpl(system, Some("FutureSequentialForKey"))(system.dispatcher)
   }
 }

@@ -152,6 +152,13 @@ val strategy = LeastShardsStrategy()
   .toAllocationStrategy()
 ```
 
+### pekko-extension-tools-test
+
+TODO
+
+### pekko-extension-tools-util
+
+TODO
 
 
 # -----------------------------------
@@ -168,3 +175,7 @@ val strategy = LeastShardsStrategy()
 | pekko-extension-test-http              | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
 | pekko-extension-distributed-data-tools | [ddata-tools](https://github.com/evolution-gaming/ddata-tools/)              | 3.1.0                 |
 | pekko-extension-sharding-strategy      | [sharding-strategy](https://github.com/evolution-gaming/sharding-strategy)   | 3.0.2                 |
+| pekko-extension-tools-test             | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
+| pekko-extension-tools-util             | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
+
+
