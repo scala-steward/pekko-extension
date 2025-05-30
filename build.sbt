@@ -61,6 +61,7 @@ val root = project
   .settings(alias)
   .aggregate(
     `pekko-extension-serialization`,
+    `pekko-extension-pubsub`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -71,10 +72,39 @@ lazy val `pekko-extension-serialization` = project
     ) ++ crossSettings(
       scalaVersion = scalaVersion.value,
       if2 = Seq(
-        Scodec.Scala2.core % Optional,
+        Scodec.Scala2.Core % Optional,
       ),
       if3 = Seq(
-        Scodec.Scala3.core % Optional,
+        Scodec.Scala3.Core % Optional,
+      ),
+    ),
+  )
+
+lazy val `pekko-extension-pubsub` = project
+  .dependsOn(`pekko-extension-serialization`)
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Stream,
+      Pekko.ClusterTools,
+      Pekko.Testkit % Test,
+      Cats.Core,
+      Cats.Effect,
+      Evo.MetricTools,
+      Evo.CatsHelper,
+      Evo.SCache,
+      Scodec.Bits,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = Seq(
+        Scodec.Scala2.Core,
+      ),
+      if3 = Seq(
+        Scodec.Scala3.Core,
       ),
     ),
   )

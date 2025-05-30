@@ -25,8 +25,34 @@ libraryDependencies += "com.evolution" %% "pekko-extension-<name>" % "<version>"
 
 TODO add description!
 
+### pekko-extension-pubsub
+
+Typesafe layer for `DistributedPubSubMediator`.
+
+```scala
+trait PubSub[F[_]] {
+
+  def publish[A: Topic: ToBytes](
+    msg: A,
+    sender: Option[ActorRef] = None,
+    sendToEachGroup: Boolean = false
+  ): F[Unit]
+
+  def subscribe[A: Topic: FromBytes: ClassTag](
+    group: Option[String] = None)(
+    onMsg: OnMsg[F, A]
+  ): Resource[F, Unit]
+
+  def topics(timeout: FiniteDuration = 3.seconds): F[Set[String]]
+}
+```
+
+For an ability to serialize/deserialize messages to offload `pekko` remoting and improve throughput, 
+check [`DistributedPubSubMediatorSerializing.scala`](src/main/scala/org/apache/pekko/cluster/pubsub/DistributedPubSubMediatorSerializing.scala).
+
 ## Library mappings `pekko` to `akka` 
 
 | pekko                         | akka                                                                         | migrated from version |
 |-------------------------------|------------------------------------------------------------------------------|-----------------------|
-| pekko-extension-serialization | [akka-serialization](https://github.com/evolution-gaming/akka-serialization) | 1.1.0                 | 
+| pekko-extension-serialization | [akka-serialization](https://github.com/evolution-gaming/akka-serialization) | 1.1.0                 |
+| pekko-extension-pubsub        | [pubsub](https://github.com/evolution-gaming/pekko-pubsub)                   | 10.0.0                |

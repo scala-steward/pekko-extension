@@ -11,7 +11,8 @@ import scala.util.Try
 /**
  * Object serialized to a binary with the metadata allowing to decode it.
  *
- * The actual fields could be used as the arguments for [[Serialization#deserialize]] call.
+ * The actual fields could be used as the arguments for
+ * [[org.apache.pekko.serialization.Serialization]] `deserialize` call.
  */
 final case class SerializedMsg(identifier: Int, manifest: String, bytes: ByteVector)
 
@@ -30,12 +31,13 @@ object SerializedMsg {
  * requires an underlying implementation such [[SerializedMsgSerializer]] configured using
  * `pekko.actor.serialization-bindings` property in `application.conf` file.
  *
- * Roughly speaking, this class is just a wrapper over [[Serialization]], using [[SerializedMsg]]
- * instead of passing serializer identifier, manifest and the payload to various [[Serialization]]
- * methods.
+ * Roughly speaking, this class is just a wrapper over
+ * [[org.apache.pekko.serialization.Serialization]], using [[SerializedMsg]] instead of passing
+ * serializer identifier, manifest and the payload to various
+ * [[org.apache.pekko.serialization.Serialization]] methods.
  *
  * @see
- *   [[Serialization#findSerializerFor]] for more details.
+ *   [[org.apache.pekko.serialization.Serialization#findSerializerFor]] for more details.
  */
 trait SerializedMsgConverter extends Extension {
 
@@ -73,7 +75,8 @@ object SerializedMsgConverter {
 /**
  * Provides a singleton with [[SerializedMsgConverter]].
  *
- * In other words, it is a simple wrapper over [[SerializationExtension]].
+ * In other words, it is a simple wrapper over
+ * [[org.apache.pekko.serialization.SerializationExtension]].
  */
 object SerializedMsgExt extends ExtensionId[SerializedMsgConverter] {
 
