@@ -100,14 +100,38 @@ import com.evolution.pekkotest.PekkoHttpSuite
 class PekkoHttpTest extends PekkoHttpSuite
 ```
 
+### pekko-extension-distributed-data-tools
+
+`SafeReplicator` is a typesafe api for [Distributed Data replicator](https://pekko.apache.org/docs/pekko/current/typed/distributed-data.html)
+
+```scala
+trait SafeReplicator[F[_], A <: ReplicatedData] {
+
+  def get(implicit consistency: ReadConsistency): F[Option[A]]
+
+  def update(modify: Option[A] => A)(implicit consistency: WriteConsistency): F[Unit]
+
+  def delete(implicit consistency: WriteConsistency): F[Boolean]
+
+  def subscribe(
+    onStop: F[Unit],
+    onChanged: A => F[Unit])(implicit
+    factory: ActorRefFactory,
+    executor: ExecutionContext
+  ): Resource[F, Unit]
+
+  def flushChanges: F[Unit]
+}
+```
+
 
 
 ## Library mappings `pekko` to `akka` 
 
-| pekko                         | akka                                                                         | migrated from version |
-|-------------------------------|------------------------------------------------------------------------------|-----------------------|
-| pekko-extension-serialization | [akka-serialization](https://github.com/evolution-gaming/akka-serialization) | 1.1.0                 |
-| pekko-extension-pubsub        | [pubsub](https://github.com/evolution-gaming/pekko-pubsub)                   | 10.0.0                |
-| pekko-extension-test-actor    | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
-| pekko-extension-test-http     | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
-
+| pekko                                  | akka                                                                         | migrated from version |
+|----------------------------------------|------------------------------------------------------------------------------|-----------------------|
+| pekko-extension-serialization          | [akka-serialization](https://github.com/evolution-gaming/akka-serialization) | 1.1.0                 |
+| pekko-extension-pubsub                 | [pubsub](https://github.com/evolution-gaming/akka-pubsub)                    | 10.0.0                |
+| pekko-extension-test-actor             | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
+| pekko-extension-test-http              | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
+| pekko-extension-distributed-data-tools | [ddata-tools](https://github.com/evolution-gaming/ddata-tools/)              | 3.1.0                 |
