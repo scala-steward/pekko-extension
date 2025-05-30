@@ -195,6 +195,73 @@ val conHub: ConHub[String, LookupById, Connection, Envelope] = ???
 conHub ! Envelope(LookupById("testId"), Msg(Array(…)))
 ```
 
+### pekko-extension-effect-actor
+
+Covered ("classic", not the "typed" kind of actors!):
+* [Actors](https://pekko.apache.org/docs/pekko/current/actors.html)
+* [Persistence](https://pekko.apache.org/docs/pekko/current/persistence.html)
+
+#### [Tell.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Tell.scala)
+
+Represents `ActorRef.tell`:
+```scala
+trait Tell[F[_], -A] {
+  def apply(a: A, sender: Option[ActorRef] = None): F[Unit]
+}
+```
+
+#### [Ask.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Ask.scala)
+
+Represents `ActorRef.ask` pattern:
+```scala
+trait Ask[F[_], -A, B] {
+  def apply(msg: A, timeout: FiniteDuration, sender: Option[ActorRef]): F[B]
+}
+```
+
+#### [Reply.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Reply.scala)
+
+Represents a reply pattern: `sender() ! reply`:
+```scala
+trait Reply[F[_], -A] {
+  def apply(msg: A): F[Unit]
+}
+```
+
+#### [Receive.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Receive.scala)
+
+This is what you need to implement instead of familiar `new Actor { ... }`:
+```scala
+trait Receive[F[_], -A, B] {
+  def apply(msg: A): F[B]
+  def timeout:  F[B]
+}
+```
+
+#### [ActorOf.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/ActorOf.scala)
+
+Constructs `Actor.scala` out of `receive: ActorCtx[F] => Resource[F, Receive[F, Any]]`.
+
+#### [ActorCtx.scala](pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/ActorCtx.scala)
+
+Wraps `ActorContext`:
+```scala
+trait ActorCtx[F[_]] {
+  def self: ActorRef
+  def parent: ActorRef
+  def executor: ExecutionContextExecutor
+  def setReceiveTimeout(timeout: Duration): F[Unit]
+  def child(name: String): F[Option[ActorRef]]
+  def children: F[List[ActorRef]]
+  def actorRefFactory: ActorRefFactory
+  def watch[A](actorRef: ActorRef, msg: A): F[Unit]
+  def unwatch(actorRef: ActorRef): F[Unit]
+  def stop: F[Unit]
+}
+```
+
+
+
 # -----------------------------------
 # TODO add descriptions for libraries
 # -----------------------------------
@@ -216,4 +283,4 @@ conHub ! Envelope(LookupById("testId"), Msg(Array(…)))
 | pekko-extension-tools-cluster          | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-instrumentation  | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-conhub                 | [conhub](https://github.com/evolution-gaming/conhub)                         | 3.0.0                 |
-
+| pekko-extension-effect-actor           | [akka-effect](https://github.com/evolution-gaming/akka-effect)               | 4.1.10                |

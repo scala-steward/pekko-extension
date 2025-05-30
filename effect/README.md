@@ -19,7 +19,7 @@ Covered ("classic", not the "typed" kind of actors!):
 
 ### `pekko-effect-actor` module 
 
-#### [Tell.scala](actor/src/main/scala/com/evolution/pekkoeffect/Tell.scala)
+#### [Tell.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Tell.scala)
 
 Represents `ActorRef.tell`
 
@@ -31,7 +31,7 @@ trait Tell[F[_], -A] {
 ```
 
 
-#### [Ask.scala](actor/src/main/scala/com/evolution/pekkoeffect/Ask.scala)
+#### [Ask.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Ask.scala)
 
 Represents `ActorRef.ask` pattern
 
@@ -43,7 +43,7 @@ trait Ask[F[_], -A, B] {
 ```
 
 
-#### [Reply.scala](actor/src/main/scala/com/evolution/pekkoeffect/Reply.scala)
+#### [Reply.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Reply.scala)
 
 Represents reply pattern: `sender() ! reply`
 
@@ -55,7 +55,7 @@ trait Reply[F[_], -A] {
 ```
 
 
-#### [Receive.scala](actor/src/main/scala/com/evolution/pekkoeffect/Receive.scala)
+#### [Receive.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/Receive.scala)
 
 This is what you need to implement instead of familiar `new Actor { ... }`  
 
@@ -69,12 +69,12 @@ trait Receive[F[_], -A, B] {
 ```
 
 
-#### [ActorOf.scala](actor/src/main/scala/com/evolution/pekkoeffect/ActorOf.scala)
+#### [ActorOf.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/ActorOf.scala)
 
 Constructs `Actor.scala` out of `receive: ActorCtx[F] => Resource[F, Receive[F, Any]]`
 
 
-#### [ActorCtx.scala](actor/src/main/scala/com/evolution/pekkoeffect/ActorCtx.scala)
+#### [ActorCtx.scala](../pekko-extension-effect-actor/src/main/scala/com/evolution/pekkoeffect/ActorCtx.scala)
 
 Wraps `ActorContext`
 

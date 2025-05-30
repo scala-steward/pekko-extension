@@ -58,11 +58,24 @@ object Dependencies {
 
   object Misc {
     val Logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
+    val KindProjector = "org.typelevel" % "kind-projector" % "0.13.3"
   }
 
   object Prometheus {
     private val version = "0.9.0"
     val simpleclient = "io.prometheus" % "simpleclient" % version
+  }
+
+  object Logback {
+    private val version = "1.5.18"
+    val Core = "ch.qos.logback" % "logback-core" % version
+    val Classic = "ch.qos.logback" % "logback-classic" % version
+  }
+
+  object Slf4j {
+    private val version = "2.0.17"
+    val Api = "org.slf4j" % "slf4j-api" % version
+    val Log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % version
   }
 
   object TestLib {

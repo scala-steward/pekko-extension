@@ -72,6 +72,7 @@ val root = project
     `pekko-extension-tools-cluster`,
     `pekko-extension-tools-instrumentation`,
     `pekko-extension-conhub`,
+    `pekko-extension-effect-actor`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -284,6 +285,30 @@ lazy val `pekko-extension-conhub` = project
       if3 = Seq(
         Scodec.Scala3.Core,
       ),
+    ),
+  )
+
+lazy val `pekko-extension-effect-actor` = project
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Cats.Core,
+      Cats.Effect,
+      Evo.CatsHelper,
+      Pekko.Slf4j % Test,
+      Pekko.Testkit % Test,
+      Logback.Classic % Test,
+      Logback.Core % Test,
+      Slf4j.Api % Test,
+      Slf4j.Log4jOverSlf4j % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if3 = Nil,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
     ),
   )
 
