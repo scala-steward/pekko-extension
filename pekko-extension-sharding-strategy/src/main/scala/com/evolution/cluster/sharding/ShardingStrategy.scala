@@ -14,7 +14,7 @@ import scala.concurrent.duration.FiniteDuration
  * [[org.apache.pekko.cluster.sharding.ShardCoordinator]].
  *
  * @see
- *   check [[ShardAllocationStrategy]] from
+ *   check [[org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy]] from
  *   [[https://github.com/apache/pekko/blob/main/cluster-sharding/src/main/scala/org/apache/pekko/cluster/sharding/ShardCoordinator.scala#L109]]
  */
 trait ShardingStrategy[F[_]] {
@@ -29,11 +29,12 @@ trait ShardingStrategy[F[_]] {
    * @param shard
    *   the id of the shard to allocate
    * @param current
-   *   all actor refs to `ShardRegion` and their current allocated shards, in the order they were
+   *   all actor-refs to `ShardRegion` and their current allocated shards, in the order they were
    *   allocated
    * @return
-   *   an effect `F` of the actor ref of the [[ShardRegion]] that is to be responsible for the
-   *   shard, must be one of the references included in the `current` parameter
+   *   an effect `F` of the actor ref of the [[org.apache.pekko.cluster.sharding.ShardRegion]] that
+   *   is to be responsible for the shard, must be one of the references included in the `current`
+   *   parameter
    */
   def allocate(requester: Region, shard: Shard, current: Allocation): F[Option[Region]]
 
@@ -41,7 +42,7 @@ trait ShardingStrategy[F[_]] {
    * Invoked periodically to decide which shards to rebalance to another location.
    *
    * @param current
-   *   all actor refs to `ShardRegion` and their current allocated shards, in the order they were
+   *   all actor-refs to `ShardRegion` and their current allocated shards, in the order they were
    *   allocated
    * @param inProgress
    *   set of shards that are currently being rebalanced, i.e. you should not include these in the

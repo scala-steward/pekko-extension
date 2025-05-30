@@ -124,7 +124,39 @@ trait SafeReplicator[F[_], A <: ReplicatedData] {
 }
 ```
 
+### pekko-extension-sharding-strategy
 
+Alternative to [org.apache.pekko.cluster.sharding.ShardCoordinator.ShardAllocationStrategy](https://github.com/apache/pekko/blob/main/cluster-sharding/src/main/scala/org/apache/pekko/cluster/sharding/ShardCoordinator.scala#L78).
+
+#### Api
+
+```scala
+trait ShardingStrategy[F[_]] {
+
+  def allocate(requester: Region, shard: Shard, current: Allocation): F[Option[Region]]
+
+  def rebalance(current: Allocation, inProgress: Set[Shard]): F[List[Shard]]
+}
+```
+
+#### Syntax
+
+```scala
+val strategy = LeastShardsStrategy()
+  .filterShards(...)
+  .filterRegions(...)
+  .rebalanceThreshold(10)
+  .takeShards(10) 
+  .shardRebalanceCooldown(1.minute)
+  .logging(...)
+  .toAllocationStrategy()
+```
+
+
+
+# -----------------------------------
+# TODO add descriptions for libraries
+# -----------------------------------
 
 ## Library mappings `pekko` to `akka` 
 
@@ -135,3 +167,4 @@ trait SafeReplicator[F[_], A <: ReplicatedData] {
 | pekko-extension-test-actor             | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
 | pekko-extension-test-http              | [akka-test](https://github.com/evolution-gaming/akka-test)                   | 0.3.0                 |
 | pekko-extension-distributed-data-tools | [ddata-tools](https://github.com/evolution-gaming/ddata-tools/)              | 3.1.0                 |
+| pekko-extension-sharding-strategy      | [sharding-strategy](https://github.com/evolution-gaming/sharding-strategy)   | 3.0.2                 |
