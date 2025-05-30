@@ -1,6 +1,6 @@
 package com.evolution.cluster
 
-import com.evolutiongaming.nel.Nel
+import cats.data.NonEmptyList as Nel
 import org.apache.pekko.actor.{ActorSystem, Address}
 import org.apache.pekko.cluster.Cluster
 
@@ -12,7 +12,7 @@ class NodesUnreachableException(addresses: Nel[Address], cause: Throwable) exten
 
   override def getMessage: String = addresses match {
     case Nel(node, Nil) => s"node $node is unreachable"
-    case nodes => s"nodes ${ nodes mkString ", " } are unreachable"
+    case nodes => s"nodes ${ nodes.toList mkString ", " } are unreachable"
   }
 }
 
@@ -29,7 +29,7 @@ object NodesUnreachableException {
 
     for {
       cluster <- ClusterOpt(system)
-      unreachable <- Nel.opt(unreachableAddresses(cluster, role))
+      unreachable <- Nel.fromList(unreachableAddresses(cluster, role).toList)
     } yield new NodesUnreachableException(unreachable, timeoutException)
 
   }

@@ -242,7 +242,7 @@ lazy val `pekko-extension-tools-cluster` = project
       Pekko.Testkit % Test,
       Misc.Logging,
       Evo.ConfigTools,
-      Evo.Nel, // TODO drop
+      Cats.Core,
       TestLib.ScalaTest % Test,
     ),
   )

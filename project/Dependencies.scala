@@ -10,7 +10,6 @@ object Dependencies {
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "2.3.1"
     val ScalaTools = "com.evolutiongaming" %% "scala-tools" % "3.0.6"
     val ConfigTools = "com.evolutiongaming" %% "config-tools" % "1.0.5"
-    val Nel = "com.evolutiongaming" %% "nel" % "1.3.5" // TODO drop
     val FutureHelper = "com.evolutiongaming" %% "future-helper" % "1.0.7"
     val Sequentially = "com.evolutiongaming" %% "sequentially" % "1.2.0"
     val SStream = "com.evolutiongaming" %% "sstream" % "1.1.0"
