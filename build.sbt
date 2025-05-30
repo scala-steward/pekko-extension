@@ -1,6 +1,6 @@
 import Dependencies.*
 
-val commonSettings = inThisBuild(Seq(
+val commonSettings = Seq(
   organization := "com.evolution",
   organizationName := "Evolution",
   organizationHomepage := Some(url("https://evolution.com")),
@@ -44,7 +44,7 @@ val commonSettings = inThisBuild(Seq(
   autoAPIMappings := true,
   versionScheme := Some("early-semver"),
   versionPolicyIntention := Compatibility.BinaryCompatible,
-))
+)
 
 val alias =
   addCommandAlias("build", "+all compile test") ++
@@ -82,6 +82,7 @@ val root = project
   )
 
 lazy val `pekko-extension-serialization` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -101,6 +102,7 @@ lazy val `pekko-extension-pubsub` = project
   .dependsOn(
     `pekko-extension-serialization`,
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -129,6 +131,7 @@ lazy val `pekko-extension-pubsub` = project
   )
 
 lazy val `pekko-extension-test-actor` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -138,6 +141,7 @@ lazy val `pekko-extension-test-actor` = project
   )
 
 lazy val `pekko-extension-test-http` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -149,6 +153,7 @@ lazy val `pekko-extension-test-http` = project
   )
 
 lazy val `pekko-extension-distributed-data-tools` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -168,6 +173,7 @@ lazy val `pekko-extension-sharding-strategy` = project
   .dependsOn(
     `pekko-extension-distributed-data-tools`,
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -183,6 +189,7 @@ lazy val `pekko-extension-sharding-strategy` = project
   )
 
 lazy val `pekko-extension-tools-test` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -193,6 +200,7 @@ lazy val `pekko-extension-tools-test` = project
 
 lazy val `pekko-extension-tools-util` = project
   .dependsOn(`pekko-extension-tools-test` % "test->compile")
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -206,6 +214,7 @@ lazy val `pekko-extension-tools-serialization` = project
   .dependsOn(
     `pekko-extension-tools-test` % "test->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -220,6 +229,7 @@ lazy val `pekko-extension-tools-persistence` = project
     `pekko-extension-tools-serialization`,
     `pekko-extension-tools-test` % "test->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -234,6 +244,7 @@ lazy val `pekko-extension-tools-cluster` = project
   .dependsOn(
     `pekko-extension-tools-test` % "test->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -251,6 +262,7 @@ lazy val `pekko-extension-tools-instrumentation` = project
   .dependsOn(
     `pekko-extension-tools-util`,
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -264,6 +276,7 @@ lazy val `pekko-extension-conhub` = project
     `pekko-extension-serialization`,
     `pekko-extension-tools-test` % "test->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Scodec.Bits,
@@ -295,6 +308,7 @@ lazy val `pekko-extension-conhub` = project
   )
 
 lazy val `pekko-extension-effect-actor` = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -322,6 +336,7 @@ lazy val `pekko-extension-effect-testkit` = project
   .dependsOn(
     `pekko-extension-effect-actor`,
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
@@ -344,6 +359,7 @@ lazy val `pekko-extension-effect-actor-tests` = project
     `pekko-extension-effect-actor` % "test->test;compile->compile",
     `pekko-extension-effect-testkit` % "test->test;test->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Testkit % Test,
@@ -363,6 +379,7 @@ lazy val `pekko-extension-effect-persistence-api` = project
     `pekko-extension-effect-testkit` % "test->test;test->compile",
     `pekko-extension-effect-actor-tests` % "test->test",
   )
+  .settings(commonSettings)
   .settings(
     Compile / doc / scalacOptions -= "-Xfatal-warnings", // TODO get rid of this
   )
@@ -385,6 +402,7 @@ lazy val `pekko-extension-effect-persistence` = project
     `pekko-extension-effect-testkit` % "test->test;test->compile",
     `pekko-extension-effect-actor-tests` % "test->test",
   )
+  .settings(commonSettings)
   .settings(
     Compile / doc / scalacOptions -= "-Xfatal-warnings", // TODO get rid of this
   )
@@ -425,6 +443,7 @@ lazy val `pekko-extension-effect-cluster` = project
     `pekko-extension-effect-testkit` % "test->test;test->compile",
     `pekko-extension-effect-actor-tests` % "test->test",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Cluster,
@@ -444,6 +463,7 @@ lazy val `pekko-extension-effect-cluster-sharding` = project
     `pekko-extension-effect-cluster` % "test->test;compile->compile",
     `pekko-extension-effect-persistence` % "test->test;compile->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.ClusterSharding,
@@ -461,6 +481,7 @@ lazy val `pekko-extension-effect-eventsourcing` = project
   .dependsOn(
     `pekko-extension-effect-persistence` % "test->test;compile->compile",
   )
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Stream,
