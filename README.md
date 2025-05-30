@@ -178,6 +178,22 @@ TODO
 
 TODO do we need umbrella lib `pekko-extension-tools`?
 
+### pekko-extension-conhub
+
+ConHub is a distributed registry used to manage websocket connections on the different nodes of an application.
+It enables you to send a serializable message to one or many connections hiding away the complexity of distributed system.
+In short: user provides `lookup` criteria and a `message` and `conHub` does the job routing message to physical 
+instances of a matched connections
+
+Usage example:
+```scala
+type Connection = ??? // type representing physical connection
+final case class Msg(bytes: Array[Byte]) // serializable
+final case class Envelope(lookup: LookupById, msg: Msg)
+final case class LookupById(id: String)
+val conHub: ConHub[String, LookupById, Connection, Envelope] = ???
+conHub ! Envelope(LookupById("testId"), Msg(Array(…)))
+```
 
 # -----------------------------------
 # TODO add descriptions for libraries
@@ -199,5 +215,5 @@ TODO do we need umbrella lib `pekko-extension-tools`?
 | pekko-extension-tools-persistence      | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-cluster          | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-instrumentation  | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
-
+| pekko-extension-conhub                 | [conhub](https://github.com/evolution-gaming/conhub)                         | 3.0.0                 |
 

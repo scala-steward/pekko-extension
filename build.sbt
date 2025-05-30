@@ -71,6 +71,7 @@ val root = project
     `pekko-extension-tools-persistence`,
     `pekko-extension-tools-cluster`,
     `pekko-extension-tools-instrumentation`,
+    `pekko-extension-conhub`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -248,6 +249,41 @@ lazy val `pekko-extension-tools-instrumentation` = project
       Pekko.Actor,
       Evo.ConfigTools,
       Prometheus.simpleclient,
+    ),
+  )
+
+lazy val `pekko-extension-conhub` = project
+  .dependsOn(
+    `pekko-extension-serialization`,
+    `pekko-extension-tools-test` % "test->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Scodec.Bits,
+      Pekko.Actor,
+      Pekko.Remote,
+      Pekko.Cluster,
+      Pekko.Stream,
+      Pekko.Protobuf,
+      Evo.ConfigTools,
+      Evo.FutureHelper,
+      Evo.Sequentially,
+      Misc.Logging,
+      Cats.Core,
+      Evo.SCache % Test,
+      Pekko.Testkit % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = Seq(
+        Scodec.Scala2.Core,
+      ),
+      if3 = Seq(
+        Scodec.Scala3.Core,
+      ),
     ),
   )
 

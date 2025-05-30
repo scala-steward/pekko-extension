@@ -11,6 +11,8 @@ object Dependencies {
     val ScalaTools = "com.evolutiongaming" %% "scala-tools" % "3.0.6"
     val ConfigTools = "com.evolutiongaming" %% "config-tools" % "1.0.5"
     val Nel = "com.evolutiongaming" %% "nel" % "1.3.5" // TODO drop
+    val FutureHelper = "com.evolutiongaming" %% "future-helper" % "1.0.7"
+    val Sequentially = "com.evolutiongaming" %% "sequentially" % "1.2.0"
   }
 
   object Pekko {
@@ -24,6 +26,8 @@ object Dependencies {
     val DistributedData = "org.apache.pekko" %% "pekko-distributed-data" % version
     val ClusterSharding = "org.apache.pekko" %% "pekko-cluster-sharding" % version
     val Persistence = "org.apache.pekko" %% "pekko-persistence" % version
+    val Remote = "org.apache.pekko" %% "pekko-remote" % version
+    val Protobuf = "org.apache.pekko" %% "pekko-protobuf-v3" % version
 
     val OlderSlf4j = "org.apache.pekko" %% "pekko-slf4j" % "1.0.3"
   }
