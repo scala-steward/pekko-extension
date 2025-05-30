@@ -14,6 +14,9 @@ val commonSettings = inThisBuild(Seq(
   ),
   scalacOptions ++= crossSettings(
     scalaVersion = scalaVersion.value,
+    if2 = Seq(
+      "-Xsource:3",
+    ),
     // Good compiler options for Scala 2.13 are coming from com.evolution:sbt-scalac-opts-plugin:0.0.9,
     // but its support for Scala 3 is limited, especially what concerns linting options.
     //
@@ -28,9 +31,6 @@ val commonSettings = inThisBuild(Seq(
       // improve error messages:
       "-explain",
       "-explain-types",
-    ),
-    if2 = Seq(
-      "-Xsource:3",
     ),
   ),
   Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings"),
@@ -73,6 +73,12 @@ val root = project
     `pekko-extension-tools-instrumentation`,
     `pekko-extension-conhub`,
     `pekko-extension-effect-actor`,
+    `pekko-extension-effect-testkit`,
+    `pekko-extension-effect-actor-tests`,
+    `pekko-extension-effect-persistence-api`,
+    `pekko-extension-effect-persistence`,
+    `pekko-extension-effect-cluster`,
+    `pekko-extension-effect-cluster-sharding`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -307,12 +313,174 @@ lazy val `pekko-extension-effect-actor` = project
   .settings(
     libraryDependencies ++= crossSettings(
       scalaVersion.value,
-      if3 = Nil,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
     ),
   )
 
-// TODO add all modules
+lazy val `pekko-extension-effect-testkit` = project
+  .dependsOn(
+    `pekko-extension-effect-actor`,
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Cats.Effect,
+      Evo.CatsHelper,
+      Pekko.Testkit % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
+    ),
+  )
+
+lazy val `pekko-extension-effect-actor-tests` = project
+  .dependsOn(
+    `pekko-extension-effect-actor` % "test->test;compile->compile",
+    `pekko-extension-effect-testkit` % "test->test;test->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Testkit % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
+    ),
+  )
+
+lazy val `pekko-extension-effect-persistence-api` = project
+  .dependsOn(
+    `pekko-extension-effect-actor` % "test->test;compile->compile",
+    `pekko-extension-effect-testkit` % "test->test;test->compile",
+    `pekko-extension-effect-actor-tests` % "test->test",
+  )
+  .settings(
+    Compile / doc / scalacOptions -= "-Xfatal-warnings", // TODO get rid of this
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Cats.Core,
+      Cats.Effect,
+      Evo.CatsHelper,
+      Evo.SStream,
+      Pekko.Slf4j % Test,
+      Pekko.Testkit % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+
+lazy val `pekko-extension-effect-persistence` = project
+  .dependsOn(
+    `pekko-extension-effect-persistence-api` % "test->test;compile->compile",
+    `pekko-extension-effect-actor` % "test->test;compile->compile",
+    `pekko-extension-effect-testkit` % "test->test;test->compile",
+    `pekko-extension-effect-actor-tests` % "test->test",
+  )
+  .settings(
+    Compile / doc / scalacOptions -= "-Xfatal-warnings", // TODO get rid of this
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Stream,
+      Pekko.Persistence,
+      Pekko.PersistenceQuery,
+      Cats.Core,
+      Cats.Effect,
+      Evo.CatsHelper,
+      Evo.SMetrics,
+      Pekko.PersistenceTestkit % Test,
+      Pekko.Slf4j % Test,
+      Pekko.Testkit % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = List(Pureconfig.Pureconfig),
+      if3 = List(Pureconfig.Scala3.Cores, Pureconfig.Scala3.Generic),
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
+    ),
+  )
+
+lazy val `pekko-extension-effect-cluster` = project
+  .dependsOn(
+    `pekko-extension-effect-actor` % "test->test;compile->compile",
+    `pekko-extension-effect-testkit` % "test->test;test->compile",
+    `pekko-extension-effect-actor-tests` % "test->test",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Cluster,
+      Pekko.ClusterTyped % Test,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = List(Pureconfig.Pureconfig),
+      if3 = List(Pureconfig.Scala3.Cores, Pureconfig.Scala3.Generic),
+    ),
+  )
+
+lazy val `pekko-extension-effect-cluster-sharding` = project
+  .dependsOn(
+    `pekko-extension-effect-cluster` % "test->test;compile->compile",
+    `pekko-extension-effect-persistence` % "test->test;compile->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.ClusterSharding,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
+    ),
+  )
+
+lazy val `pekko-extension-effect-eventsourcing` = project
+  .dependsOn(
+    `pekko-extension-effect-persistence` % "test->test;compile->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Stream,
+      Evo.Retry,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion.value,
+      if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
+      if3 = Nil,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= crossSettings(
+      scalaVersion = scalaVersion.value,
+      if2 = Nil,
+      if3 = List(Pureconfig.Scala3.Generic),
+    ),
+  )
 
 def crossSettings[T](scalaVersion: String, if3: T, if2: T): T = {
   scalaVersion match {

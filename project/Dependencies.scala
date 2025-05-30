@@ -13,12 +13,15 @@ object Dependencies {
     val Nel = "com.evolutiongaming" %% "nel" % "1.3.5" // TODO drop
     val FutureHelper = "com.evolutiongaming" %% "future-helper" % "1.0.7"
     val Sequentially = "com.evolutiongaming" %% "sequentially" % "1.2.0"
+    val SStream = "com.evolutiongaming" %% "sstream" % "1.1.0"
+    val Retry = "com.evolutiongaming" %% "retry" % "3.1.0"
   }
 
   object Pekko {
     private val version = "1.1.3"
     val Actor = "org.apache.pekko" %% "pekko-actor" % version
     val Cluster = "org.apache.pekko" %% "pekko-cluster" % version
+    val ClusterTyped = "org.apache.pekko" %% "pekko-cluster-typed" % version
     val ClusterTools = "org.apache.pekko" %% "pekko-cluster-tools" % version
     val Testkit = "org.apache.pekko" %% "pekko-testkit" % version
     val Stream = "org.apache.pekko" %% "pekko-stream" % version
@@ -26,6 +29,8 @@ object Dependencies {
     val DistributedData = "org.apache.pekko" %% "pekko-distributed-data" % version
     val ClusterSharding = "org.apache.pekko" %% "pekko-cluster-sharding" % version
     val Persistence = "org.apache.pekko" %% "pekko-persistence" % version
+    val PersistenceQuery = "org.apache.pekko" %% "pekko-persistence-query" % version
+    val PersistenceTestkit = "org.apache.pekko" %% "pekko-persistence-testkit" % version
     val Remote = "org.apache.pekko" %% "pekko-remote" % version
     val Protobuf = "org.apache.pekko" %% "pekko-protobuf-v3" % version
 
@@ -59,6 +64,15 @@ object Dependencies {
   object Misc {
     val Logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
     val KindProjector = "org.typelevel" % "kind-projector" % "0.13.3"
+  }
+
+  object Pureconfig {
+    private val version = "0.17.8"
+    val Pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.8"
+    object Scala3 {
+      val Cores = "com.github.pureconfig" %% "pureconfig-core" % "0.17.8"
+      val Generic = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.8"
+    }
   }
 
   object Prometheus {
