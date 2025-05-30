@@ -19,7 +19,7 @@ trait InstrumentedDispatcherMixin extends Dispatcher {
   }
 
   /**
-   * Clone of [[Dispatcher.executorServiceFactoryProvider]]
+   * Clone of [[org.apache.pekko.dispatch.Dispatcher.registerForExecution]]
    */
   override protected[pekko] def registerForExecution(
     mbox: Mailbox,

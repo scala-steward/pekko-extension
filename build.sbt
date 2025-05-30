@@ -70,6 +70,7 @@ val root = project
     `pekko-extension-tools-util`,
     `pekko-extension-tools-persistence`,
     `pekko-extension-tools-cluster`,
+    `pekko-extension-tools-instrumentation`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -235,6 +236,18 @@ lazy val `pekko-extension-tools-cluster` = project
       Evo.ConfigTools,
       Evo.Nel, // TODO drop
       TestLib.ScalaTest % Test,
+    ),
+  )
+
+lazy val `pekko-extension-tools-instrumentation` = project
+  .dependsOn(
+    `pekko-extension-tools-util`,
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Evo.ConfigTools,
+      Prometheus.simpleclient,
     ),
   )
 

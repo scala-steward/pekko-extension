@@ -172,6 +172,9 @@ TODO
 
 TODO
 
+### pekko-extension-tools-instrumentation
+
+TODO
 
 
 
@@ -194,4 +197,6 @@ TODO
 | pekko-extension-tools-serialization    | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-persistence      | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-cluster          | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
+| pekko-extension-tools-instrumentation  | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
+
 

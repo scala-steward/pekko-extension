@@ -56,6 +56,11 @@ object Dependencies {
     val Logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
   }
 
+  object Prometheus {
+    private val version = "0.9.0"
+    val simpleclient = "io.prometheus" % "simpleclient" % version
+  }
+
   object TestLib {
     val ScalaTest = "org.scalatest" %% "scalatest" % "3.2.19"
   }
