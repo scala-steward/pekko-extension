@@ -164,6 +164,10 @@ TODO
 
 TODO
 
+### pekko-extension-tools-persistence
+
+TODO
+
 
 # -----------------------------------
 # TODO add descriptions for libraries
@@ -182,4 +186,5 @@ TODO
 | pekko-extension-tools-test             | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-util             | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 | pekko-extension-tools-serialization    | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
+| pekko-extension-tools-persistence      | [akka-tools](https://github.com/evolution-gaming/akka-tools/)                | 3.3.13                |
 

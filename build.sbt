@@ -68,6 +68,7 @@ val root = project
     `pekko-extension-sharding-strategy`,
     `pekko-extension-tools-test`,
     `pekko-extension-tools-util`,
+    `pekko-extension-tools-persistence`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -192,12 +193,29 @@ lazy val `pekko-extension-tools-util` = project
   )
 
 lazy val `pekko-extension-tools-serialization` = project
-  .dependsOn(`pekko-extension-tools-test` % "test->compile")
+  .dependsOn(
+    `pekko-extension-tools-test` % "test->compile",
+  )
   .settings(
     libraryDependencies ++= Seq(
       Pekko.Actor,
       Pekko.Persistence,
       Misc.Logging,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+
+lazy val `pekko-extension-tools-persistence` = project
+  .dependsOn(
+    `pekko-extension-tools-serialization`,
+    `pekko-extension-tools-test` % "test->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Evo.ScalaTools,
+      Evo.ConfigTools,
+      Pekko.Testkit % Test,
       TestLib.ScalaTest % Test,
     ),
   )

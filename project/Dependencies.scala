@@ -8,6 +8,8 @@ object Dependencies {
     val SCache = "com.evolution" %% "scache" % "5.1.2"
     val ExecutorTools = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "2.3.1"
+    val ScalaTools = "com.evolutiongaming" %% "scala-tools" % "3.0.6"
+    val ConfigTools = "com.evolutiongaming" %% "config-tools" % "1.0.5"
   }
 
   object Pekko {
