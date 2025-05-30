@@ -69,6 +69,7 @@ val root = project
     `pekko-extension-tools-test`,
     `pekko-extension-tools-util`,
     `pekko-extension-tools-persistence`,
+    `pekko-extension-tools-cluster`,
   )
 
 lazy val `pekko-extension-serialization` = project
@@ -163,7 +164,7 @@ lazy val `pekko-extension-sharding-strategy` = project
       Pekko.Actor,
       Pekko.DistributedData,
       Pekko.Cluster,
-      Pekko.Sharding,
+      Pekko.ClusterSharding,
       Pekko.Testkit % Test,
       Cats.Core,
       Cats.Effect,
@@ -216,6 +217,23 @@ lazy val `pekko-extension-tools-persistence` = project
       Evo.ScalaTools,
       Evo.ConfigTools,
       Pekko.Testkit % Test,
+      TestLib.ScalaTest % Test,
+    ),
+  )
+
+lazy val `pekko-extension-tools-cluster` = project
+  .dependsOn(
+    `pekko-extension-tools-test` % "test->compile",
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      Pekko.Actor,
+      Pekko.Cluster,
+      Pekko.ClusterSharding,
+      Pekko.Testkit % Test,
+      Misc.Logging,
+      Evo.ConfigTools,
+      Evo.Nel, // TODO drop
       TestLib.ScalaTest % Test,
     ),
   )

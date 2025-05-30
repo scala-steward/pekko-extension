@@ -10,6 +10,7 @@ object Dependencies {
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "2.3.1"
     val ScalaTools = "com.evolutiongaming" %% "scala-tools" % "3.0.6"
     val ConfigTools = "com.evolutiongaming" %% "config-tools" % "1.0.5"
+    val Nel = "com.evolutiongaming" %% "nel" % "1.3.5" // TODO drop
   }
 
   object Pekko {
@@ -21,7 +22,7 @@ object Dependencies {
     val Stream = "org.apache.pekko" %% "pekko-stream" % version
     val Slf4j = "org.apache.pekko" %% "pekko-slf4j" % version
     val DistributedData = "org.apache.pekko" %% "pekko-distributed-data" % version
-    val Sharding = "org.apache.pekko" %% "pekko-cluster-sharding" % version
+    val ClusterSharding = "org.apache.pekko" %% "pekko-cluster-sharding" % version
     val Persistence = "org.apache.pekko" %% "pekko-persistence" % version
 
     val OlderSlf4j = "org.apache.pekko" %% "pekko-slf4j" % "1.0.3"
