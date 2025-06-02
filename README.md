@@ -1,6 +1,6 @@
 [![Build Status](https://github.com/evolution-gaming/pekko-extension/workflows/CI/badge.svg)](https://github.com/evolution-gaming/pekko-extension/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/evolution-gaming/pekko-extension/badge.svg?branch=main)](https://coveralls.io/github/evolution-gaming/pekko-extension?branch=main)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4fa9958e884a458fbfd465372e4e3e65)](https://app.codacy.com/gh/evolution-gaming/pekko-extension/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2a147aa5b283460c8c6ab43bac4c787e)](https://app.codacy.com/gh/evolution-gaming/pekko-extension/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolution&a=pekko-extension_2.13&repos=public)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
 
