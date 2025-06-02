@@ -60,28 +60,28 @@ val root = project
   .settings(publish / skip := true)
   .settings(alias)
   .aggregate(
-    `pekko-extension-serialization`,
-    `pekko-extension-pubsub`,
-    `pekko-extension-test-actor`,
-    `pekko-extension-test-http`,
-    `pekko-extension-distributed-data-tools`,
-    `pekko-extension-sharding-strategy`,
-    `pekko-extension-tools-test`,
-    `pekko-extension-tools-util`,
-    `pekko-extension-tools-persistence`,
-    `pekko-extension-tools-cluster`,
-    `pekko-extension-tools-instrumentation`,
-    `pekko-extension-conhub`,
-    `pekko-extension-effect-actor`,
-    `pekko-extension-effect-testkit`,
-    `pekko-extension-effect-actor-tests`,
-    `pekko-extension-effect-persistence-api`,
-    `pekko-extension-effect-persistence`,
-    `pekko-extension-effect-cluster`,
-    `pekko-extension-effect-cluster-sharding`,
+    serialization,
+    pubsub,
+    testActor,
+    testHttp,
+    distributedDataTools,
+    shardingStrategy,
+    toolsTest,
+    toolsUtil,
+    toolsPersistence,
+    toolsCluster,
+    toolsInstrumentation,
+    conhub,
+    effectActor,
+    effectTestkit,
+    effectActorTests,
+    effectPersistenceApi,
+    effectPersistence,
+    effectCluster,
+    effectClusterSharding,
   )
 
-lazy val `pekko-extension-serialization` = project
+lazy val serialization = module("serialization")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -89,18 +89,14 @@ lazy val `pekko-extension-serialization` = project
       TestLib.ScalaTest % Test,
     ) ++ crossSettings(
       scalaVersion = scalaVersion.value,
-      if2 = Seq(
-        Scodec.Scala2.Core % Optional,
-      ),
-      if3 = Seq(
-        Scodec.Scala3.Core % Optional,
-      ),
+      if2 = Seq(Scodec.Scala2.Core % Optional),
+      if3 = Seq(Scodec.Scala3.Core % Optional),
     ),
   )
 
-lazy val `pekko-extension-pubsub` = project
+lazy val pubsub = module("pubsub")
   .dependsOn(
-    `pekko-extension-serialization`,
+    serialization,
   )
   .settings(commonSettings)
   .settings(
@@ -121,16 +117,12 @@ lazy val `pekko-extension-pubsub` = project
   .settings(
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
-      if2 = Seq(
-        Scodec.Scala2.Core,
-      ),
-      if3 = Seq(
-        Scodec.Scala3.Core,
-      ),
+      if2 = Seq(Scodec.Scala2.Core),
+      if3 = Seq(Scodec.Scala3.Core),
     ),
   )
 
-lazy val `pekko-extension-test-actor` = project
+lazy val testActor = module("test-actor")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -140,7 +132,7 @@ lazy val `pekko-extension-test-actor` = project
     ),
   )
 
-lazy val `pekko-extension-test-http` = project
+lazy val testHttp = module("test-http")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -152,7 +144,7 @@ lazy val `pekko-extension-test-http` = project
     ),
   )
 
-lazy val `pekko-extension-distributed-data-tools` = project
+lazy val distributedDataTools = module("distributed-data-tools")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -169,9 +161,9 @@ lazy val `pekko-extension-distributed-data-tools` = project
     ),
   )
 
-lazy val `pekko-extension-sharding-strategy` = project
+lazy val shardingStrategy = module("sharding-strategy")
   .dependsOn(
-    `pekko-extension-distributed-data-tools`,
+    distributedDataTools,
   )
   .settings(commonSettings)
   .settings(
@@ -188,7 +180,7 @@ lazy val `pekko-extension-sharding-strategy` = project
     ),
   )
 
-lazy val `pekko-extension-tools-test` = project
+lazy val toolsTest = module("tools-test")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -198,8 +190,8 @@ lazy val `pekko-extension-tools-test` = project
     ),
   )
 
-lazy val `pekko-extension-tools-util` = project
-  .dependsOn(`pekko-extension-tools-test` % "test->compile")
+lazy val toolsUtil = module("tools-util")
+  .dependsOn(toolsTest % "test->compile")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -210,9 +202,9 @@ lazy val `pekko-extension-tools-util` = project
     ),
   )
 
-lazy val `pekko-extension-tools-serialization` = project
+lazy val toolsSerialization = module("tools-serialization")
   .dependsOn(
-    `pekko-extension-tools-test` % "test->compile",
+    toolsTest % "test->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -224,10 +216,10 @@ lazy val `pekko-extension-tools-serialization` = project
     ),
   )
 
-lazy val `pekko-extension-tools-persistence` = project
+lazy val toolsPersistence = module("tools-persistence")
   .dependsOn(
-    `pekko-extension-tools-serialization`,
-    `pekko-extension-tools-test` % "test->compile",
+    toolsSerialization,
+    toolsTest % "test->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -240,9 +232,9 @@ lazy val `pekko-extension-tools-persistence` = project
     ),
   )
 
-lazy val `pekko-extension-tools-cluster` = project
+lazy val toolsCluster = module("tools-cluster")
   .dependsOn(
-    `pekko-extension-tools-test` % "test->compile",
+    toolsTest % "test->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -258,9 +250,9 @@ lazy val `pekko-extension-tools-cluster` = project
     ),
   )
 
-lazy val `pekko-extension-tools-instrumentation` = project
+lazy val toolsInstrumentation = module("tools-instrumentation")
   .dependsOn(
-    `pekko-extension-tools-util`,
+    toolsUtil,
   )
   .settings(commonSettings)
   .settings(
@@ -271,10 +263,10 @@ lazy val `pekko-extension-tools-instrumentation` = project
     ),
   )
 
-lazy val `pekko-extension-conhub` = project
+lazy val conhub = module("conhub")
   .dependsOn(
-    `pekko-extension-serialization`,
-    `pekko-extension-tools-test` % "test->compile",
+    serialization,
+    toolsTest % "test->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -298,16 +290,12 @@ lazy val `pekko-extension-conhub` = project
   .settings(
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
-      if2 = Seq(
-        Scodec.Scala2.Core,
-      ),
-      if3 = Seq(
-        Scodec.Scala3.Core,
-      ),
+      if2 = Seq(Scodec.Scala2.Core),
+      if3 = Seq(Scodec.Scala3.Core),
     ),
   )
 
-lazy val `pekko-extension-effect-actor` = project
+lazy val effectActor = module("effect-actor")
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -326,15 +314,15 @@ lazy val `pekko-extension-effect-actor` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
   )
 
-lazy val `pekko-extension-effect-testkit` = project
+lazy val effectTestkit = module("effect-testkit")
   .dependsOn(
-    `pekko-extension-effect-actor`,
+    effectActor,
   )
   .settings(commonSettings)
   .settings(
@@ -348,16 +336,16 @@ lazy val `pekko-extension-effect-testkit` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
   )
 
-lazy val `pekko-extension-effect-actor-tests` = project
+lazy val effectActorTests = module("effect-actor-tests")
   .dependsOn(
-    `pekko-extension-effect-actor` % "test->test;compile->compile",
-    `pekko-extension-effect-testkit` % "test->test;test->compile",
+    effectActor % "test->test;compile->compile",
+    effectTestkit % "test->test;test->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -367,17 +355,17 @@ lazy val `pekko-extension-effect-actor-tests` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
   )
 
-lazy val `pekko-extension-effect-persistence-api` = project
+lazy val effectPersistenceApi = module("effect-persistence-api")
   .dependsOn(
-    `pekko-extension-effect-actor` % "test->test;compile->compile",
-    `pekko-extension-effect-testkit` % "test->test;test->compile",
-    `pekko-extension-effect-actor-tests` % "test->test",
+    effectActor % "test->test;compile->compile",
+    effectTestkit % "test->test;test->compile",
+    effectActorTests % "test->test",
   )
   .settings(commonSettings)
   .settings(
@@ -395,12 +383,12 @@ lazy val `pekko-extension-effect-persistence-api` = project
     ),
   )
 
-lazy val `pekko-extension-effect-persistence` = project
+lazy val effectPersistence = module("effect-persistence")
   .dependsOn(
-    `pekko-extension-effect-persistence-api` % "test->test;compile->compile",
-    `pekko-extension-effect-actor` % "test->test;compile->compile",
-    `pekko-extension-effect-testkit` % "test->test;test->compile",
-    `pekko-extension-effect-actor-tests` % "test->test",
+    effectPersistenceApi % "test->test;compile->compile",
+    effectActor % "test->test;compile->compile",
+    effectTestkit % "test->test;test->compile",
+    effectActorTests % "test->test",
   )
   .settings(commonSettings)
   .settings(
@@ -431,17 +419,17 @@ lazy val `pekko-extension-effect-persistence` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
   )
 
-lazy val `pekko-extension-effect-cluster` = project
+lazy val effectCluster = module("effect-cluster")
   .dependsOn(
-    `pekko-extension-effect-actor` % "test->test;compile->compile",
-    `pekko-extension-effect-testkit` % "test->test;test->compile",
-    `pekko-extension-effect-actor-tests` % "test->test",
+    effectActor % "test->test;compile->compile",
+    effectTestkit % "test->test;test->compile",
+    effectActorTests % "test->test",
   )
   .settings(commonSettings)
   .settings(
@@ -458,10 +446,10 @@ lazy val `pekko-extension-effect-cluster` = project
     ),
   )
 
-lazy val `pekko-extension-effect-cluster-sharding` = project
+lazy val effectClusterSharding = module("effect-cluster-sharding")
   .dependsOn(
-    `pekko-extension-effect-cluster` % "test->test;compile->compile",
-    `pekko-extension-effect-persistence` % "test->test;compile->compile",
+    effectCluster % "test->test;compile->compile",
+    effectPersistence % "test->test;compile->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -471,15 +459,15 @@ lazy val `pekko-extension-effect-cluster-sharding` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
   )
 
-lazy val `pekko-extension-effect-eventsourcing` = project
+lazy val effectEventsourcing = module("effect-eventsourcing")
   .dependsOn(
-    `pekko-extension-effect-persistence` % "test->test;compile->compile",
+    effectPersistence % "test->test;compile->compile",
   )
   .settings(commonSettings)
   .settings(
@@ -490,7 +478,7 @@ lazy val `pekko-extension-effect-eventsourcing` = project
   )
   .settings(
     libraryDependencies ++= crossSettings(
-      scalaVersion.value,
+      scalaVersion = scalaVersion.value,
       if2 = Seq(compilerPlugin(Misc.KindProjector cross CrossVersion.full)),
       if3 = Nil,
     ),
@@ -509,3 +497,7 @@ def crossSettings[T](scalaVersion: String, if3: T, if2: T): T = {
     case _ => if2
   }
 }
+
+def module(moduleName: String): Project =
+  Project(id = moduleName, base = file(moduleName))
+    .settings(name := s"pekko-extension-$moduleName")
