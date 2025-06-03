@@ -50,8 +50,7 @@ val alias =
   addCommandAlias("build", "+all compile test") ++
     addCommandAlias("fmt", "+all scalafmtAll scalafmtSbt") ++
     // `check` is called with `+` in release workflow
-    // TODO add `versionPolicyCheck`
-    addCommandAlias("check", "all Compile/doc scalafmtCheckAll scalafmtSbtCheck")
+    addCommandAlias("check", "all versionPolicyCheck Compile/doc scalafmtCheckAll scalafmtSbtCheck")
 
 val root = project
   .in(file("."))
