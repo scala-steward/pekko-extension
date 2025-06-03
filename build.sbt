@@ -68,6 +68,7 @@ val root = project
     shardingStrategy,
     toolsTest,
     toolsUtil,
+    toolsSerialization,
     toolsPersistence,
     toolsCluster,
     toolsInstrumentation,
@@ -79,6 +80,7 @@ val root = project
     effectPersistence,
     effectCluster,
     effectClusterSharding,
+    effectEventsourcing,
   )
 
 lazy val serialization = module("serialization")
