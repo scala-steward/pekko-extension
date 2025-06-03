@@ -4,15 +4,16 @@ import cats.syntax.all.*
 import cats.{Applicative, FlatMap, Functor, Monad}
 import com.evolution.pekkoeffect.persistence.SeqNr
 
-/** Describes "Validation" phase against actual state
-  *
-  * @tparam S
-  *   state
-  * @tparam E
-  *   event
-  * @tparam A
-  *   result
-  */
+/**
+ * Describes "Validation" phase against actual state
+ *
+ * @tparam S
+ *   state
+ * @tparam E
+ *   event
+ * @tparam A
+ *   result
+ */
 trait Validate[F[_], S, E, A] {
 
   def apply(state: S, seqNr: SeqNr): F[Directive[F, S, E, A]]
@@ -26,7 +27,7 @@ object Validate {
 
   def apply[S]: Apply[S] = new Apply[S]
 
-  final private[Validate] class Apply[S](private val b: Boolean = true) extends AnyVal {
+  private[Validate] final class Apply[S](private val b: Boolean = true) extends AnyVal {
 
     def apply[F[_], E, A](f: (S, SeqNr) => F[Directive[F, S, E, A]]): Validate[F, S, E, A] = { (state, seqNr) =>
       f(state, seqNr)
@@ -35,7 +36,7 @@ object Validate {
 
   def effect[S, E]: EffectApply[S, E] = new EffectApply[S, E]
 
-  final private[Validate] class EffectApply[S, E](private val b: Boolean = true) extends AnyVal {
+  private[Validate] final class EffectApply[S, E](private val b: Boolean = true) extends AnyVal {
 
     def apply[F[_]: Applicative, A](f: Either[Throwable, SeqNr] => F[A]): Validate[F, S, E, A] =
       const(Directive.effect[S, E](f).pure[F])
@@ -43,22 +44,35 @@ object Validate {
 
   implicit class ValidateOps[F[_], S, E, A](val self: Validate[F, S, E, A]) extends AnyVal {
 
-    def map[E1, A1](f: Directive[F, S, E, A] => Directive[F, S, E1, A1])(implicit
+    def map[E1, A1](
+      f: Directive[F, S, E, A] => Directive[F, S, E1, A1],
+    )(implicit
       F: Functor[F],
     ): Validate[F, S, E1, A1] = { (state, seqNr) =>
       self(state, seqNr).map(f)
     }
 
-    def mapM[E1, A1](f: Directive[F, S, E, A] => F[Directive[F, S, E1, A1]])(implicit
+    def mapM[E1, A1](
+      f: Directive[F, S, E, A] => F[Directive[F, S, E1, A1]],
+    )(implicit
       F: FlatMap[F],
     ): Validate[F, S, E1, A1] = { (state, seqNr) =>
       self(state, seqNr).flatMap(f)
     }
 
-    def mapA[A1](f: A => A1)(implicit F: Functor[F]): Validate[F, S, E, A1] =
+    def mapA[A1](
+      f: A => A1,
+    )(implicit
+      F: Functor[F],
+    ): Validate[F, S, E, A1] =
       self.map(_.map(f))
 
-    def convert[S1, E1, A1](sf: S => F[S1], s1f: S1 => F[S], ef: E => F[E1], af: A => F[A1])(implicit
+    def convert[S1, E1, A1](
+      sf: S => F[S1],
+      s1f: S1 => F[S],
+      ef: E => F[E1],
+      af: A => F[A1],
+    )(implicit
       F: Monad[F],
     ): Validate[F, S1, E1, A1] = { (state, seqNr) =>
       for {
@@ -68,16 +82,31 @@ object Validate {
       } yield a
     }
 
-    def convertA[A1](f: A => F[A1])(implicit F: FlatMap[F]): Validate[F, S, E, A1] =
+    def convertA[A1](
+      f: A => F[A1],
+    )(implicit
+      F: FlatMap[F],
+    ): Validate[F, S, E, A1] =
       self.map(_.mapM(f))
 
-    def convertE[E1](f: E => F[E1])(implicit F: Monad[F]): Validate[F, S, E1, A] =
+    def convertE[E1](
+      f: E => F[E1],
+    )(implicit
+      F: Monad[F],
+    ): Validate[F, S, E1, A] =
       self.mapM(_.convertE(f))
 
-    def convertSE[E1](f: (S, E) => F[E1])(implicit F: Monad[F]): Validate[F, S, E1, A] =
+    def convertSE[E1](
+      f: (S, E) => F[E1],
+    )(implicit
+      F: Monad[F],
+    ): Validate[F, S, E1, A] =
       self.mapM(_.convertSE(f))
 
-    def convertS[S1](sf: S => F[S1], s1f: S1 => F[S])(implicit
+    def convertS[S1](
+      sf: S => F[S1],
+      s1f: S1 => F[S],
+    )(implicit
       F: Monad[F],
     ): Validate[F, S1, E, A] = { (state, seqNr) =>
       for {

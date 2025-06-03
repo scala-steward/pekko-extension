@@ -6,13 +6,15 @@ import cats.{Applicative, FlatMap, Functor, Monad}
 import com.evolution.pekkoeffect.persistence.SeqNr
 import com.evolutiongaming.catshelper.MonadThrowable
 
-/** This function will be executed after events are stored
-  */
+/**
+ * This function will be executed after events are stored
+ */
 trait Effect[F[_], A] {
 
-  /** @param seqNr
-    *   \- either last seqNr or error if failed to store events
-    */
+  /**
+   * @param seqNr
+   *   \- either last seqNr or error if failed to store events
+   */
   def apply(seqNr: Either[Throwable, SeqNr]): F[A]
 }
 
@@ -48,11 +50,19 @@ object Effect {
 
   implicit class EffectOps[F[_], A](val self: Effect[F, A]) extends AnyVal {
 
-    def mapM[B](f: A => F[B])(implicit F: FlatMap[F]): Effect[F, B] = { seqNr =>
+    def mapM[B](
+      f: A => F[B],
+    )(implicit
+      F: FlatMap[F],
+    ): Effect[F, B] = { seqNr =>
       self(seqNr).flatMap(f)
     }
 
-    def map[B](f: A => B)(implicit F: Functor[F]): Effect[F, B] = { seqNr =>
+    def map[B](
+      f: A => B,
+    )(implicit
+      F: Functor[F],
+    ): Effect[F, B] = { seqNr =>
       self(seqNr).map(f)
     }
   }

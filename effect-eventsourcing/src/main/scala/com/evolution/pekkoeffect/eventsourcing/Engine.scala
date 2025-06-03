@@ -18,20 +18,23 @@ import org.apache.pekko.stream.scaladsl.{Sink, Source}
 trait Engine[F[_], S, E] {
   import Engine._
 
-  /** Get effective state. Effective state is latest persisted state, should be used for all async operations with
-    * [[Journaller]] or [[Snapshotter]]
-    */
+  /**
+   * Get effective state. Effective state is latest persisted state, should be used for all async
+   * operations with [[Journaller]] or [[Snapshotter]]
+   */
   def effective: F[State[S]]
 
-  /** Get optimistic state. Optimistic aka speculative state is used internally to keep running incoming commands in
-    * parallel with persisting events from past changes
-    */
+  /**
+   * Get optimistic state. Optimistic aka speculative state is used internally to keep running
+   * incoming commands in parallel with persisting events from past changes
+   */
   def optimistic: F[State[S]]
 
-  /** @return
-    *   Outer F[_] is about `load` being enqueued, this immediately provides order guarantees Inner F[_] is about `load`
-    *   being completed
-    */
+  /**
+   * @return
+   *   Outer F[_] is about `load` being enqueued, this immediately provides order guarantees Inner
+   *   F[_] is about `load` being completed
+   */
   def apply[A](load: F[Validate[F, S, E, A]]): F[F[A]]
 }
 
@@ -52,26 +55,32 @@ object Engine {
 
     def apply[A](load: F[Validate[F, S, E, A]]) =
       for {
-        validate  <- load
+        validate <- load
         directive <- validate(initial.value, initial.seqNr)
-        result    <- directive.effect(result)
+        result <- directive.effect(result)
       } yield result.pure[F]
   }
 
-  /** Executes following stages
-    *   1. Load: parallel, in case you need to call external world 2. Validation: serially validates and changes current
-    *      state 3. Append: appends events produced in #2 in batches, might be blocked by previous in flight batch 4.
-    *      Effect: serially performs side effects
-    *
-    * Ordering is strictly preserved between elements, means that first received element will be also the first to
-    * append events and to perform side effects
-    *
-    * Example: let's consider we called engine in the the following order
-    *   1. engine(A) 2. engine(B) there after Load stage will be performed in parallel for both A and B, however despite
-    *      B being faster loading it won't reach Validation stage before A, because A is first submitted element. As
-    *      soon as A done with validation, it will proceed with Append stage, meanwhile B can be moved to Validation
-    *      stage seeing already updated state by A
-    */
+  /**
+   * Executes following stages
+   *   1. Load: parallel, in case you need to call external world
+   *   1. Validation: serially validates and changes current state
+   *   1. Append: appends events produced in #2 in batches, might be blocked by previous in flight
+   *      batch
+   *   1. Effect: serially performs side effects
+   *
+   * Ordering is strictly preserved between elements, means that first received element will be also
+   * the first to append events and to perform side effects
+   *
+   * Example: let's consider we called engine in the following order
+   *   1. engine(A)
+   *   1. engine(B)
+   *
+   * The Load stage will be performed in parallel for both A and B, despite B being faster to load,
+   * it won't reach the Validation stage before A, because A is a first submitted element. As soon
+   * as A is done with validation, it will proceed with Append stage, while B will be moved to
+   * Validation stage seeing already updated state by A
+   */
   def of[F[_]: Async: ToFuture: FromFuture, S, E](
     initial: State[S],
     actorSystem: ActorSystem,
@@ -79,7 +88,7 @@ object Engine {
   ): Resource[F, Engine[F, S, E]] =
     for {
       materializer <- Sync[F].delay(SystemMaterializer(actorSystem).materializer).toResource
-      engine       <- of(initial, materializer, Append(append))
+      engine <- of(initial, materializer, Append(append))
     } yield engine
 
   def of[F[_]: Async: Runtime: ToFuture: FromFuture, S, E](
@@ -126,7 +135,7 @@ object Engine {
         .mapAsync(parallelism)(_.toFuture)
         .mapAsync(1) { validate =>
           val result = for {
-            state     <- stateRef.get
+            state <- stateRef.get
             directive <- validate(state.value.value, state.value.seqNr)
             result <- {
               if (state.stopped) {
@@ -182,12 +191,12 @@ object Engine {
     }
 
     for {
-      stateRef     <- Ref[F].of(State(initial, stopped = false)).toResource
+      stateRef <- Ref[F].of(State(initial, stopped = false)).toResource
       effectiveRef <- Ref[F].of(initial).toResource
-      append       <- Append.of(append).toResource
-      cores        <- Runtime.summon[F].availableCores.toResource
-      parallelism   = (cores max 2) * 10
-      queue        <- queue(parallelism, stateRef, effectiveRef, append)
+      append <- Append.of(append).toResource
+      cores <- Runtime.summon[F].availableCores.toResource
+      parallelism = (cores max 2) * 10
+      queue <- queue(parallelism, stateRef, effectiveRef, append)
       engine = {
         def loadOf[A](
           load: F[Validate[F, S, E, A]],
@@ -233,9 +242,9 @@ object Engine {
             .apply(queue.offer(fiber.joinWithNever))
             .adaptError { case e => EngineError(s"queue offer failed: $e", e) }
             .flatMap {
-              case QueueOfferResult.Enqueued    => void
-              case QueueOfferResult.Dropped     => EngineError("queue offer dropped").raiseError[F, Unit]
-              case QueueOfferResult.Failure(e)  => EngineError(s"queue offer failed: $e", e).raiseError[F, Unit]
+              case QueueOfferResult.Enqueued => void
+              case QueueOfferResult.Dropped => EngineError("queue offer dropped").raiseError[F, Unit]
+              case QueueOfferResult.Failure(e) => EngineError(s"queue offer failed: $e", e).raiseError[F, Unit]
               case QueueOfferResult.QueueClosed => EngineError("queue closed").raiseError[F, Unit]
             }
 
@@ -262,21 +271,27 @@ object Engine {
     } yield engine
   }
 
-  /** Cats-effect based implementation, expected to be used '''only in tests'''
-    *
-    * Executes following stages
-    *   1. Load: parallel, in case you need to call external world 2. Validation: serially validates and changes current
-    *      state 3. Append: appends events produced in #2 4. Effect: serially performs side effects
-    *
-    * Ordering is strictly preserved between elements, means that first received element will be also the first to
-    * append events and to perform side effects
-    *
-    * Example: let's consider we called engine in the the following order
-    *   1. engine(A) 2. engine(B) there after Load stage will be performed in parallel for both A and B, however despite
-    *      B being faster loading it won't reach Validation stage before A, because A is first submitted element. As
-    *      soon as A done with validation, it will proceed with Append stage, meanwhile B can be moved to Validation
-    *      stage seeing already updated state by A
-    */
+  /**
+   * Cats-effect based implementation, expected to be used '''only in tests'''
+   *
+   * Executes following stages
+   *   1. Load: parallel, in case you need to call external world
+   *   1. Validation: serially validates and changes current state
+   *   1. Append: appends events produced in #2
+   *   1. Effect: serially performs side effects
+   *
+   * Ordering is strictly preserved between elements, means that first received element will be also
+   * the first to append events and to perform side effects
+   *
+   * Example: let's consider we called engine in the the following order
+   *   1. engine(A)
+   *   2. engine(B)
+   *
+   * The Load stage will be performed in parallel for both A and B, despite B being faster to load,
+   * it won't reach the Validation stage before A, because A is a first submitted element. As soon
+   * as A is done with validation, it will proceed with Append stage, while B will be moved to
+   * Validation stage seeing already updated state by A
+   */
   def of[F[_]: Async, S, E](
     initial: State[S],
     append: Append[F, E],
@@ -285,8 +300,8 @@ object Engine {
     sealed trait Key
     object Key {
       case object validate extends Key
-      case object persist  extends Key
-      case object effect   extends Key
+      case object persist extends Key
+      case object effect extends Key
     }
 
     case class Wrapped(state: State[S], stopped: Boolean = false)
@@ -308,23 +323,26 @@ object Engine {
 
       override def apply[A](load: F[Validate[F, S, E, A]]): F[F[A]] =
         for {
-          d  <- Deferred[F, Either[Throwable, A]]
+          d <- Deferred[F, Either[Throwable, A]]
           fv <- load.start // fork `load` stage to allow multiple independent executions
-          fu  = execute(fv.joinWithNever, d)
-          _  <- queue(Key.validate.some)(fu)
+          fu = execute(fv.joinWithNever, d)
+          _ <- queue(Key.validate.some)(fu)
         } yield for {
           e <- d.get
           a <- e.liftTo[F]
         } yield a
 
-      /** Execute `load` with respect to:
-        *   1. failure on `load` or `validate` will be propagated to user 2. stopped Engine will not persist any events
-        *      or change its state 3. `load` stages executed unordered and in parallel 4. `validate` stages executed
-        *      strictly sequentially 5. `persist` happened strictly sequentially 6. `effect`s executed strictly
-        *      sequentially
-        *
-        * Please check [[EngineCatsEffectTest]] for more restrictions of the implementation
-        */
+      /**
+       * Execute `load` with respect to:
+       *   1. failure on `load` or `validate` will be propagated to user
+       *   1. stopped Engine will not persist any events or change its state
+       *   1. `load` stages executed unordered and in parallel
+       *   1. `validate` stages executed strictly sequentially
+       *   1. `persist` happened strictly sequentially
+       *   1. `effect`s executed strictly sequentially
+       *
+       * Please check [[EngineCatsEffectTest]] for more restrictions of the implementation
+       */
       def execute[A](
         load: F[Validate[F, S, E, A]],
         reply: Deferred[F, Either[Throwable, A]],
@@ -335,7 +353,7 @@ object Engine {
               /* await for `load` stage to complete & run `validate` stage */
               val directive =
                 for {
-                  validate  <- load
+                  validate <- load
                   directive <- validate(state0.value, state0.seqNr)
                 } yield directive
 
@@ -430,8 +448,8 @@ object Engine {
           def apply[A](load: F[Validate[F, S, E, A]]) =
             for {
               released <- released.get
-              _        <- if (released) Engine.released.raiseError[F, Unit] else ().pure[F]
-              result   <- engine(load)
+              _ <- if (released) Engine.released.raiseError[F, Unit] else ().pure[F]
+              result <- engine(load)
             } yield result
         }
       }
@@ -477,7 +495,7 @@ object Engine {
       events =>
         appended.modify { persisted =>
           val applied = persisted ++ events.toList
-          val seqNr   = initial + applied.length
+          val seqNr = initial + applied.length
           applied -> seqNr
         }
   }

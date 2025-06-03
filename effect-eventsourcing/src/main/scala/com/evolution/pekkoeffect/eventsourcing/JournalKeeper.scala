@@ -17,18 +17,21 @@ import scala.concurrent.duration.*
 
 trait JournalKeeper[F[_], Sn, St] {
 
-  /** Called after events are saved
-    */
+  /**
+   * Called after events are saved
+   */
   def eventsSaved(seqNr: SeqNr, state: St): F[Unit]
 
-  /** @return
-    *   Journaller with hooks attached in order to monitor external actions
-    */
+  /**
+   * @return
+   *   Journaller with hooks attached in order to monitor external actions
+   */
   def journaller: Journaller[F]
 
-  /** @return
-    *   Snapshotter with hooks attached in order to monitor external actions
-    */
+  /**
+   * @return
+   *   Snapshotter with hooks attached in order to monitor external actions
+   */
   def snapshotter: Snapshotter[F, Sn]
 
 }
@@ -48,7 +51,7 @@ object JournalKeeper {
 
     def apply[St]: Apply[St] = new Apply[St]
 
-    final private[SnapshotOf] class Apply[St](private val b: Boolean = true) extends AnyVal {
+    private[SnapshotOf] final class Apply[St](private val b: Boolean = true) extends AnyVal {
 
       def apply[F[_], Sn](f: Candidate[St] => F[Option[Sn]]): SnapshotOf[F, St, Sn] = { candidate =>
         f(candidate)
@@ -56,15 +59,18 @@ object JournalKeeper {
     }
   }
 
-  /** JournalKeeper is responsible for
-    *   1. taking snapshots according to config 2. deleting previous snapshots 3. deleting events prior snapshot Does
-    *      not take more than one snapshot at a time, useful for loaded entities
-    *
-    * @tparam Sn
-    *   snapshot
-    * @tparam St
-    *   state
-    */
+  /**
+   * JournalKeeper is responsible for
+   *   1. taking snapshots according to config
+   *   1. deleting previous snapshots
+   *   1. deleting events prior snapshot Does not take more than one snapshot at a time, useful for
+   *      loaded entities
+   *
+   * @tparam Sn
+   *   snapshot
+   * @tparam St
+   *   state
+   */
   def of[F[_]: Concurrent: Clock, Sn, St](
     candidate: Candidate[St],
     snapshotOffer: Option[SnapshotMetadata],
@@ -123,7 +129,7 @@ object JournalKeeper {
                 .flatten
                 .handleErrorWith {
                   case _: ActorStoppedError => ().pure[F]
-                  case e                    => log.warn(s"delete snapshot at $seqNr failed with $e", e)
+                  case e => log.warn(s"delete snapshot at $seqNr failed with $e", e)
                 }
             }
         } else {
@@ -147,7 +153,7 @@ object JournalKeeper {
                       .flatten
                       .handleErrorWith {
                         case _: ActorStoppedError => ().pure[F]
-                        case e                    => log.warn(s"delete events to $deleteTo failed with $e", e)
+                        case e => log.warn(s"delete events to $deleteTo failed with $e", e)
                       }
                     (deleteTo.some, result)
                   }
@@ -198,7 +204,7 @@ object JournalKeeper {
                     for {
                       _ <- e match {
                         case _: ActorStoppedError => ().pure[F]
-                        case e                    => log.error(s"save snapshot at ${candidate.seqNr} failed with $e", e)
+                        case e => log.error(s"save snapshot at ${ candidate.seqNr } failed with $e", e)
                       }
                       a <- ref.modify {
                         case S.Saving(Some(candidate)) =>
@@ -219,8 +225,8 @@ object JournalKeeper {
     for {
       deletedTo <- Ref[F].of(none[SeqNr])
       timestamp <- Clock[F].millis
-      check      = Check(timestamp)
-      save       = Save(check, deletedTo)
+      check = Check(timestamp)
+      save = Save(check, deletedTo)
       (s, f) = {
         if (check(snapshotOffer, timestamp, candidate)) {
           val s = S.saving(none)
@@ -232,7 +238,7 @@ object JournalKeeper {
         }
       }
       ref <- Ref[F].of(s)
-      _   <- f(ref)
+      _ <- f(ref)
     } yield new JournalKeeper[F, Sn, St] {
 
       def eventsSaved(seqNr: SeqNr, state: St) = {
@@ -293,7 +299,7 @@ object JournalKeeper {
                 .productL {
                   ref.update {
                     case a: S.Idle if a.last.exists(_.seqNr == seqNr) => S.Idle(none)
-                    case a                                            => a
+                    case a => a
                   }
                 }
                 .start
@@ -312,7 +318,7 @@ object JournalKeeper {
                 .productL {
                   ref.update {
                     case a: S.Idle if a.last.exists(selected) => S.Idle(none)
-                    case a                                    => a
+                    case a => a
                   }
                 }
                 .start

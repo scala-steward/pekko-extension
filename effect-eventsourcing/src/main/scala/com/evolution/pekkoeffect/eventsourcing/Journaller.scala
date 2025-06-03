@@ -8,11 +8,12 @@ import com.evolutiongaming.catshelper.{Log, MeasureDuration}
 
 trait Journaller[F[_]] {
 
-  /** @see
-    *   [[org.apache.pekko.persistence.Eventsourced.deleteMessages]]
-    * @return
-    *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
-    */
+  /**
+   * @see
+   *   [[org.apache.pekko.persistence.Eventsourced.deleteMessages]]
+   * @return
+   *   outer F[_] is about deletion in background, inner F[_] is about deletion being completed
+   */
   def deleteTo(seqNr: SeqNr): F[F[Unit]]
 }
 
@@ -32,7 +33,9 @@ object Journaller {
       f(self.deleteTo(seqNr)).map(a => f(a))
     }
 
-    def withLogging1(log: Log[F])(implicit
+    def withLogging1(
+      log: Log[F],
+    )(implicit
       F: FlatMap[F],
       measureDuration: MeasureDuration[F],
     ): Journaller[F] = (seqNr: SeqNr) =>
@@ -42,7 +45,7 @@ object Journaller {
       } yield for {
         r <- r
         d <- d
-        _ <- log.info(s"delete events to $seqNr in ${d.toMillis}ms")
+        _ <- log.info(s"delete events to $seqNr in ${ d.toMillis }ms")
       } yield r
   }
 }

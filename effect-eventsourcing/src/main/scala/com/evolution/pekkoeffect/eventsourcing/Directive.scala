@@ -5,19 +5,21 @@ import cats.syntax.all.*
 import cats.{Applicative, FlatMap, Functor, Monad}
 import com.evolution.pekkoeffect.persistence.{Events, SeqNr}
 
-/** Describes optional change as well as effect to be executed after change is applied and events are stored
-  *
-  * @param change
-  *   \- state and events
-  * @param effect
-  *   \- will be executed after events are stored
-  * @param stop
-  *   \- to ensure that there will be no more changes
-  * @tparam S
-  *   state
-  * @tparam E
-  *   event
-  */
+/**
+ * Describes optional change as well as effect to be executed after change is applied and events are
+ * stored
+ *
+ * @param change
+ *   \- state and events
+ * @param effect
+ *   \- will be executed after events are stored
+ * @param stop
+ *   \- to ensure that there will be no more changes
+ * @tparam S
+ *   state
+ * @tparam E
+ *   event
+ */
 final case class Directive[F[_], +S, +E, A](change: Option[Change[S, E]], effect: Effect[F, A], stop: Boolean) {
   def mapState[S1](f: S => S1): Directive[F, S1, E, A] = copy(change = change.map(_.mapState(f)))
 
@@ -55,7 +57,7 @@ object Directive {
 
   def effect[S, E]: EffectApply[S, E] = new EffectApply[S, E]
 
-  final private[Directive] class EffectApply[S, E](private val b: Boolean = true) extends AnyVal {
+  private[Directive] final class EffectApply[S, E](private val b: Boolean = true) extends AnyVal {
 
     def apply[F[_], A](f: Either[Throwable, SeqNr] => F[A]): Directive[F, S, E, A] =
       Directive(Effect(f))
@@ -72,16 +74,32 @@ object Directive {
     def mapEffect[A1](f: Effect[F, A] => Effect[F, A1]): Directive[F, S, E, A1] =
       self.copy(effect = f(self.effect))
 
-    def map[A1](f: A => A1)(implicit F: Functor[F]): Directive[F, S, E, A1] =
+    def map[A1](
+      f: A => A1,
+    )(implicit
+      F: Functor[F],
+    ): Directive[F, S, E, A1] =
       mapEffect(_.map(f))
 
-    def mapM[A1](f: A => F[A1])(implicit F: FlatMap[F]): Directive[F, S, E, A1] =
+    def mapM[A1](
+      f: A => F[A1],
+    )(implicit
+      F: FlatMap[F],
+    ): Directive[F, S, E, A1] =
       mapEffect(_.mapM(f))
 
-    def andThen(effect: Effect[F, A])(implicit F: Monad[F]): Directive[F, S, E, A] =
+    def andThen(
+      effect: Effect[F, A],
+    )(implicit
+      F: Monad[F],
+    ): Directive[F, S, E, A] =
       mapEffect(_.productR(effect))
 
-    def convert[S1, E1, A1](sf: S => F[S1], ef: E => F[E1], af: A => F[A1])(implicit
+    def convert[S1, E1, A1](
+      sf: S => F[S1],
+      ef: E => F[E1],
+      af: A => F[A1],
+    )(implicit
       F: Monad[F],
     ): F[Directive[F, S1, E1, A1]] =
       self.change
@@ -91,17 +109,29 @@ object Directive {
           self.copy(change, effect)
         }
 
-    def convertE[E1](f: E => F[E1])(implicit F: Monad[F]): F[Directive[F, S, E1, A]] =
+    def convertE[E1](
+      f: E => F[E1],
+    )(implicit
+      F: Monad[F],
+    ): F[Directive[F, S, E1, A]] =
       self.change
         .traverse(_.convertE(f))
         .map(change => self.copy(change))
 
-    def convertSE[E1](f: (S, E) => F[E1])(implicit F: Monad[F]): F[Directive[F, S, E1, A]] =
+    def convertSE[E1](
+      f: (S, E) => F[E1],
+    )(implicit
+      F: Monad[F],
+    ): F[Directive[F, S, E1, A]] =
       self.change
         .traverse(_.convertSE(f))
         .map(change => self.copy(change))
 
-    def convertS[S1](f: S => F[S1])(implicit F: Monad[F]): F[Directive[F, S1, E, A]] =
+    def convertS[S1](
+      f: S => F[S1],
+    )(implicit
+      F: Monad[F],
+    ): F[Directive[F, S1, E, A]] =
       self.change
         .traverse(_.convertS(f))
         .map(change => self.copy(change))
