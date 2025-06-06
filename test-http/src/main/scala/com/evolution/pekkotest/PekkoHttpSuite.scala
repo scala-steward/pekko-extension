@@ -10,6 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
 trait PekkoHttpSuite extends AsyncFunSuite {
+  import PekkoHttpSuite.*
 
   test("pekko-http modules are of same version") {
     `pekko-http modules are of same version`
