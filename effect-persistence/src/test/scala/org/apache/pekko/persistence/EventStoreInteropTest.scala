@@ -65,7 +65,7 @@ class EventStoreInteropTest extends AnyFunSuite with Matchers {
         val maxSeqNr = n - 1 // SeqNr starts from 0
 
         def events: List[EventStore.Event[Any]] =
-          List.range(0L, n).map(n => EventStore.Event(s"event_$n", n.toLong))
+          List.range(0L, n).map(n => EventStore.Event(s"event_$n", n))
 
         for {
           // persist n events

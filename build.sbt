@@ -415,7 +415,7 @@ lazy val effectPersistence = module("effect-persistence")
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
       if2 = List(Pureconfig.Pureconfig),
-      if3 = List(Pureconfig.Scala3.Cores, Pureconfig.Scala3.Generic),
+      if3 = List(Pureconfig.Scala3.Core, Pureconfig.Scala3.Generic),
     ),
   )
   .settings(
@@ -443,7 +443,7 @@ lazy val effectCluster = module("effect-cluster")
     libraryDependencies ++= crossSettings(
       scalaVersion = scalaVersion.value,
       if2 = List(Pureconfig.Pureconfig),
-      if3 = List(Pureconfig.Scala3.Cores, Pureconfig.Scala3.Generic),
+      if3 = List(Pureconfig.Scala3.Core, Pureconfig.Scala3.Generic),
     ),
   )
 
