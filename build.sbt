@@ -44,6 +44,9 @@ val commonSettings = Seq(
   autoAPIMappings := true,
   versionScheme := Some("early-semver"),
   versionPolicyIntention := Compatibility.BinaryCompatible,
+  // TODO remove after 0.0.5 release
+  versionPolicyCheck / skip := true,
+  versionCheck / skip := true,
 )
 
 val alias =
