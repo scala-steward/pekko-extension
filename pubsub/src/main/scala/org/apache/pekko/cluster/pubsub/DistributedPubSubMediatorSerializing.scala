@@ -1,8 +1,8 @@
 package org.apache.pekko.cluster.pubsub
 
 import cats.Id
-import com.evolution.cluster.pubsub.{PubSub, PubSubMsg}
-import com.evolution.serialization.{SerializedMsg, SerializedMsgExt}
+import com.evolution.pekko.cluster.pubsub.{PubSub, PubSubMsg}
+import com.evolution.pekko.serialization.{SerializedMsg, SerializedMsgExt}
 import org.apache.pekko.Done
 import org.apache.pekko.actor.{
   Actor,
@@ -39,7 +39,7 @@ class DistributedPubSubMediatorSerializing(
 ) extends DistributedPubSubMediator(settings)
 with DistributedPubSubMediatorSerializing.StreamHelper {
 
-  import DistributedPubSubMediatorSerializing._
+  import DistributedPubSubMediatorSerializing.*
   import context.dispatcher
 
   private val selfAddress = Cluster(context.system).selfAddress

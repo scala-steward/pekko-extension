@@ -3,9 +3,9 @@ package org.apache.pekko.persistence
 import cats.effect.unsafe.implicits.global
 import cats.effect.{Deferred, IO}
 import cats.syntax.all.*
-import com.evolution.pekkoeffect.persistence.{EventSourcedId, EventStore, Events, SeqNr}
-import com.evolution.pekkoeffect.testkit.TestActorSystem
-import com.evolution.pekkoeffect.util.AtomicRef
+import com.evolution.pekko.effect.actor.util.AtomicRef
+import com.evolution.pekko.effect.persistence.api.{EventSourcedId, EventStore, Events, SeqNr}
+import com.evolution.pekko.effect.testkit.TestActorSystem
 import com.evolutiongaming.catshelper.LogOf
 import org.apache.pekko.persistence.journal.AsyncWriteJournal
 import org.scalatest.funsuite.AnyFunSuite

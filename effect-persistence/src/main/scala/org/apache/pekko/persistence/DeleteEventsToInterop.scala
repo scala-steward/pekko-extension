@@ -2,8 +2,9 @@ package org.apache.pekko.persistence
 
 import cats.effect.{Resource, Sync}
 import cats.syntax.all.*
-import com.evolution.pekkoeffect.persistence.{DeleteEventsTo, SeqNr}
-import com.evolution.pekkoeffect.{ActorRefOf, AskFrom}
+import com.evolution.pekko.effect.actor.{ActorRefOf, AskFrom}
+import com.evolution.pekko.effect.persistence.DeleteEventsTo
+import com.evolution.pekko.effect.persistence.api.SeqNr
 import com.evolutiongaming.catshelper.FromFuture
 import org.apache.pekko.actor.{ActorContext, ActorRef}
 import org.apache.pekko.persistence.JournalProtocol.DeleteMessagesTo
