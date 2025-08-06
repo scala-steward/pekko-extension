@@ -285,6 +285,7 @@ lazy val conhub = module("conhub")
       Evo.Sequentially,
       Misc.Logging,
       Cats.Core,
+      Cats.Effect % Test,
       Evo.SCache % Test,
       Pekko.Testkit % Test,
       TestLib.ScalaTest % Test,
@@ -477,6 +478,8 @@ lazy val effectEventsourcing = module("effect-eventsourcing")
     libraryDependencies ++= Seq(
       Pekko.Stream,
       Evo.Retry,
+      Cats.Core,
+      Cats.Effect,
     ),
   )
   .settings(
