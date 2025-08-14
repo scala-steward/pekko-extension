@@ -5,7 +5,7 @@ object Dependencies {
   object Evo {
     val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.0"
     val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.12.0"
-    val SCache = "com.evolution" %% "scache" % "5.1.2"
+    val SCache = "com.evolution" %% "scache" % "5.1.4"
     val ExecutorTools = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "2.3.1"
     val ScalaTools = "com.evolutiongaming" %% "scala-tools" % "3.0.6"
