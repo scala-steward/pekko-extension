@@ -63,7 +63,7 @@ object Dependencies {
   }
 
   object Misc {
-    val Logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
+    val Logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.6"
     val KindProjector = "org.typelevel" % "kind-projector" % "0.13.3"
   }
 
