@@ -3,7 +3,7 @@ import sbt.*
 object Dependencies {
 
   object Evo {
-    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.0"
+    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.1"
     val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.13.2"
     val SCache = "com.evolution" %% "scache" % "6.0.2"
     val ExecutorTools = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
