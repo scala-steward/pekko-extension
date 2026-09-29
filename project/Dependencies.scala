@@ -3,8 +3,8 @@ import sbt.*
 object Dependencies {
 
   object Evo {
-    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.0"
-    val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.13.1"
+    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.1"
+    val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.13.2"
     val SCache = "com.evolution" %% "scache" % "6.0.2"
     val ExecutorTools = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "3.0.0"
@@ -87,7 +87,7 @@ object Dependencies {
   }
 
   object Logback {
-    private val version = "1.6.3"
+    private val version = "1.6.4"
     val Core = "ch.qos.logback" % "logback-core" % version
     val Classic = "ch.qos.logback" % "logback-classic" % version
   }
