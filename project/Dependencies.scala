@@ -3,8 +3,8 @@ import sbt.*
 object Dependencies {
 
   object Evo {
-    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.0"
-    val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.13.1"
+    val MetricTools = "com.evolutiongaming" %% "metric-tools" % "3.0.1"
+    val CatsHelper = "com.evolutiongaming" %% "cats-helper" % "3.13.2"
     val SCache = "com.evolution" %% "scache" % "6.0.2"
     val ExecutorTools = "com.evolutiongaming" %% "executor-tools" % "1.0.5"
     val SMetrics = "com.evolutiongaming" %% "smetrics" % "3.0.0"
@@ -82,14 +82,18 @@ object Dependencies {
     val simpleclient = "io.prometheus" % "simpleclient" % version
   }
 
+  object Dropwizard {
+    val MetricsGraphite = "io.dropwizard.metrics" % "metrics-graphite" % "4.2.40"
+  }
+
   object Logback {
-    private val version = "1.6.3"
+    private val version = "1.6.4"
     val Core = "ch.qos.logback" % "logback-core" % version
     val Classic = "ch.qos.logback" % "logback-classic" % version
   }
 
   object Slf4j {
-    private val version = "2.0.19"
+    private val version = "2.0.20"
     val Api = "org.slf4j" % "slf4j-api" % version
     val Log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % version
   }
