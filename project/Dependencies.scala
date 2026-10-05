@@ -17,7 +17,7 @@ object Dependencies {
   }
 
   object Pekko {
-    private val version = "1.7.0"
+    private val version = "1.7.1"
     val Actor = "org.apache.pekko" %% "pekko-actor" % version
     val Cluster = "org.apache.pekko" %% "pekko-cluster" % version
     val ClusterTyped = "org.apache.pekko" %% "pekko-cluster-typed" % version
@@ -87,7 +87,7 @@ object Dependencies {
   }
 
   object Logback {
-    private val version = "1.6.4"
+    private val version = "1.6.5"
     val Core = "ch.qos.logback" % "logback-core" % version
     val Classic = "ch.qos.logback" % "logback-classic" % version
   }
