@@ -31,6 +31,9 @@ val commonSettings = Seq(
       // improve error messages:
       "-explain",
       "-explain-types",
+
+      // wait for something similar to: https://github.com/scala/scala3/pull/27028
+      "-Wconf:msg=Skipping coverage instrumentation:i",
     ),
   ),
   Compile / doc / scalacOptions ++= Seq("-groups", "-no-link-warnings"),
