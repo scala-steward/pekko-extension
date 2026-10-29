@@ -6,7 +6,7 @@ val commonSettings = Seq(
   organizationHomepage := Some(uri("https://evolution.com")),
   homepage := Some(uri("https://github.com/evolution-gaming/pekko-extension")),
   startYear := Some(2016),
-  crossScalaVersions := Seq("2.13.18", "3.3.8"),
+  crossScalaVersions := Seq("2.13.18", "3.3.9"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-release:17",
@@ -31,6 +31,9 @@ val commonSettings = Seq(
       // improve error messages:
       "-explain",
       "-explain-types",
+
+      // wait for something similar to: https://github.com/scala/scala3/pull/27028
+      "-Wconf:msg=Skipping coverage instrumentation:i",
     ),
   ),
   Compile / doc / scalacOptions ++= Seq("-groups", "-no-link-warnings"),
